@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
 
+
 body{
     box-sizing: border-box;
     margin: 0;
@@ -74,7 +75,7 @@ header{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 550px;
+    height: 650px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -83,14 +84,16 @@ header{
 }
 
 .hero-banner-text {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 20px;
+    font-family: "Comic Neue", cursive, sans-serif;
+    font-size: 24px;
+    color: #7a2500;
+    font-weight: 700; 
     line-height: 1.5;
     color: #332219; 
     margin: 0;
     max-width: 600px;
     text-align: center;
-    
+
 
 }
 
@@ -207,3 +210,26 @@ footer .wave#wave1{
     }
 }
 
+.section-content {
+    background-color: #fff2d6;
+    padding: 100px 20px; 
+}
+
+.section-title{
+    color: #ffa41c;
+    margin-top: -60px;
+    margin-bottom: 5px;
+
+}
+
+.section-content p {
+    font-family: "Comic Neue", cursive, sans-serif;
+    font-size: 20px;
+    color: #7a2500;
+    font-weight: 700; 
+    line-height: 1.5;
+    color: #332219; 
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+}
