@@ -21,11 +21,23 @@
 
     background-image: url('../assets/images/level1-ship.png');
     background-size: contain;
+    background-repeat: no-repeat;
     background-position: center bottom;
 
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-
+    bottom: 0;
+    left: 100px;
     z-index: 2;
+
+   animation: animateship 3s linear infinite alternate;
+}
+
+/* rotate the ship*/
+@keyframes animateship {
+    0% {
+        transform: rotate(-2deg);
+    }
+
+    100% {
+        transform: rotate(2deg);
+    }
 }
