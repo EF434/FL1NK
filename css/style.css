@@ -7,6 +7,7 @@ body{
     padding: 0;
     font-family: 'Fredoka', 'Changa', 'Arial', sans-serif; 
     background-color: #FAF6EE;
+    scroll-behavior: smooth;
 
 }
 
@@ -211,7 +212,7 @@ footer .wave#wave1{
 }
 
 .section-content {
-    background-color: #fff2d6;
+    background-color: #fffbf1;
     padding: 100px 20px; 
 }
 
