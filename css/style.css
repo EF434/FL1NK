@@ -211,15 +211,29 @@ footer .wave#wave1{
     }
 }
 
+.play-game-section{
+    background-image: url("../assets/images/game-step-section-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+
+    padding: 80px 40px;
+}
 .section-content {
-    background-color: #fffbf1;
-    padding: 100px 20px; 
+    padding: 5px 50px; 
+    top: -100px
 }
 
 .section-title{
     color: #ffa41c;
-    margin-top: -60px;
+    margin-top: 0px;
     margin-bottom: 5px;
+    
 
 }
 
@@ -309,4 +323,148 @@ footer .wave#wave1{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+.game-step-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    
+}
+
+.step-cards {
+    position: relative;
+}
+
+.card-image {
+    width: 294px;
+    height: auto;
+}
+
+.step-number {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: 80px;
+}
+
+.fl1nk-icon{
+    position: absolute;
+    top: 18px;
+    left: 65px;
+    width: 190px;
+}
+
+.coin-icon{
+    position: absolute;
+    top: 30px;
+    left: 90px;
+    width: 140px;
+}
+
+.cannonball-icon{
+    position: absolute;
+    top: 50px;
+    left: 70px;
+    width: 170px;
+}
+
+.treasure-icon{
+    position: absolute;
+    top: 35px;
+    left: 90px;
+    width: 150px;
+}
+
+.card-title{
+    font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+    color: #2b1e18;
+    position: absolute;
+    top: 125px;
+    left: 75px;
+    width: 180px;
+    text-align: center;
+    
+}
+
+.card-text{
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    position: absolute;
+    top: 155px;
+    left: 80px;
+    width: 180px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 1.2;
+
+
+}
+
+.playing-button-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+.playing-button {
+    display: inline-block;
+    font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 13px 32px;
+    background-color: #ea7405;
+    color: #FAF6EE;
+    border: 3px solid #332219;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 5px 0 #332219;
+    transition: all 0.2s ease;
+}
+
+.playing-button:hover {
+    background-color: #332219;
+    color: #FAF6EE;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 #1f1510;
+}
+
+.play-subtext {
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    color: #2b1e18;
+    font-size: 19px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.level-banner1{
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    width: 230px;
+}
+
+.level-banner2{
+    position: absolute;
+    top: 15px;
+    left: 280px;
+    width: 230px;
+}
+
+.level-banner3{
+    position: absolute;
+    top: 15px;
+    left: 550px;
+    width: 230px;
 }
