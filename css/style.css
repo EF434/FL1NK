@@ -18,17 +18,20 @@ li, a, button {
     text-decoration: none;
 }
 
-header{
+header {
+    background-image: url("../assets/images/navbar-bg.png");
+    background-position: center;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 40px;
+    justify-content: space-between;
+
 }
 
 .navbar-logo {
     cursor: pointer;
-    height: 70px;
+    height: 80px;
     display: block;
+    z-index: 2;
 }
 
 
@@ -56,7 +59,7 @@ header{
     color: #E26829;
 }
 
-.play-game-button {
+/* .play-game-button {
     padding: 9px 25px;
     background-color: #E26829;
     border: none;
@@ -69,7 +72,7 @@ header{
 .play-game-button:hover {
     background-color: #332219;
     color: #FAF6EE;
-}
+} */
 
 .hero-banner{
     background-image: url("../assets/images/banner.png");
@@ -116,21 +119,39 @@ header{
 }
 
 .play-button {
+    background-image: url("../assets/images/wood-texture.png");
+    background-size: cover;
+    background-position: center;
+
     padding: 14px 36px;
     background-color: #FFF8F0;
-    color: #3D1E0B;
+    color: #ffe0cc;
     font-weight: 700;
-    font-size: 18px;
-    border: 3px solid #3D1E0B;
-    border-radius: 50px;
+    font-size: 25px;
+    border: 4px solid #3D1E0B;
+    border-radius: 12px;
     box-shadow: 0px 5px 0px #3D1E0B;
     margin-top: 15px;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.hero-banner-text .play-button:hover {
+.play-button:hover {
     transform: translateY(-2px);
     box-shadow: 0px 7px 0px #3D1E0B;
+}
+
+.navbar-links img {
+    width: 80px;
+    height: 100px;
+    object-fit: contain;
+    display: block;
+
+    transition: all 0.25s ease;
+}
+
+.navbar-links img:hover {
+    transform: scale(1.12) translateY(-7px) rotate(-2deg);
+    filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
 }
 
 footer {
@@ -314,10 +335,14 @@ footer .wave#wave1{
 .level-button {
     margin-top: 15px;
     padding: 10px 25px;
-    background-color: #E26829;
-    color: #FAF6EE;
+    width: 80px;
     border-radius: 50px;
-    font-weight: 700;
+    position: absolute;
+    font-size: 15px;
+    text-align: center;
+    top: 225px;
+    left: 45px;
+
 }
 .level {
     display: flex;
@@ -449,10 +474,15 @@ footer .wave#wave1{
 }
 
 .level-banner1{
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
     position: absolute;
     top: 15px;
     left: 5px;
     width: 230px;
+    font-size: 25px;
+    font-weight: 700;
+    color: #fefdfc;    
+
 }
 
 .level-banner2{
@@ -467,4 +497,22 @@ footer .wave#wave1{
     top: 15px;
     left: 550px;
     width: 230px;
+}
+
+.level-one{
+    position: absolute;
+    top: 89px;
+    left: 20px;
+    width: 185px;
+}
+
+.level-description {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    width: 185px;
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 700;
 }
