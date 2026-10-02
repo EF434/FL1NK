@@ -32,8 +32,14 @@ header {
     height: 80px;
     display: block;
     z-index: 2;
+    transition: transform 0.25s ease;
+
 }
 
+.navbar-logo-link:hover .navbar-logo {
+    transform: scale(1.12) translateY(-5px) rotate(-2deg);
+    filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
+}
 
 .navbar-links {
     margin-right: 3%;
@@ -134,6 +140,8 @@ header {
     margin-top: 15px;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
+
+
 
 .play-button:hover {
     transform: translateY(-2px);
@@ -341,14 +349,22 @@ footer .wave#wave1{
     font-size: 15px;
     text-align: center;
     top: 225px;
-    left: 45px;
+
 
 }
-.level {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.level-button {
+    margin-top: 15px;
+    padding: 10px 25px;
+    width: 80px;
+    border-radius: 50px;
+    position: absolute;
+    font-size: 15px;
+    text-align: center;
+    top: 225px;
+    left: 45px;
 }
+
 
 
 .game-step-cards {
@@ -473,40 +489,20 @@ footer .wave#wave1{
     margin-bottom: 0;
 }
 
-.level-banner1{
-    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+
+
+.level-banner1,
+.level-banner2,
+.level-banner3 {
     position: absolute;
     top: 15px;
     left: 5px;
     width: 230px;
-    font-size: 25px;
-    font-weight: 700;
-    color: #fefdfc;    
-
 }
 
-.level-banner2{
-    position: absolute;
-    top: 15px;
-    left: 280px;
-    width: 230px;
-}
-
-.level-banner3{
-    position: absolute;
-    top: 15px;
-    left: 550px;
-    width: 230px;
-}
-
-.level-one{
-    position: absolute;
-    top: 89px;
-    left: 20px;
-    width: 185px;
-}
-
-.level-description {
+.level-description1,
+.level-description2,
+.level-description3 {
     position: absolute;
     top: 200px;
     left: 20px;
@@ -515,4 +511,86 @@ footer .wave#wave1{
     font-size: 15px;
     text-align: center;
     font-weight: 700;
+}
+
+.level,
+.leve2,
+.leve3 {
+    position: relative;
+    width: 220px;
+    height: 430px;
+    flex-shrink: 0;
+}
+
+.level-one,
+.level-two,
+.level-three {
+    position: absolute;
+    top: 89px;
+    left: 20px;
+    width: 185px;
+}
+
+.level-title1,
+.level-title2,
+.level-title3 {
+    position: absolute;
+    top: 10px;
+    left: 80px;
+    z-index: 2;
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    font-size: 25px;
+    font-weight: 700;
+    color: #fefdfc;  
+}  
+
+
+/* CSS OF LEVEL 1 ===========*/
+.game-controls {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 10;
+}
+
+.exit-button {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    pointer-events: auto;
+}
+
+.exit-button img {
+    width: 90px;
+    height: 100px;
+    object-fit: contain;
+    display: block;
+
+    transition: all 0.25s ease;
+}
+
+.exit-button img:hover {
+    transform: scale(1.12) translateY(-7px) rotate(-2deg);
+    filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
+}
+
+.pirate-dock img {
+    position: absolute;
+
+    bottom: -15px;
+    left: 250px;
+
+    width: 750px;
+    height: auto;
+
+    z-index: 2;
+
+    pointer-events: none;
 }

@@ -1,31 +1,29 @@
 .ocean-bg-video {
-    width: 70%;
-    height: 60%;
-    margin: 50px auto;
+    width: 100%;
+    height: 100vh;
     overflow: hidden;
-    border-radius: 20px;
     position: relative;
 }
 
 .ocean-bg-video video {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     object-fit: cover;
     display: block;
 }
 
 .pirate-ship {
     position: absolute;
-    width: 83.33%;
-    height: 100%;
+    width: 770px;
+    height: 100vh;
 
     background-image: url('../assets/images/level1-ship.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
 
-    bottom: 0;
-    left: 10%;
+    bottom: 65px;
+    left: 22%;
     z-index: 2;
 
    animation: animateship 3s linear infinite alternate;
