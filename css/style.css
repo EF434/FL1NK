@@ -594,3 +594,23 @@ footer .wave#wave1{
 
     pointer-events: none;
 }
+
+.pirate-bg{
+    background-image: url("../assets/images/pirate-map-bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 650px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 8%;
+    
+}
+
+.signup-banner{
+    position: absolute;
+    top: 90px;
+    left: 320px;
+    width: 630px;
+}
