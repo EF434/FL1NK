@@ -614,3 +614,34 @@ footer .wave#wave1{
     left: 320px;
     width: 630px;
 }
+
+.signup-card_one{
+    position: absolute;
+    top: 310px;
+    left: 7cqi;
+    width: 340px;
+}
+
+.signup-card_two{
+    position: absolute;
+    top: 310px;
+    left: 470px;
+    width: 340px;
+}
+
+.signup-card_three{
+    position: absolute;
+    top: 310px;
+    left: 870px;
+    width: 340px;
+}
+
+.card-one-title{
+    position: absolute;
+    top: 410px;
+    left: 142x;
+    font-size: 22px;
+    color: #411801;
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    font-weight: 700;
+}
