@@ -645,3 +645,16 @@ footer .wave#wave1{
     font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
     font-weight: 700;
 }
+
+.card-one-description{
+    position: absolute;
+    top: 440px;
+    left: 70px;
+    font-size: 15px;
+    color: #411801;
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    font-weight: 700;
+    width: 200px;
+    text-align: center;
+
+}
