@@ -65,20 +65,6 @@ header {
     color: #E26829;
 }
 
-/* .play-game-button {
-    padding: 9px 25px;
-    background-color: #E26829;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #FAF6EE;
-}
-
-.play-game-button:hover {
-    background-color: #332219;
-    color: #FAF6EE;
-} */
 
 .hero-banner{
     background-image: url("../assets/images/banner.png");
@@ -600,7 +586,7 @@ footer .wave#wave1{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 650px;
+    height: 750px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -611,50 +597,385 @@ footer .wave#wave1{
 .signup-banner{
     position: absolute;
     top: 90px;
-    left: 320px;
-    width: 630px;
+    left: 390px;
+    width: 550px;
+    z-index: 10000;
 }
 
-.signup-card_one{
+
+.signup-card{
     position: absolute;
-    top: 310px;
-    left: 7cqi;
-    width: 340px;
+    top: 210px;
+    left: 290px;
+    width: 750px;
 }
 
-.signup-card_two{
-    position: absolute;
-    top: 310px;
-    left: 470px;
-    width: 340px;
-}
 
-.signup-card_three{
-    position: absolute;
-    top: 310px;
-    left: 870px;
-    width: 340px;
-}
 
 .card-one-title{
     position: absolute;
-    top: 412px;
-    left: 152px;
-    font-size: 21px;
-    color: #411801;
-    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    top: 165px;
+    left: 495px;
+    font-size: 32px;
+    color: #ffede3;
     font-weight: 700;
+    font-family: 'ChunkFive', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1.5px #4b1c00;
+    z-index: 10000;
+    
 }
 
 .card-one-description{
     position: absolute;
-    top: 440px;
-    left: 70px;
-    font-size: 15px;
+    top: 450px;
+    left: 109px;
+    font-size: 14px;
     color: #411801;
     font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
     font-weight: 700;
-    width: 200px;
-    text-align: center;
+    width: 260px;
+    text-align:center;
+    
+}
 
+.play-game-button {
+    padding: 9px 25px;
+    background-color: #E26829;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #FAF6EE;
+}
+
+.play-game-button:hover {
+    background-color: #332219;
+    color: #FAF6EE;
+}
+
+/* Container for positioning the island graphic */
+.treasure-corner-container {
+  position: absolute; 
+  top: 550px;
+  right: 924px;
+  width: 350px; 
+  z-index: 10;
+}
+
+.beach-corner-container {
+  position: absolute; 
+  top: 570px;
+  left: 915px; 
+  width: 350px; 
+  z-index: 10;
+}
+
+.glowing-treasure {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: treasureGlow 2.5s infinite ease-in-out;
+}
+
+@keyframes treasureGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.4)) 
+            drop-shadow(0 0 15px rgba(255, 165, 0, 0.2));
+  }
+  50% {
+    /* Peak of the pulse: brighter golden aura */
+    filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.8)) 
+            drop-shadow(0 0 30px rgba(255, 204, 0, 0.5));
+  }
+}   
+
+.login-signboard{
+    position: absolute;
+    top: 265px;
+    left: 360px;
+    width: 275px;
+    Z-index: 10000;
+
+}
+
+.login-signboard-two{
+    position: absolute;
+    top: 265px;
+    left: 695px;
+    width: 275px;
+    Z-index: 10000;
+}
+
+.login-card h3, 
+.register-card h3 {
+    position: absolute;
+    font-size: 18px;
+    color: #ffede3;
+    font-weight: 1900;
+    font-family: 'Fantasy', 'Papyrus';
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 10000;
+
+}
+
+.login-card h3 {
+  top: 281px;
+  left: 470px;
+}
+
+.register-card h3 {
+  top: 280px;
+  left: 800px;
+}
+
+.login-card h4, 
+.register-card h4 {
+    position: absolute;
+    font-size: 15px;
+    font-weight: 1900;
+    font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+    color: #2b1e18;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 10000;
+
+}
+
+.login-card h4 {
+  top: 330px;
+  left: 400px;
+}
+
+.register-card h4 {
+  top: 330px;
+  left: 765px;
+}
+
+
+.login-card p, 
+.register-card p {
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    position: absolute;
+    top: 155px;
+    left: 80px;
+    width: 180px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.2;
+
+}
+
+.login-card p {
+  top: 360px;
+  left: 400px;
+}
+
+.register-card p {
+  top: 360px;
+  left: 745px;
+}
+
+.login-box{
+    position: absolute;
+    width: 250px;
+    height: 325px;
+    background: transparent;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 370px;
+    backdrop-filter: blur(15px);
+    z-index: 100;
+    top: 415px
+
+}
+.login-box {
+    position: absolute;
+    width: 250px;
+    height: 325px;
+    left: 370px;
+    top: 415px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+}
+
+.login-box form {
+    width: 180px;
+}
+
+
+/* INPUTS */
+
+.input-box {
+    position: relative;
+    width: 180px;
+    height: 32px;
+    margin: 7px 0;
+
+    background: #f8e4bd;
+    border: 2px solid #c79b62;
+    border-radius: 8px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    padding: 0 30px;
+    box-sizing: border-box;
+
+    font-size: 11px;
+    color: #3b2110;
+}
+
+.input-box label {
+    position: absolute;
+    left: 30px;
+    top: 8px;
+
+    font-size: 11px;
+    color: #8b6b4a;
+}
+
+
+/* ICONS */
+
+.input-box .icon {
+    position: absolute;
+    left: 8px;
+    top: 7px;
+
+    color: #79502e;
+    font-size: 13px;
+}
+
+.password-eye {
+    position: absolute;
+    right: 8px;
+    top: 7px;
+
+    color: #79502e;
+    font-size: 12px;
+}
+
+
+/* LOGIN BUTTON */
+
+.login-box button[type="submit"] {
+    width: 180px;
+    height: 32px;
+
+    margin-top: 8px;
+
+    background: #a95316;
+    color: white;
+
+    border: 2px solid #54230a;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.login-box button[type="submit"]:hover {
+    background: #c0670f;
+}
+
+
+/* REGISTER */
+
+.register-link {
+    text-align: center;
+    margin-top: 10px;
+
+    font-size: 11px;
+    color: #4b2a17;
+}
+
+.register-link p {
+    margin: 0 0 4px;
+}
+
+.register-link a {
+    display: block;
+
+    padding: 7px;
+
+    background: #f4d99f;
+    border: 2px solid #c28a4a;
+    border-radius: 7px;
+
+    color: #3f2413;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.register-link a:hover {
+    background: #ffe8b5;
+}
+
+
+/* OR */
+
+.or {
+    display: flex;
+    align-items: center;
+
+    width: 180px;
+
+    margin: 5px 0;
+
+    font-size: 10px;
+    color: #704321;
+    text-align: center;
+}
+
+.or::before,
+.or::after {
+    content: "";
+    height: 1px;
+    background: #b88a52;
+    flex: 1;
+}
+
+.or span {
+    padding: 0 7px;
+}
+
+
+/* GUEST BUTTON */
+
+.login-box .guest-button {
+    width: 180px;
+    height: 32px;
+
+    background: #0062c4;
+    color: white;
+
+    border: 2px solid #063e72;
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.login-box .guest-button:hover {
+    background: #0877df;
 }
