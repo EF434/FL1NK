@@ -9,7 +9,6 @@
 
     <!-- Link Css-->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/levels.css">
 
     <!-- Add fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,17 +19,21 @@
 <body>
 
 
-    <main> 
+    <main>
         <div class="ocean-bg-video">
-
             <video autoplay muted loop>
                 <source src="assets/videos/ocean-background.mp4" type="video/mp4">
             </video>
 
-            <div class="pirate-ship"></div>
+            <div class="pirate-ship">
+                
+                <canvas id="pirate-game-canvas"
+                        aria-label="FL1NK Pirate Maze Tracing Tool">
+                </canvas>
+            </div>
         </div>
-
     </main>
+
 
     <section class="game-controls">
         <div class="exit-button">
@@ -38,12 +41,22 @@
                 <img src="assets/images/exit-icon.png" alt="Exit Icon">
             </a>
         </div>
-        <!-- dock image-->
-        <div class="pirate-dock">
-            <img src="assets/images/pirate-dock.png" alt="Dock Image">
+
+ 
+        <div class="scoreboard">
+            <img src="assets/images/display-score.png" alt="" class="scoreboard-image">
+
+            <div class="scoreboard-text">
+                <img src="assets/images/game-coin.png" alt="" class="coin-img">
+                <h3>SCORE</h3>
+                <p id="score-value">0</p>
+            </div>
         </div>
+
     </section>
 
+    <script src="js/game.js"></script>
+    <script src="js/coins.js"></script>
 
 
 

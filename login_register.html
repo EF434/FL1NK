@@ -1,134 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Declarations for the Home page-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="icon" href="assets\images\favicon.png" type="image/png">
+    <!-- Provide the title name-->
+    <title>Sign Up - FL1NK</title>
+    <!-- Add a favicon and link external CSS file-->
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
     
 </head>
-<body>
+<body class="home-page-style">
     <header>
         <a href="index.html" class="navbar-logo-link">
             <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
+
+        <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
+                <!-- Home page icon-->
                 <li><a href="index.html"> 
-                    <img src="assets\images\home-page-icon.png" alt="FL1NK Logo"></a>
+                    <img src="assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
+                <!-- Home page icon-->
                 <li><a href="login_register.html">
-                    <img src="assets\images\signup-icon.png" alt="Login Icon"></a>
+                    <img src="assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
+                <!-- Home page icon-->
                 <li><a href="score_board.html">
-                    <img src="assets\images\scoreboard-icon.png" alt="Score Board Icon"></a>
+                    <img src="assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
-
+                <!-- Home page icon-->
                 <li><a href="play_game.html">
-                    <img src="assets\images\play-icon.png" alt="Play Game Icon"></a>
+                    <img src="assets/images/play-icon.png" alt="Play Game Icon"></a>
+                </li>
             </ul>
         </nav>
     </header>
 
-    <main> 
-        <div class="signup-page">
-            <div class="pirate-bg"></div>
-            <img class="signup-banner" src="assets/images/banner-title.png" alt="Pirate Banner">
+    <main class="login-register-page"> 
+        <div class="main-section">
+            <input type="checkbox" id="chk" aria-hidden="true">
+            <div class="signup">
+                <form>
+                    <label for="chk" aria-hidden="true">Sign up</label>
+                    <input type="text" name="txt" placeholder="User name" required="">
+                    <input type="email" name="email" placeholder="Email" required="">
+                    <input type="password" name="pswd" placeholder="Password" required="">
+                    <button> Sign up</button>
+                </form>
+            
+            </div>
 
+            <div class="login"> 
+                <form>
+                    <label for="chk" aria-hidden="true">Login</label>
+                    <input type="email" name="email" placeholder="Email" required="">
+                    <input type="password" name="pswd" placeholder="Password" required="">
+                    <button>Login</button>
+                </form>
+    
+
+            </div>
+            
         </div>
-
         
-        <div class="card-frame">
-
-            <div class="card-container">
-                <img class="signup-card" src="assets/images/fl1nk_card_frame.png" alt="Signup Card">
-                <h3 class="card-one-title">Welcome to FL1NK</h3>
-               <p class="card-one-description"> Choose your adventure and start exploring the seas! </p>
-            </div>
-
-            <div class="login-card"> 
-                <img class="login-signboard" src="assets\images\fl1nk-login-signboard.png" alt="Login Signboard">
-                <h3> Login </h3>
-                <h4> Welcome back, Pirate!</h4>
-                <p> Continue your adventure and check your progress.</p>
-
-
-            </div>
-
-            <div class="register-card">
-                <img class="login-signboard-two" src="assets/images/fl1nk-login-signboard.png" alt="Login Signboard 2">
-                <h3> Register </h3>
-                <h4>Join the crew!</h4>
-                <p> Create your player profile and start your adventure.</p>
-
-            </div>
-
-        <!--- ------------------------------------------------>
-         <!-- Login form -->
-        
-        <div class="login-box">
-            <form>
-
-                <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="person"></ion-icon>
-                    </span>
-
-                    <input type="text" required>
-                    <label>Username</label>
-                </div>
-
-                <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="lock-closed"></ion-icon>
-                    </span>
-
-                    <input type="password" required>
-                    <label>Password</label>
-
-                    <span class="password-eye">
-                        <ion-icon name="eye"></ion-icon>
-                    </span>
-                </div>
-
-
-                <button type="submit"><ion-icon name="log-in-outline"></ion-icon> LOGIN
-                </button>
-
-                <div class="register-link">
-                    <p>Don't have an account?</p>
-                    <a href="#">CREATE ACCOUNT</a>
-                </div>
-
-                <div class="or">
-                    <span>OR</span>
-                </div>
-
-                <button type="button" class="guest-button">
-                    <ion-icon name="anchor"></ion-icon>
-                    PLAY AS GUEST
-                </button>
-
-            </form>
-
-        </div>
-
-
-
-
-
-
-        <div class="treasure-corner-container">
-            <img src="assets/images/treasure-island-corner.png" alt="Tropical Treasure Island" class="glowing-treasure" />
-        </div>
-
-        <div class="beach-corner-container">
-            <img src="assets/images/beach_corner.png" alt="Tropical Beach Island" class="glowing-treasure" />
-        </div>
+    
 
 
     </main>
@@ -136,19 +79,22 @@
 
 
     <footer>
+        <!-- Adding the waves animation with css-->
         <div class="waves">
             <div class="wave" id="wave1"></div>
         </div>
         
+        <!-- Add footer section with icons, redirect user to the social media pages-->
         <ul class="social-icons">
-            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="https://x.com/"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></a></li>
         </ul>
+        <!-- Addedd copyright text-->
         <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
     </footer>
 
-    <!-- Adding external icons for footer-->
+    <!-- Adding external icons for footer in javascript-->
     <script
      type="module" 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
@@ -157,5 +103,6 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
+    
 </body>
 </html>

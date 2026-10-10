@@ -1,0 +1,1175 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FL1NK Ship Layout Editor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #faf6ee;
+            color: #332219;
+        }
+
+        h1 {
+            color: #e26829;
+            margin-bottom: 6px;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #d9caba;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        button,
+        select,
+        input {
+            padding: 9px 11px;
+            border: 1px solid #cbbba9;
+            border-radius: 6px;
+            background: white;
+            color: #332219;
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #f4e6d7;
+        }
+
+        button.primary {
+            background: #e26829;
+            color: white;
+            border-color: #e26829;
+        }
+
+        button.active {
+            background: #332219;
+            color: white;
+        }
+
+        button.danger {
+            color: #b42318;
+        }
+
+        #status {
+            color: #a94c1c;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .help {
+            background: #fff4e8;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .canvas-wrap {
+            width: 100%;
+            max-width: 1400px;
+            margin: auto;
+            border: 2px solid #332219;
+            background: #e6dfd2;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            cursor: crosshair;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .legend span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            border-radius: 50%;
+        }
+
+        .small {
+            font-size: 13px;
+            color: #68584a;
+        }
+
+        #jsonOutput {
+            width: 100%;
+            min-height: 180px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .panel {
+                padding: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>FL1NK Ship Layout Editor</h1>
+
+    <p>
+        Map the ship boundary, five walking paths, staircases,
+        and Captain's exit.
+    </p>
+
+    <div class="panel">
+        <h3>1. Select what to map</h3>
+
+        <div class="toolbar">
+            <label for="tool">Mapping tool:</label>
+
+            <select id="tool">
+                <option value="boundary">Ship Boundary</option>
+                <option value="walkable">Walking Path (2 points)</option>
+                <option value="staircase">Staircase</option>
+                <option value="exit">Captain's Exit</option>
+            </select>
+
+            <label for="deck">Deck:</label>
+
+            <select id="deck">
+                <option value="1">Deck 1 — Start</option>
+                <option value="2">Deck 2</option>
+                <option value="3">Deck 3</option>
+                <option value="4">Deck 4</option>
+                <option value="5">Deck 5 — Captain</option>
+            </select>
+        </div>
+
+        <div class="toolbar">
+            <label for="pathWidth">Walking corridor width:</label>
+
+            <input
+                id="pathWidth"
+                type="number"
+                min="25"
+                max="100"
+                step="5"
+                value="40"
+                style="width: 100px;"
+            >
+
+            <button id="finish" class="primary">
+                Finish / Save Points
+            </button>
+
+            <button id="undo">Undo Last Point</button>
+        </div>
+
+        <p class="small">
+            <strong>Boundary:</strong> Click around the inside edge
+            of the ship walls.
+
+            <br>
+
+            <strong>Walking path:</strong> Click its start and end
+            points only.
+
+            <br>
+
+            <strong>Staircase:</strong> Click the endpoint on each
+            connected deck.
+
+            <br>
+
+            <strong>Exit:</strong> Click the center of the Captain's
+            exit door.
+        </p>
+
+        <h3>2. Connect a staircase</h3>
+
+        <div class="toolbar">
+            <label for="staircase">Staircase:</label>
+
+            <select id="staircase">
+                <option value="">Select staircase</option>
+            </select>
+
+            <label for="fromDeck">From:</label>
+
+            <select id="fromDeck">
+                <option value="1">Deck 1</option>
+                <option value="2">Deck 2</option>
+                <option value="3">Deck 3</option>
+                <option value="4">Deck 4</option>
+                <option value="5">Deck 5</option>
+            </select>
+
+            <label for="toDeck">To:</label>
+
+            <select id="toDeck">
+                <option value="1">Deck 1</option>
+                <option value="2">Deck 2</option>
+                <option value="3">Deck 3</option>
+                <option value="4">Deck 4</option>
+                <option value="5">Deck 5</option>
+            </select>
+
+            <button id="assign" class="primary">
+                Assign Decks
+            </button>
+
+            <button id="deleteStair" class="danger">
+                Delete Staircase
+            </button>
+        </div>
+
+        <p class="small">
+            For each staircase, click the lower-deck endpoint first
+            and the higher-deck endpoint second. Then assign adjacent
+            decks, such as Deck 1 → Deck 2.
+        </p>
+
+        <h3>3. Save or load your layout</h3>
+
+        <div class="toolbar">
+            <button id="save">Save in Browser</button>
+            <button id="load">Load Browser Save</button>
+
+            <button id="export" class="primary">
+                Export JSON File
+            </button>
+
+            <label for="importFile">Import JSON:</label>
+
+            <input
+                id="importFile"
+                type="file"
+                accept=".json,application/json"
+            >
+
+            <button id="reset" class="danger">Start Fresh</button>
+        </div>
+
+        <p id="status" role="status">
+            Ready. Start by mapping the ship boundary.
+        </p>
+
+        <div class="help">
+            <strong>Recommended order</strong>
+
+            <ol>
+                <li>Trace and save the ship boundary.</li>
+                <li>Select Walking Path and click two points for each deck.</li>
+                <li>Adjust the width to match the deck's actual walking area.</li>
+                <li>Map each staircase and assign its connected decks.</li>
+                <li>Select Deck 5, choose Captain's Exit, and click the exit door.</li>
+                <li>Export your JSON file and keep a backup.</li>
+            </ol>
+        </div>
+
+        <div class="legend">
+            <span><i class="dot" style="background:#ed642e"></i>Boundary</span>
+            <span><i class="dot" style="background:#20a64a"></i>Deck 1</span>
+            <span><i class="dot" style="background:#008fba"></i>Deck 2</span>
+            <span><i class="dot" style="background:#9550c9"></i>Deck 3</span>
+            <span><i class="dot" style="background:#d13e65"></i>Deck 4</span>
+            <span><i class="dot" style="background:#bc861d"></i>Deck 5</span>
+            <span><i class="dot" style="background:#0878ff"></i>Staircases</span>
+        </div>
+    </div>
+
+    <div class="canvas-wrap">
+        <canvas id="canvas" width="1400" height="950"></canvas>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+        <h3>Current JSON preview</h3>
+
+        <p class="small">
+            The preview updates when you save points or change a
+            staircase or corridor width.
+        </p>
+
+        <textarea
+            id="jsonOutput"
+            readonly
+            spellcheck="false"
+        ></textarea>
+
+        <button id="copyJson">Copy JSON</button>
+    </div>
+
+<script>
+"use strict";
+
+const WIDTH = 1400;
+const HEIGHT = 950;
+const STORAGE_KEY = "fl1nk-ship-layout-v4";
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const tool = document.getElementById("tool");
+const deckSelect = document.getElementById("deck");
+const pathWidthInput = document.getElementById("pathWidth");
+const staircaseSelect = document.getElementById("staircase");
+const fromDeckSelect = document.getElementById("fromDeck");
+const toDeckSelect = document.getElementById("toDeck");
+const status = document.getElementById("status");
+const jsonOutput = document.getElementById("jsonOutput");
+
+const shipImage = new Image();
+shipImage.src = "assets/images/level1-ship.png";
+
+const COLORS = {
+    "1": "#20a64a",
+    "2": "#008fba",
+    "3": "#9550c9",
+    "4": "#d13e65",
+    "5": "#bc861d"
+};
+
+function emptyLayout() {
+    return {
+        version: 4,
+        decks: 5,
+        startDeck: 1,
+        captainDeck: 5,
+        boundary: [],
+        walkableAreas: {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        },
+        walkingPaths: {
+            "1": null,
+            "2": null,
+            "3": null,
+            "4": null,
+            "5": null
+        },
+        staircases: [],
+        exit: null
+    };
+}
+
+let layout = emptyLayout();
+let points = [];
+let selectedStaircase = -1;
+
+function say(message) {
+    status.textContent = message;
+}
+
+function activeDeck() {
+    return Number(deckSelect.value);
+}
+
+function round(value) {
+    return Math.round(value * 100) / 100;
+}
+
+function canvasPoint(event) {
+    const rect = canvas.getBoundingClientRect();
+
+    return {
+        x: round((event.clientX - rect.left) * WIDTH / rect.width),
+        y: round((event.clientY - rect.top) * HEIGHT / rect.height)
+    };
+}
+
+function distance(a, b) {
+    return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+// Keep the width within the range allowed by the input.
+function getPathWidth() {
+    const value = Number(pathWidthInput.value);
+
+    if (!Number.isFinite(value)) {
+        return 40;
+    }
+
+    return Math.max(25, Math.min(100, value));
+}
+
+// Create a straight corridor with rounded ends.
+// The result is a polygon, so it works with point-in-polygon collision checks.
+function makeCorridor(start, end, width) {
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const length = Math.hypot(dx, dy);
+
+    if (length < 5) {
+        return null;
+    }
+
+    const radius = width / 2;
+    const angle = Math.atan2(dy, dx);
+    const corridor = [];
+    const segments = 8;
+
+    // Rounded end around the endpoint.
+    for (let i = 0; i <= segments; i++) {
+        const theta =
+            angle - Math.PI / 2 + (Math.PI * i) / segments;
+
+        corridor.push({
+            x: round(end.x + Math.cos(theta) * radius),
+            y: round(end.y + Math.sin(theta) * radius)
+        });
+    }
+
+    // Rounded end around the starting point.
+    for (let i = 0; i <= segments; i++) {
+        const theta =
+            angle + Math.PI / 2 + (Math.PI * i) / segments;
+
+        corridor.push({
+            x: round(start.x + Math.cos(theta) * radius),
+            y: round(start.y + Math.sin(theta) * radius)
+        });
+    }
+
+    return corridor;
+}
+
+function drawPoint(point, color, radius = 5) {
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+function drawPolygon(poly, color, fill, closed = true, lineWidth = 3) {
+    if (!poly || poly.length === 0) {
+        return;
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(poly[0].x, poly[0].y);
+
+    for (let i = 1; i < poly.length; i++) {
+        ctx.lineTo(poly[i].x, poly[i].y);
+    }
+
+    if (closed && poly.length >= 3) {
+        ctx.closePath();
+        ctx.fillStyle = fill;
+        ctx.fill();
+    }
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+
+    poly.forEach(point => drawPoint(point, color, 4));
+}
+
+function drawLabel(text, x, y, color) {
+    ctx.font = "bold 16px Arial";
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#ffffff";
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+}
+
+function updatePreview() {
+    jsonOutput.value = JSON.stringify(layout, null, 2);
+}
+
+function draw() {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+    if (shipImage.complete && shipImage.naturalWidth > 0) {
+        ctx.drawImage(shipImage, 0, 0, WIDTH, HEIGHT);
+    } else {
+        ctx.fillStyle = "#e6dfd2";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        ctx.fillStyle = "#332219";
+        ctx.font = "20px Arial";
+        ctx.fillText(
+            "Image not found: assets/images/level1-ship.png",
+            30,
+            40
+        );
+    }
+
+    // Draw the ship boundary.
+    drawPolygon(
+        layout.boundary,
+        "#ed642e",
+        "rgba(237,100,46,0.10)",
+        layout.boundary.length >= 3
+    );
+
+    // Draw the saved walking corridors and their start/end markers.
+    for (let d = 1; d <= 5; d++) {
+        const key = String(d);
+        const color = COLORS[key];
+
+        for (const area of layout.walkableAreas[key]) {
+            drawPolygon(area, color, color + "35", true, 3);
+        }
+
+        const path = layout.walkingPaths[key];
+
+        if (path) {
+            drawPoint(path.start, color, 7);
+            drawPoint(path.end, color, 7);
+
+            drawLabel(
+                "D" + d + " START",
+                path.start.x + 8,
+                path.start.y - 8,
+                color
+            );
+
+            drawLabel(
+                "D" + d + " END",
+                path.end.x + 8,
+                path.end.y - 8,
+                color
+            );
+        }
+    }
+
+    // Draw staircase connections.
+    layout.staircases.forEach((staircase, index) => {
+        const selected = index === selectedStaircase;
+
+        ctx.beginPath();
+        ctx.setLineDash([8, 6]);
+        ctx.moveTo(staircase.start.x, staircase.start.y);
+        ctx.lineTo(staircase.end.x, staircase.end.y);
+        ctx.strokeStyle = selected ? "#ff00b7" : "#0878ff";
+        ctx.lineWidth = selected ? 5 : 3;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        drawPoint(staircase.start, "#0878ff", 7);
+        drawPoint(staircase.end, "#ff00b7", 7);
+
+        const label =
+            "S" + (index + 1) +
+            " (" + (staircase.fromDeck ?? "?") +
+            " → " + (staircase.toDeck ?? "?") + ")";
+
+        drawLabel(
+            label,
+            (staircase.start.x + staircase.end.x) / 2 + 8,
+            (staircase.start.y + staircase.end.y) / 2,
+            selected ? "#ff00b7" : "#0759c4"
+        );
+    });
+
+    // Draw Captain's exit.
+    if (layout.exit) {
+        drawPoint(layout.exit, "#ffce00", 10);
+
+        drawLabel(
+            "CAPTAIN EXIT",
+            layout.exit.x + 12,
+            layout.exit.y - 10,
+            "#8a5100"
+        );
+    }
+
+    // Preview unfinished points.
+    if (points.length > 0) {
+        if (tool.value === "walkable" && points.length === 2) {
+            const corridor = makeCorridor(
+                points[0],
+                points[1],
+                getPathWidth()
+            );
+
+            if (corridor) {
+                const color = COLORS[String(activeDeck())];
+
+                drawPolygon(
+                    corridor,
+                    color,
+                    color + "35",
+                    true,
+                    3
+                );
+
+                // Show the exact straight centerline.
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[1].x, points[1].y);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        } else {
+            drawPolygon(
+                points,
+                "#ff3030",
+                "rgba(255,48,48,0.12)",
+                false,
+                3
+            );
+        }
+    }
+
+    updatePreview();
+}
+
+function refreshStaircases() {
+    const oldValue = staircaseSelect.value;
+
+    staircaseSelect.innerHTML =
+        '<option value="">Select staircase</option>';
+
+    layout.staircases.forEach((staircase, index) => {
+        const option = document.createElement("option");
+
+        option.value = String(index);
+        option.textContent =
+            "Staircase " + (index + 1) +
+            " — " + (staircase.fromDeck ?? "?") +
+            " → " + (staircase.toDeck ?? "?");
+
+        staircaseSelect.appendChild(option);
+    });
+
+    if (
+        oldValue !== "" &&
+        Number(oldValue) < layout.staircases.length
+    ) {
+        staircaseSelect.value = oldValue;
+    }
+
+    updateSelectedStaircase();
+}
+
+function updateSelectedStaircase() {
+    selectedStaircase = staircaseSelect.value === ""
+        ? -1
+        : Number(staircaseSelect.value);
+
+    const staircase = layout.staircases[selectedStaircase];
+
+    if (staircase) {
+        fromDeckSelect.value = String(staircase.fromDeck ?? 1);
+        toDeckSelect.value = String(staircase.toDeck ?? 2);
+    }
+
+    draw();
+}
+
+function validAdjacentDecks(from, to) {
+    return from >= 1 &&
+        from <= 5 &&
+        to >= 1 &&
+        to <= 5 &&
+        Math.abs(from - to) === 1;
+}
+
+function finishCurrentTool() {
+    if (tool.value === "boundary") {
+        if (points.length < 3) {
+            say("Ship boundary needs at least 3 points.");
+            return;
+        }
+
+        layout.boundary = [...points];
+        points = [];
+
+        say("Ship boundary saved.");
+        draw();
+        return;
+    }
+
+    if (tool.value === "walkable") {
+        if (points.length !== 2) {
+            say("Walking path needs exactly 2 points: Start and End.");
+            return;
+        }
+
+        const start = points[0];
+        const end = points[1];
+        const width = getPathWidth();
+        const corridor = makeCorridor(start, end, width);
+
+        if (!corridor) {
+            say("Start and End are too close. Click two different points.");
+            return;
+        }
+
+        const key = String(activeDeck());
+
+        layout.walkingPaths[key] = {
+            start: { ...start },
+            end: { ...end },
+            width: width
+        };
+
+        // Replace the selected deck's previous corridor.
+        layout.walkableAreas[key] = [corridor];
+
+        points = [];
+
+        say(
+            "Deck " + key + " path saved. Corridor width: " +
+            width + " pixels."
+        );
+
+        draw();
+        return;
+    }
+
+    if (tool.value === "staircase") {
+        say("Click two staircase endpoints on the image.");
+        return;
+    }
+
+    if (tool.value === "exit") {
+        say("Click the Captain's exit door on Deck 5.");
+    }
+}
+
+canvas.addEventListener("click", event => {
+    const point = canvasPoint(event);
+
+    if (tool.value === "boundary") {
+        points.push(point);
+
+        say(
+            "Boundary points: " + points.length +
+            ". Click around the inside edge, then finish."
+        );
+
+        draw();
+        return;
+    }
+
+    if (tool.value === "walkable") {
+        if (points.length >= 2) {
+            points = [];
+        }
+
+        points.push(point);
+
+        if (points.length === 1) {
+            say("Start selected. Now click the End point.");
+        } else {
+            say("Start and End selected. Click Finish / Save Points.");
+        }
+
+        draw();
+        return;
+    }
+
+    if (tool.value === "staircase") {
+        points.push(point);
+
+        if (points.length === 1) {
+            say(
+                "Staircase start selected. Click the endpoint " +
+                "on the connected deck."
+            );
+        } else {
+            const staircase = {
+                start: { ...points[0] },
+                end: { ...points[1] },
+                fromDeck: null,
+                toDeck: null
+            };
+
+            layout.staircases.push(staircase);
+            points = [];
+            selectedStaircase = layout.staircases.length - 1;
+
+            refreshStaircases();
+            staircaseSelect.value = String(selectedStaircase);
+            updateSelectedStaircase();
+
+            say(
+                "Staircase " + (selectedStaircase + 1) +
+                " added. Assign its connected decks."
+            );
+
+            draw();
+        }
+
+        return;
+    }
+
+    if (tool.value === "exit") {
+        if (activeDeck() !== 5) {
+            say("Select Deck 5 — Captain before marking the exit.");
+            return;
+        }
+
+        layout.exit = point;
+        say("Captain's exit position saved.");
+        draw();
+    }
+});
+
+document.getElementById("finish").addEventListener(
+    "click",
+    finishCurrentTool
+);
+
+document.getElementById("undo").addEventListener("click", () => {
+    if (points.length > 0) {
+        points.pop();
+        say("Removed the last unfinished point.");
+    } else {
+        say("No unfinished points to undo.");
+    }
+
+    draw();
+});
+
+staircaseSelect.addEventListener("change", updateSelectedStaircase);
+
+document.getElementById("assign").addEventListener("click", () => {
+    if (selectedStaircase < 0) {
+        say("Select a staircase first.");
+        return;
+    }
+
+    const from = Number(fromDeckSelect.value);
+    const to = Number(toDeckSelect.value);
+
+    if (!validAdjacentDecks(from, to)) {
+        say("Connect adjacent decks only, such as Deck 1 → Deck 2.");
+        return;
+    }
+
+    const staircase = layout.staircases[selectedStaircase];
+
+    staircase.fromDeck = from;
+    staircase.toDeck = to;
+
+    refreshStaircases();
+    staircaseSelect.value = String(selectedStaircase);
+    updateSelectedStaircase();
+
+    say(
+        "Staircase connection saved: Deck " +
+        from + " → Deck " + to + "."
+    );
+});
+
+document.getElementById("deleteStair").addEventListener("click", () => {
+    if (selectedStaircase < 0) {
+        say("Select a staircase to delete.");
+        return;
+    }
+
+    layout.staircases.splice(selectedStaircase, 1);
+    selectedStaircase = -1;
+
+    refreshStaircases();
+    draw();
+
+    say("Selected staircase deleted.");
+});
+
+document.getElementById("save").addEventListener("click", () => {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
+        say("Layout saved in this browser.");
+    } catch (error) {
+        say("Browser save failed. Export the JSON file instead.");
+    }
+});
+
+document.getElementById("load").addEventListener("click", () => {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (!saved) {
+            say("No saved layout found in this browser.");
+            return;
+        }
+
+        const parsed = JSON.parse(saved);
+
+        if (!validateLayout(parsed)) {
+            say("The saved layout has an invalid structure.");
+            return;
+        }
+
+        layout = normalizeLayout(parsed);
+        points = [];
+        selectedStaircase = -1;
+
+        refreshStaircases();
+        draw();
+
+        say("Saved layout loaded.");
+    } catch (error) {
+        say("Could not load the browser save.");
+    }
+});
+
+document.getElementById("export").addEventListener("click", () => {
+    const blob = new Blob(
+        [JSON.stringify(layout, null, 2)],
+        { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "fl1nk-maze-layout.json";
+    link.click();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    say("JSON exported. Replace your game layout file with this file.");
+});
+
+document.getElementById("importFile").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        try {
+            const parsed = JSON.parse(reader.result);
+
+            if (!validateLayout(parsed)) {
+                say("This JSON doesn't have the expected layout structure.");
+                return;
+            }
+
+            layout = normalizeLayout(parsed);
+            points = [];
+            selectedStaircase = -1;
+
+            refreshStaircases();
+            draw();
+
+            say("JSON imported. Review the layout before exporting.");
+        } catch (error) {
+            say("Could not read this JSON file.");
+        }
+    };
+
+    reader.readAsText(file);
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+    if (!confirm("Clear all points and start a new layout?")) {
+        return;
+    }
+
+    layout = emptyLayout();
+    points = [];
+    selectedStaircase = -1;
+
+    refreshStaircases();
+    draw();
+
+    say("Fresh layout ready. Start with the ship boundary.");
+});
+
+document.getElementById("copyJson").addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(jsonOutput.value);
+        say("JSON copied to clipboard.");
+    } catch (error) {
+        jsonOutput.focus();
+        jsonOutput.select();
+        say("JSON selected. Press Ctrl+C to copy it.");
+    }
+});
+
+tool.addEventListener("change", () => {
+    points = [];
+
+    if (tool.value === "boundary") {
+        say("Click around the inside edge of the ship boundary.");
+    } else if (tool.value === "walkable") {
+        say("Deck " + activeDeck() + ": click Start, then End.");
+    } else if (tool.value === "staircase") {
+        say(
+            "Click the staircase point on the lower deck, " +
+            "then its endpoint on the upper deck."
+        );
+    } else {
+        say("Select Deck 5 and click the Captain's exit.");
+    }
+
+    draw();
+});
+
+deckSelect.addEventListener("change", () => {
+    points = [];
+    say("Selected Deck " + activeDeck() + ".");
+    draw();
+});
+
+pathWidthInput.addEventListener("change", () => {
+    const width = getPathWidth();
+    pathWidthInput.value = String(width);
+
+    const key = String(activeDeck());
+    const path = layout.walkingPaths[key];
+
+    // Rebuild only the selected deck's saved corridor.
+    if (path) {
+        const corridor = makeCorridor(
+            path.start,
+            path.end,
+            width
+        );
+
+        if (corridor) {
+            path.width = width;
+            layout.walkableAreas[key] = [corridor];
+
+            say(
+                "Deck " + key +
+                " corridor width updated to " + width + " pixels."
+            );
+        }
+    } else {
+        say(
+            "Width set to " + width +
+            " pixels. It will apply to the next path you draw."
+        );
+    }
+
+    draw();
+});
+
+function validateLayout(data) {
+    return data &&
+        Array.isArray(data.boundary) &&
+        data.walkableAreas &&
+        Array.isArray(data.staircases);
+}
+
+function normalizeLayout(data) {
+    const result = emptyLayout();
+
+    result.boundary = Array.isArray(data.boundary)
+        ? data.boundary
+        : [];
+
+    for (let d = 1; d <= 5; d++) {
+        const key = String(d);
+
+        if (
+            data.walkableAreas &&
+            Array.isArray(data.walkableAreas[key])
+        ) {
+            result.walkableAreas[key] = data.walkableAreas[key];
+        }
+
+        if (
+            data.walkingPaths &&
+            data.walkingPaths[key]
+        ) {
+            result.walkingPaths[key] = data.walkingPaths[key];
+        } else if (result.walkableAreas[key].length > 0) {
+            // Older layouts may contain corridors but no start/end data.
+            // Preserve those corridors rather than deleting them.
+            result.walkingPaths[key] = null;
+        }
+    }
+
+    result.staircases = Array.isArray(data.staircases)
+        ? data.staircases
+        : [];
+
+    result.exit = data.exit || null;
+    result.version = 4;
+    result.decks = 5;
+    result.startDeck = 1;
+    result.captainDeck = 5;
+
+    return result;
+}
+
+// Restore the saved layout from this browser, if one exists.
+try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+        const parsed = JSON.parse(saved);
+
+        if (validateLayout(parsed)) {
+            layout = normalizeLayout(parsed);
+        }
+    }
+} catch (error) {
+    // Start with an empty layout if the saved data is invalid.
+}
+
+shipImage.onload = draw;
+
+shipImage.onerror = () => {
+    say("Image not found. Check assets/images/level1-ship.png.");
+    draw();
+};
+
+refreshStaircases();
+draw();
+</script>
+</body>
+</html>

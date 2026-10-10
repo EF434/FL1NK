@@ -1,69 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Game</title>
-    <!-- Link Favicon-->
-    <link rel="icon" href="assets\images\favicon.png" type="image/png">
+  <div class="login-box">
+            <form>
 
-    <!-- Link Css-->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/levels.css">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
 
-    <!-- Add fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
-    
-</head>
-<body>
-    <header>
-        <img class="navbar-logo" src="assets\images\nav-logo.png" alt="FL1NK Logo">
-        <nav class="navbar-links">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login_register.html">Login / Register</a></li>
-                <li><a href="score_board.html">Score Board</a></li>
-            </ul>
-        </nav>
-        <a class="play-game-button" href="play_game.html">Play Game</a>
-    </header>
+                    <input type="text" required>
+                    <label>Username</label>
+                </div>
 
-    <main> 
-        <div class="ocean-bg-video">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
 
-            <video autoplay muted loop>
-                <source src="assets/videos/ocean-background.mp4" type="video/mp4">
-            </video>
+                    <input type="password" required>
+                    <label>Password</label>
 
-            <div class="pirate-ship"></div>
+                    <span class="password-eye">
+                        <ion-icon name="eye"></ion-icon>
+                    </span>
+                </div>
+
+
+                <button type="submit"><ion-icon name="log-in-outline"></ion-icon> LOGIN
+                </button>
+
+                <div class="register-link">
+                    <p>Don't have an account?</p>
+                    <a href="#">CREATE ACCOUNT</a>
+                </div>
+
+                <div class="or">
+                    <span>OR</span>
+                </div>
+
+                <button type="button" class="guest-button">
+                    <ion-icon name="anchor"></ion-icon>
+                    PLAY AS GUEST
+                </button>
+
+            </form>
+
         </div>
 
-    </main>
 
 
-    <footer>
-        <div class="waves">
-            <div class="wave" id="wave1"></div>
+
+
+
+        <div class="signup-page">
+            <div class="pirate-bg"></div>
+            <img class="signup-banner" src="assets/images/banner-title.png" alt="Pirate Banner">
+
         </div>
+
         
-        <ul class="social-icons">
-            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
-        </ul>
-        <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
-    </footer>
+        <div class="card-frame">
 
-    <!-- Adding external icons for footer-->
-    <script
-     type="module" 
-     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
-    </script>
-    <script
-     nomodule 
-     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
-    </script>
-</body>
-</html>
+            <div class="card-container">
+                <img class="signup-card" src="assets/images/fl1nk_card_frame.png" alt="Signup Card">
+                <h3 class="card-one-title">Welcome to FL1NK</h3>
+               <p class="card-one-description"> Choose your adventure and start exploring the seas! </p>
+            </div>
+
+            <div class="login-card"> 
+                <img class="login-signboard" src="assets\images\fl1nk-login-signboard.png" alt="Login Signboard">
+                <h3> Login </h3>
+                <h4> Welcome back, Pirate!</h4>
+                <p> Continue your adventure and check your progress.</p>
+
+
+            </div>
+
+            <div class="register-card">
+                <img class="login-signboard-two" src="assets/images/fl1nk-login-signboard.png" alt="Login Signboard 2">
+                <h3> Register </h3>
+                <h4>Join the crew!</h4>
+                <p> Create your player profile and start your adventure.</p>
+
+            </div>
+
+        <!--- ------------------------------------------------>
+         <!-- Login form --
+          

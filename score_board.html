@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Declarations for the Home page-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="icon" href="assets\images\favicon.png" type="image/png">
+    <!-- Provide the title name-->
+    <title>Score Board - FL1NK</title>
+    <!-- Add a favicon and link external CSS file-->
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
@@ -16,48 +20,63 @@
         <a href="index.html" class="navbar-logo-link">
             <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
+
+        <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
+                <!-- Home page icon-->
                 <li><a href="index.html"> 
-                    <img src="assets\images\home-page-icon.png" alt="FL1NK Logo"></a>
+                    <img src="assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
+                <!-- Home page icon-->
                 <li><a href="login_register.html">
-                    <img src="assets\images\signup-icon.png" alt="Login Icon"></a>
+                    <img src="assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
+                <!-- Home page icon-->
                 <li><a href="score_board.html">
-                    <img src="assets\images\scoreboard-icon.png" alt="Score Board Icon"></a>
+                    <img src="assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
-
+                <!-- Home page icon-->
                 <li><a href="play_game.html">
-                    <img src="assets\images\play-icon.png" alt="Play Game Icon"></a>
+                    <img src="assets/images/play-icon.png" alt="Play Game Icon"></a>
+                </li>
             </ul>
         </nav>
     </header>
 
 
         <main>
+            <div class="play-game-video">
+
+                <video autoplay muted loop>
+                    <source src="assets/videos/play-game-bg.mp4" type="video/mp4">
+                </video>
         
         </main>
 
-    <footer>
+     <footer>
+        <!-- Adding the waves animation with css-->
         <div class="waves">
             <div class="wave" id="wave1"></div>
         </div>
         
+        <!-- Add footer section with icons, redirect user to the social media pages-->
         <ul class="social-icons">
-            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="https://x.com/"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></a></li>
         </ul>
+        <!-- Addedd copyright text-->
         <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
     </footer>
 
-    <!-- Adding external icons for footer-->
+    <!-- Adding external icons for footer in javascript-->
     <script
      type="module" 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
     </script>
     <script
+    
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>

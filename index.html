@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Declarations for the Home page-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="icon" href="assets\images\favicon.png" type="image/png">
+    <!-- Provide the title name-->
+    <title>Home - FL1NK</title>
+    <!-- Add a favicon and link external CSS file-->
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
@@ -16,27 +20,34 @@
         <a href="index.html" class="navbar-logo-link">
             <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
+
+        <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
+                <!-- Home page icon-->
                 <li><a href="index.html"> 
-                    <img src="assets\images\home-page-icon.png" alt="FL1NK Logo"></a>
+                    <img src="assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
+                <!-- Home page icon-->
                 <li><a href="login_register.html">
-                    <img src="assets\images\signup-icon.png" alt="Login Icon"></a>
+                    <img src="assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
+                <!-- Home page icon-->
                 <li><a href="score_board.html">
-                    <img src="assets\images\scoreboard-icon.png" alt="Score Board Icon"></a>
+                    <img src="assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
-
+                <!-- Home page icon-->
                 <li><a href="play_game.html">
-                    <img src="assets\images\play-icon.png" alt="Play Game Icon"></a>
+                    <img src="assets/images/play-icon.png" alt="Play Game Icon"></a>
+                </li>
             </ul>
         </nav>
     </header>
 
     <section class="hero-banner">
-        <!-- Hero banner content-->
+        <!-- Create main banner for the home page-->
         <div class="hero-banner-text">
+            <!-- Create the text for the banner, apply CSS for styling-->
             <h1 class="lilita-one-regular">THE MAZE <br>
                 <span class="font-styling">WON'T STAY STILL</span> 
             </h1>
@@ -44,24 +55,27 @@
                 find your way through the maze before time runs
                 out     
             </p>
+            <!-- Play Game button on banner-->
             <a class="play-button" href="play_game.html">Play Game</a>
 
         </div>
 
-        </section>
+    </section>
 
-        <main class="play-game-section">
-        <!-- Section content-->
+    <main class="play-game-section">
+        <!-- Game Information Section-->
          <div class="section-content">
-            <h1 class="lilita-one-regular section-title">HOW TO PLAY</h1>
+            <!-- Add text and apply CSS for styling-->
+            <h2 class="lilita-one-regular section-title">HOW TO PLAY</h2>
             <p> It's easy to get started! Just follow these simple steps
                 and help FL1NK find the treasure!
             </p>
          </div>
          
         <div class="game-step-cards">
-
+            <!-- Create four background cards for this section-->
             <div class="step-cards">
+                <!-- Add the content for the card, and text-->
                 <img class="step-number" src="assets/images/step-num1.png" alt="Step 1">
                 <img class="fl1nk-icon" src="assets/images/FL1NK-icon.png" alt="FL1NK Icon">
                 <img class="card-image" src="assets/images/content-bg1.png" alt="Game Step Card One">
@@ -70,6 +84,7 @@
             </div>
 
             <div class="step-cards">
+                <!-- Adding the content for the step 2 card-->
                 <img class="step-number" src="assets/images/step-num2.png" alt="Step 1">
                 <img class="coin-icon" src="assets/images/coin-icon.png" alt="Coin Icon">
                 <img class="card-image"src="assets/images/content-bg2.png" alt="Game Step Card Two">
@@ -77,6 +92,7 @@
                 <p  class="card-text">Grab coins to boost your score and unlock fun surprises!</p>
             </div>
 
+            <!-- Adding the content for the step 3 card-->
             <div class="step-cards">
                 <img class="step-number" src="assets/images/step-num3.png" alt="Step 1">
                 <img class="cannonball-icon" src="assets/images/cannonball.png" alt="Cannonball Icon">
@@ -85,6 +101,7 @@
                 <p  class="card-text">Watch out for cannonballs, rocks and sneaky pirates!</p>
             </div>
 
+            <!-- Adding the content for the step 4 card-->
             <div class="step-cards">
                 <img class="step-number" src="assets/images/step-num4.png" alt="Step 1">
                 <img class="treasure-icon" src="assets/images/treasure-icon.png" alt="Treasure Icon">
@@ -93,31 +110,33 @@
                 <p  class="card-text">Find the treasure chest at the end of each level to win!</p>
             </div>
 
-        <div class="playing-button-section">
-                <a class="playing-button" href="play_game.html">ARE YOU READY TO PLAY?</a>
-                <p class="play-subtext">The maze is waiting... can you find FL1NK?</p>
-        </div> 
+            <!-- Adding a button to redirect user to play game page-->
+            <div class="playing-button-section">
+                    <a class="playing-button" href="play_game.html">ARE YOU READY TO PLAY?</a>
+                    <p class="play-subtext">The maze is waiting... can you find FL1NK?</p>
+            </div> 
 
         </div>
 
-        </main>
-
-
+    </main>
 
     <footer>
+        <!-- Adding the waves animation with css-->
         <div class="waves">
             <div class="wave" id="wave1"></div>
         </div>
         
+        <!-- Add footer section with icons, redirect user to the social media pages-->
         <ul class="social-icons">
-            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="https://x.com/"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></a></li>
         </ul>
+        <!-- Addedd copyright text-->
         <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
     </footer>
 
-    <!-- Adding external icons for footer-->
+    <!-- Adding external icons for footer in javascript-->
     <script
      type="module" 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
@@ -126,5 +145,6 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
+
 </body>
 </html>

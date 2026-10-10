@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap'); */
 
 
 body{
@@ -6,7 +6,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Fredoka', 'Changa', 'Arial', sans-serif; 
-    background-color: #FAF6EE;
+    background-color: #ffc87b;
     scroll-behavior: smooth;
 
 }
@@ -532,18 +532,21 @@ footer .wave#wave1{
 
 
 /* CSS OF LEVEL 1 ===========*/
-.game-controls {
+/* .game-controls {
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     pointer-events: none;
-
     z-index: 10;
+} */
+
+.game-controls {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
 }
 
 .exit-button {
@@ -552,6 +555,51 @@ footer .wave#wave1{
     right: 25px;
     pointer-events: auto;
 }
+
+
+.scoreboard {
+    position: fixed;
+    top: 12px;
+    right: 135px;
+    width: 190px;
+    height: 100px;
+}
+
+.scoreboard-image {
+    width: 100%;
+    height: 100%;
+}
+
+.scoreboard-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transform: translate(-6px);
+}
+
+.coin-img {
+    width: 30px;
+    height: 30px;
+}
+
+.scoreboard-text h3 {
+    font-family: 'Comic Neue', cursive;
+    font-size: 25px;
+    color: #5c2800;
+    margin: 0;
+}
+
+#score-value {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 3px 0 #54280E;
+    margin: 0;
+}
+
 
 .exit-button img {
     width: 90px;
@@ -567,32 +615,7 @@ footer .wave#wave1{
     filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
 }
 
-.pirate-dock img {
-    position: absolute;
 
-    bottom: -15px;
-    left: 250px;
-
-    width: 750px;
-    height: auto;
-
-    z-index: 2;
-
-    pointer-events: none;
-}
-
-.pirate-bg{
-    background-image: url("../assets/images/pirate-map-bg.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 750px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 8%;
-    
-}
 
 .signup-banner{
     position: absolute;
@@ -655,41 +678,6 @@ footer .wave#wave1{
     color: #FAF6EE;
 }
 
-/* Container for positioning the island graphic */
-.treasure-corner-container {
-  position: absolute; 
-  top: 550px;
-  right: 924px;
-  width: 350px; 
-  z-index: 10;
-}
-
-.beach-corner-container {
-  position: absolute; 
-  top: 570px;
-  left: 915px; 
-  width: 350px; 
-  z-index: 10;
-}
-
-.glowing-treasure {
-  width: 100%;
-  height: auto;
-  display: block;
-  animation: treasureGlow 2.5s infinite ease-in-out;
-}
-
-@keyframes treasureGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.4)) 
-            drop-shadow(0 0 15px rgba(255, 165, 0, 0.2));
-  }
-  50% {
-    /* Peak of the pulse: brighter golden aura */
-    filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.8)) 
-            drop-shadow(0 0 30px rgba(255, 204, 0, 0.5));
-  }
-}   
 
 .login-signboard{
     position: absolute;
@@ -979,3 +967,243 @@ footer .wave#wave1{
 .login-box .guest-button:hover {
     background: #0877df;
 }
+
+/* Main game area */
+.ocean-bg-video {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+/* Ocean background video */
+.ocean-bg-video video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+
+
+/* Player character */
+.game-player {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+    z-index: 3;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Gentle ship movement */
+@keyframes shipRock {
+    from {
+        transform: translateX(-50%) rotate(-1deg);
+    }
+
+    to {
+        transform: translateX(-50%) rotate(1deg);
+    }
+}
+
+.main-section{
+    width: 350px;
+    height: 500px;
+    overflow: hidden;
+    background: url("../assets/images/1.jpg") no-repeat center / cover;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #ff7c01;
+    
+}
+
+#chk{
+    display: none;  
+
+}
+
+.signup{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.main-section label{
+    color: #fcfcfb;
+    font-size: 2.3em;
+    justify-content: center;
+    display: flex;
+    margin: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .5s ease-in-out
+
+}
+
+.main-section input:not(#chk) {
+    width: 60%;
+    height: 20px;
+    background: #ffe7bb;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border:none;
+    outline: none;
+    border-radius: 5px;
+}
+
+.main-section button {
+    width: 60%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background: #812d00ed;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border:none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    cursor: pointer;
+}
+
+.main button:hover{
+    background: #6d6d6d;
+}
+
+.login{
+    height: 460px;
+    background: #008337;
+    border-radius: 60% / 10%;
+    transform: translateY(-180px);
+    transition: 0.8s ease-in-out;
+}
+
+.login label{
+    color: #923d00;
+    transform: scale(.6);
+
+}
+
+#chk:checked ~ .login{
+    transform: translateY(-500px);
+}
+
+
+#chk:checked ~ .login label{
+    transform: scale(1);
+}
+
+#chk:checked ~ .signup label{
+    transform: scale(.6);
+}
+
+
+/* Login and Register Page Layout */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    position: relative;
+    flex: 1;
+    min-height: 700px;
+}
+
+.main-section {
+    margin: 50px auto 0;
+    position: relative;
+    z-index: 5;
+}
+
+.login-register-page{
+    background-image: url("../assets/images/pirate-map-bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.pirate-bg{
+    background-image: url("../assets/images/pirate-map-bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 750px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 8%;
+    
+}
+.game-player {
+position: absolute;
+left: 100px;
+top: 170px;
+width: 100px;
+height: auto;
+object-fit: contain;
+z-index: 10;
+user-select: none;
+pointer-events: none;
+}
+
+
+
+
+.pirate-ship {
+    position: absolute;
+    width: min(100vw, 147.368vh);
+    aspect-ratio: 1400 / 950;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-image: url("../assets/images/level1-ship.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    z-index: 2;
+}
+
+#pirate-game-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: crosshair;
+}
+
+
+
+#gameCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+
+
