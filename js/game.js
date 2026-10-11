@@ -7,8 +7,8 @@ const ctx = canvas.getContext("2d");
 const WORLD_WIDTH = 1400;
 const WORLD_HEIGHT = 950;
 
-const PLAYER_WIDTH = 32;
-const PLAYER_HEIGHT = 44;
+const PLAYER_WIDTH = 70;
+const PLAYER_HEIGHT = 80;
 const PLAYER_SPEED = 3;
 const STAIRCASE_DISTANCE = 45;
 const WALKING_PATH_OFFSET_Y = 12;
@@ -97,7 +97,7 @@ async function loadLayout() {
         // Start in the middle of the starting deck.
         player.x = (path.start.x + path.end.x) / 2;
         player.y = getPathYAtX(player.x, path);
-
+        positionGameItems();
         layoutLoaded = true;
 
         console.log("FL1NK layout loaded:", layout);
@@ -419,43 +419,33 @@ function drawPlayer() {
 // --------------------------------------------------
 // MAIN GAME LOOP
 // --------------------------------------------------
+    function gameLoop() {
+        if (!layoutLoaded) {
+            return;
+        }
 
-function gameLoop() {
-    if (!layoutLoaded) {
-        return;
+        if (!gameWon && !gameOver) {
+            updatePlayer();
+            updatePirate();
+            collectCoins(player, currentDeck);
+            updateGameItems();
+        }
+
+        ctx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+
+        drawCoins(ctx, 1);
+        drawCoins(ctx, 2);
+        drawCoins(ctx, 3);
+        drawCoins(ctx, 4);
+        drawCoins(ctx, 5);
+
+        drawGameItems();
+        drawPirate(ctx);
+        drawPlayer();
+        drawGameStatus();
+
+        requestAnimationFrame(gameLoop);
     }
-
-    // Update the player's position.
-    updatePlayer();
-
-    // Check whether the player collects any coins.
-    collectCoins(player, currentDeck);
-
-    // Clear the previous frame.
-    ctx.clearRect(
-        0,
-        0,
-        WORLD_WIDTH,
-        WORLD_HEIGHT
-    );
-
-    // Draw coins belonging to the current deck.
-// TEMPORARY TEST: Draw coins from every deck.
-    drawCoins(ctx, 1);
-    drawCoins(ctx, 2);
-    drawCoins(ctx, 3);
-    drawCoins(ctx, 4);
-    drawCoins(ctx, 5);
-
-    // Draw the player above the coins.
-    drawPlayer();
-
-    // Display the current score.
-    drawScore(ctx);
-
-    requestAnimationFrame(gameLoop);
-}
-
 // --------------------------------------------------
 // KEYBOARD CONTROLS
 // --------------------------------------------------

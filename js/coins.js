@@ -28,7 +28,6 @@ coinImage.src = "assets/images/coin.png";
 
 const coins = [
     // DECK 1 - Lower deck
-    { x: 350, y: 833, deck: 1, collected: false },
     { x: 450, y: 833, deck: 1, collected: false },
     { x: 600, y: 833, deck: 1, collected: false },
     { x: 750, y: 833, deck: 1, collected: false },
