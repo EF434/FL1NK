@@ -1,66 +1,70 @@
-
 "use strict";
 
+// ---------- IMAGES ----------
+// frames 1-4 = walking right, frames 5-8 = walking left
 const pirateFrames = [];
 
 for (let i = 1; i <= 8; i++) {
     const image = new Image();
-    image.src = `assets/images/pirate-frames/pirate-frame-${i}.png`;
+    image.src = "assets/images/pirate-frames/pirate-frame-" + i + ".png";
     pirateFrames.push(image);
 }
 
+// ---------- PIRATE ----------
 const pirate = {
-    x: 219.06,
-    y: 630.9,
-    minX: 219.06,
-    maxX: 1114.8,
+    x: 219,
+    y: 631,
+    minX: 219,       // left end of the patrol
+    maxX: 1115,      // right end of the patrol
     width: 75,
     height: 75,
     speed: 1.5,
-    direction: 1,
-    frame: 0,
-    frameTimer: 0,
-    deck: 3
+    direction: 1,    // 1 = walking right, -1 = walking left
+    frame: 0,        // which of the 4 walking pictures to show
+    frameTimer: 0    // counts game frames
 };
 
-
+// ---------- UPDATE ----------
 function updatePirate() {
-    pirate.x += pirate.speed * pirate.direction;
+    // walk
+    pirate.x = pirate.x + pirate.speed * pirate.direction;
 
-    // Turn around at the ends of the patrol route.
+    // turn around at either end
     if (pirate.x >= pirate.maxX) {
-        pirate.x = pirate.maxX;
         pirate.direction = -1;
     }
 
     if (pirate.x <= pirate.minX) {
-        pirate.x = pirate.minX;
         pirate.direction = 1;
     }
 
-    // Change the walking frame.
-    pirate.frameTimer++;
+    // change to the next walking picture every 8 game frames
+    pirate.frameTimer = pirate.frameTimer + 1;
 
     if (pirate.frameTimer >= 8) {
         pirate.frameTimer = 0;
-        pirate.frame = (pirate.frame + 1) % 4;
+        pirate.frame = pirate.frame + 1;
+
+        if (pirate.frame === 4) {
+            pirate.frame = 0;
+        }
     }
 }
 
-function drawPirate(ctx) {
-    const frameIndex = pirate.direction === 1
-        ? pirate.frame
-        : pirate.frame + 4;
+// ---------- DRAW ----------
+function drawPirate() {
+    // use pictures 5-8 when walking left
+    let index = pirate.frame;
 
-    const image = pirateFrames[frameIndex];
-
-    if (image.complete && image.naturalWidth > 0) {
-        ctx.drawImage(
-            image,
-            pirate.x,
-            pirate.y - pirate.height / 2,
-            pirate.width,
-            pirate.height
-        );
+    if (pirate.direction === -1) {
+        index = pirate.frame + 4;
     }
+
+    ctx.drawImage(
+        pirateFrames[index],
+        pirate.x,
+        pirate.y - pirate.height / 2,
+        pirate.width,
+        pirate.height
+    );
 }

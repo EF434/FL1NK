@@ -1,51 +1,51 @@
-
 "use strict";
 
+// ---------- SETUP ----------
 const canvas = document.getElementById("pirate-game-canvas");
 const ctx = canvas.getContext("2d");
 
 const WORLD_WIDTH = 1400;
 const WORLD_HEIGHT = 950;
 
-const PLAYER_WIDTH = 70;
-const PLAYER_HEIGHT = 80;
+const PLAYER_WIDTH = 100;
+const PLAYER_HEIGHT = 110;
 const PLAYER_SPEED = 3;
-const STAIRCASE_DISTANCE = 45;
-const WALKING_PATH_OFFSET_Y = 12;
+const LADDER_DISTANCE = 45; // how close you must be to use a ladder
 
 canvas.width = WORLD_WIDTH;
 canvas.height = WORLD_HEIGHT;
 
-// --------------------------------------------------
-// PLAYER SPRITE
-// --------------------------------------------------
+const playerAnimator = new PlayerAnimator();
 
-const playerImage = new Image();
-playerImage.src = "assets/images/player.png";
+let playerDirection = "idle";
+let playerMoving = false;
 
-// --------------------------------------------------
-// DEFAULT LAYOUT
-// --------------------------------------------------
-
-let layout = {
-    version: 4,
-    decks: 5,
-    startDeck: 1,
-    captainDeck: 5,
-    boundary: [],
-    walkableAreas: {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-    },
-    walkingPaths: {},
-    staircases: [],
-    exit: null
+// ---------- SHIP DATA ----------
+// For each deck:
+// startPoint = left end of the walking line
+// endPoint = right end of the walking line
+// lineHeight = vertical position of the walking line
+const decks = {
+    1: { startPoint: 397, endPoint: 993, lineHeight: 861 },
+    2: { startPoint: 264, endPoint: 1107, lineHeight: 769 },
+    3: { startPoint: 219, endPoint: 1115, lineHeight: 644 },
+    4: { startPoint: 201, endPoint: 1127, lineHeight: 517 },
+    5: { startPoint: 250, endPoint: 1076, lineHeight: 408 }
 };
 
-let layoutLoaded = false;
+// ---------- LADDERS ----------
+// bottomPoint = lower deck
+// topPoint = upper deck
+const ladders = [
+    { x: 469, bottomPoint: 1, topPoint: 2 },
+    { x: 926, bottomPoint: 2, topPoint: 3 },
+    { x: 421, bottomPoint: 3, topPoint: 4 },
+    { x: 958, bottomPoint: 3, topPoint: 4 },
+    { x: 415, bottomPoint: 4, topPoint: 5 },
+    { x: 971, bottomPoint: 4, topPoint: 5 }
+];
+
+// ---------- PLAYER ----------
 let currentDeck = 1;
 
 const player = {
@@ -53,446 +53,196 @@ const player = {
     y: 0
 };
 
-// Store the keys currently being pressed.
-const keysPressed = new Set();
+let leftPressed = false;
+let rightPressed = false;
 
-// --------------------------------------------------
-// LOAD JSON LAYOUT
-// --------------------------------------------------
+// ---------- HTML LIVES SCOREBOARD ----------
+function updateLivesDisplay() {
+    const heartsContainer = document.getElementById("play-life-hearts");
 
-async function loadLayout() {
-    try {
-        const response = await fetch(
-            "assets/data/fl1nk-maze-layout.json"
-        );
-
-        if (!response.ok) {
-            throw new Error("Could not load the layout JSON.");
-        }
-
-        const parsed = await response.json();
-
-        if (
-            !parsed.walkingPaths ||
-            !parsed.staircases ||
-            !parsed.walkableAreas
-        ) {
-            throw new Error(
-                "The layout must contain walkingPaths, staircases, " +
-                "and walkableAreas."
-            );
-        }
-
-        layout = parsed;
-        currentDeck = layout.startDeck || 1;
-
-        const path = getCurrentWalkingPath();
-
-        if (!path) {
-            throw new Error(
-                "No walking path was found for Deck " + currentDeck
-            );
-        }
-
-        // Start in the middle of the starting deck.
-        player.x = (path.start.x + path.end.x) / 2;
-        player.y = getPathYAtX(player.x, path);
-        positionGameItems();
-        layoutLoaded = true;
-
-        console.log("FL1NK layout loaded:", layout);
-        console.log("Starting on Deck", currentDeck);
-
-        requestAnimationFrame(gameLoop);
-
-    } catch (error) {
-        console.error("Layout loading failed:", error);
-
-        alert(
-            "Could not load the ship layout. Check that " +
-            "assets/data/fl1nk-maze-layout.json exists and " +
-            "that you are running the game through a local server."
-        );
-    }
-}
-
-// --------------------------------------------------
-// DECK WALKING PATHS
-// --------------------------------------------------
-
-function getCurrentWalkingPath(deck = currentDeck) {
-    if (!layout.walkingPaths) {
-        return null;
-    }
-
-    return layout.walkingPaths[String(deck)] || null;
-}
-
-// Calculate the player's Y position along a deck.
-function getPathYAtX(x, path) {
-    if (!path) {
-        return player.y;
-    }
-
-    const start = path.start;
-    const end = path.end;
-
-    const differenceX = end.x - start.x;
-
-    if (Math.abs(differenceX) < 0.001) {
-        return start.y + WALKING_PATH_OFFSET_Y;
-    }
-
-    const minX = Math.min(start.x, end.x);
-    const maxX = Math.max(start.x, end.x);
-
-    const clampedX = Math.max(
-        minX,
-        Math.min(maxX, x)
-    );
-
-    const progress =
-        (clampedX - start.x) / differenceX;
-
-    return (
-        start.y +
-        (end.y - start.y) * progress +
-        WALKING_PATH_OFFSET_Y
-    );
-}
-
-// Keep the player within the current deck's walking path.
-function keepPlayerOnPath() {
-    const path = getCurrentWalkingPath();
-
-    if (!path) {
+    if (!heartsContainer) {
         return;
     }
 
-    const minX = Math.min(
-        path.start.x,
-        path.end.x
-    );
-
-    const maxX = Math.max(
-        path.start.x,
-        path.end.x
-    );
-
-    player.x = Math.max(
-        minX,
-        Math.min(maxX, player.x)
-    );
-
-    player.y = getPathYAtX(player.x, path);
+    // Remove heart images until the number of hearts matches remaining lives.
+    while (heartsContainer.children.length > lives) {
+        heartsContainer.removeChild(heartsContainer.lastElementChild);
+    }
 }
 
-// --------------------------------------------------
-// STAIRCASE ENDPOINT DETECTION
-// --------------------------------------------------
+// ---------- HTML KEY SCOREBOARD ----------
+function updateKeyDisplay() {
+    const keyImage = document.getElementById("key-status-image");
+    const keyText = document.getElementById("key-status-text");
+    const tickImage = document.getElementById("key-collected-tick");
 
-function getStaircaseEndpoints(staircase) {
-    if (!staircase.start || !staircase.end) {
-        return null;
-    }
+    if (!keyImage || !keyText || !tickImage) return;
 
-    return [
-        staircase.start,
-        staircase.end
-    ];
-}
-
-// Find the staircase endpoint closest to a deck's path.
-function getEndpointForDeck(staircase, deck) {
-    const endpoints = getStaircaseEndpoints(staircase);
-    const path = getCurrentWalkingPath(deck);
-
-    if (!endpoints || !path) {
-        return null;
-    }
-
-    let closestEndpoint = null;
-    let smallestDifference = Infinity;
-
-    for (const endpoint of endpoints) {
-        const pathY = getPathYAtX(endpoint.x, path);
-        const difference = Math.abs(endpoint.y - pathY);
-
-        if (difference < smallestDifference) {
-            smallestDifference = difference;
-            closestEndpoint = endpoint;
-        }
-    }
-
-    return closestEndpoint;
-}
-
-// Find the correct endpoints for the current and destination deck.
-function getStaircaseForDeck(staircase, deck) {
-    if (
-        !Number.isInteger(staircase.fromDeck) ||
-        !Number.isInteger(staircase.toDeck) ||
-        !staircase.start ||
-        !staircase.end
-    ) {
-        return null;
-    }
-
-    let destinationDeck;
-
-    if (deck === staircase.fromDeck) {
-        destinationDeck = staircase.toDeck;
-    } else if (deck === staircase.toDeck) {
-        destinationDeck = staircase.fromDeck;
+    if (hasKey) {
+        keyImage.alt = "Key collected";
+        keyText.textContent = "KEY COLLECTED";
+        tickImage.style.display = "block";
     } else {
-        return null;
+        keyImage.alt = "Key not collected";
+        keyText.textContent = "KEY";
+        tickImage.style.display = "none";
     }
-
-    const currentEndpoint = getEndpointForDeck(
-        staircase,
-        deck
-    );
-
-    const destinationEndpoint = getEndpointForDeck(
-        staircase,
-        destinationDeck
-    );
-
-    if (!currentEndpoint || !destinationEndpoint) {
-        return null;
-    }
-
-    return {
-        currentEndpoint,
-        destinationEndpoint,
-        destinationDeck
-    };
 }
 
-// --------------------------------------------------
-// FIND A NEARBY STAIRCASE
-// --------------------------------------------------
-
-function findNearbyStaircase() {
-    if (!Array.isArray(layout.staircases)) {
-        return null;
-    }
-
-    for (const staircase of layout.staircases) {
-        const endpoints = getStaircaseForDeck(
-            staircase,
-            currentDeck
-        );
-
-        if (!endpoints) {
-            continue;
-        }
-
-        const distanceX = Math.abs(
-            player.x - endpoints.currentEndpoint.x
-        );
-
-        if (distanceX <= STAIRCASE_DISTANCE) {
-            return {
-                ...endpoints,
-                staircase
-            };
-        }
-    }
-
-    return null;
-}
-
-// --------------------------------------------------
-// CLIMB OR DESCEND STAIRS
-// --------------------------------------------------
-
-function tryUseStaircase(direction) {
-    if (
-        direction !== "up" &&
-        direction !== "down"
-    ) {
-        return false;
-    }
-
-    const staircase = findNearbyStaircase();
-
-    if (!staircase) {
-        console.log(
-            "No staircase nearby. Walk closer to the stairs."
-        );
-
-        return false;
-    }
-
-    const movingUp =
-        staircase.destinationDeck > currentDeck;
-
-    const movingDown =
-        staircase.destinationDeck < currentDeck;
-
-    if (direction === "up" && !movingUp) {
-        console.log("This staircase does not lead upward.");
-        return false;
-    }
-
-    if (direction === "down" && !movingDown) {
-        console.log("This staircase does not lead downward.");
-        return false;
-    }
-
-    // Switch to the destination deck.
-    currentDeck = staircase.destinationDeck;
-
-    // Place the player at the staircase on the new deck.
-    player.x = staircase.destinationEndpoint.x;
-
-    const destinationPath = getCurrentWalkingPath();
-
-    if (destinationPath) {
-        player.y = getPathYAtX(
-            player.x,
-            destinationPath
-        );
-    }
-
-    keepPlayerOnPath();
-
-    console.log("Now on Deck", currentDeck);
-
-    return true;
-}
-
-// --------------------------------------------------
-// PLAYER MOVEMENT
-// --------------------------------------------------
-
+// ---------- MOVEMENT ----------
 function updatePlayer() {
-    const path = getCurrentWalkingPath();
+    const deck = decks[currentDeck];
 
-    if (!path) {
-        return;
-    }
+    playerMoving = leftPressed || rightPressed;
 
-    if (keysPressed.has("ArrowLeft")) {
+    if (leftPressed) {
+        playerDirection = "left";
         player.x -= PLAYER_SPEED;
-    }
-
-    if (keysPressed.has("ArrowRight")) {
+    } else if (rightPressed) {
+        playerDirection = "right";
         player.x += PLAYER_SPEED;
-    }
-
-    keepPlayerOnPath();
-}
-
-// --------------------------------------------------
-// DRAW PLAYER
-// --------------------------------------------------
-
-function drawPlayer() {
-    const drawX = player.x - PLAYER_WIDTH / 2;
-    const drawY = player.y - PLAYER_HEIGHT / 2;
-
-    if (
-        playerImage.complete &&
-        playerImage.naturalWidth > 0
-    ) {
-        ctx.drawImage(
-            playerImage,
-            drawX,
-            drawY,
-            PLAYER_WIDTH,
-            PLAYER_HEIGHT
-        );
     } else {
-        ctx.fillStyle = "#e26829";
-
-        ctx.fillRect(
-            drawX,
-            drawY,
-            PLAYER_WIDTH,
-            PLAYER_HEIGHT
-        );
+        playerDirection = "idle";
     }
+
+    // Keep the player inside the current deck.
+    player.x = Math.max(
+        deck.startPoint,
+        Math.min(player.x, deck.endPoint)
+    );
+
+    // Keep the player on the deck's walking line.
+    player.y = deck.lineHeight;
 }
 
-// --------------------------------------------------
-// MAIN GAME LOOP
-// --------------------------------------------------
-    function gameLoop() {
-        if (!layoutLoaded) {
+// ---------- LADDERS ----------
+// Go up when the player releases the up arrow near a ladder.
+function goUp() {
+    for (let i = 0; i < ladders.length; i++) {
+        const ladder = ladders[i];
+        const isClose = Math.abs(player.x - ladder.x) < LADDER_DISTANCE;
+
+        if (isClose && ladder.bottomPoint === currentDeck) {
+            currentDeck = ladder.topPoint;
+            player.x = ladder.x;
+            player.y = decks[currentDeck].lineHeight;
             return;
         }
+    }
+}
 
-        if (!gameWon && !gameOver) {
-            updatePlayer();
-            updatePirate();
-            collectCoins(player, currentDeck);
-            updateGameItems();
+// Go down when the player releases the down arrow near a ladder.
+function goDown() {
+    for (let i = 0; i < ladders.length; i++) {
+        const ladder = ladders[i];
+        const isClose = Math.abs(player.x - ladder.x) < LADDER_DISTANCE;
+
+        if (isClose && ladder.topPoint === currentDeck) {
+            currentDeck = ladder.bottomPoint;
+            player.x = ladder.x;
+            player.y = decks[currentDeck].lineHeight;
+            return;
         }
-
-        ctx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
-
-        drawCoins(ctx, 1);
-        drawCoins(ctx, 2);
-        drawCoins(ctx, 3);
-        drawCoins(ctx, 4);
-        drawCoins(ctx, 5);
-
-        drawGameItems();
-        drawPirate(ctx);
-        drawPlayer();
-        drawGameStatus();
-
-        requestAnimationFrame(gameLoop);
     }
-// --------------------------------------------------
-// KEYBOARD CONTROLS
-// --------------------------------------------------
+}
 
-document.addEventListener("keydown", event => {
-    const allowedKeys = [
-        "ArrowLeft",
-        "ArrowRight",
-        "ArrowUp",
-        "ArrowDown"
-    ];
+// ---------- DRAW PLAYER ----------
+function drawPlayer() {
+    playerAnimator.draw(
+        ctx,
+        player.x - PLAYER_WIDTH / 2,
+        player.y - PLAYER_HEIGHT / 2,
+        PLAYER_WIDTH,
+        PLAYER_HEIGHT,
+        playerDirection,
+        playerMoving
+    );
+}
 
-    if (!allowedKeys.includes(event.key)) {
-        return;
+// ---------- GAME LOOP ----------
+function gameLoop() {
+    // Update the game while it is still active.
+    if (gameWon === false && gameOver === false) {
+        updatePlayer();
+        updatePirate();
+        collectCoins();
+        updateGameItems();
+
+        // Refresh the HTML scoreboards.
+        updateLivesDisplay();
+        updateKeyDisplay();
     }
 
-    event.preventDefault();
+    // Draw everything on the canvas.
+    ctx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
-    // Prevent repeated staircase transitions while holding a key.
-    if (event.repeat) {
-        return;
+    drawCoins();
+    drawGameItems();
+    drawPirate();
+    drawPlayer();
+    drawGameStatus();
+
+    requestAnimationFrame(gameLoop);
+}
+
+// ---------- KEYBOARD ----------
+// Holding left or right walks.
+// Release up or down to use a ladder.
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowLeft") {
+        leftPressed = true;
+    }
+
+    if (event.key === "ArrowRight") {
+        rightPressed = true;
+    }
+
+    // Stop arrow keys from scrolling the page.
+    if (
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight" ||
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown"
+    ) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("keyup", function (event) {
+    if (event.key === "ArrowLeft") {
+        leftPressed = false;
+    }
+
+    if (event.key === "ArrowRight") {
+        rightPressed = false;
     }
 
     if (event.key === "ArrowUp") {
-        tryUseStaircase("up");
-        return;
+        goUp();
     }
 
     if (event.key === "ArrowDown") {
-        tryUseStaircase("down");
-        return;
+        goDown();
     }
-
-    keysPressed.add(event.key);
 });
 
-document.addEventListener("keyup", event => {
-    keysPressed.delete(event.key);
+// Stop walking if the browser window loses focus.
+window.addEventListener("blur", function () {
+    leftPressed = false;
+    rightPressed = false;
 });
 
-// Stop movement if the browser window loses focus.
-window.addEventListener("blur", () => {
-    keysPressed.clear();
-});
+// ---------- START ----------
+// Start in the middle of deck 1.
+player.x = (decks[1].startPoint + decks[1].endPoint) / 2;
+player.y = decks[1].lineHeight;
 
-// --------------------------------------------------
-// START GAME
-// --------------------------------------------------
+// Display the correct scoreboard states at the start.
+updateLivesDisplay();
+updateKeyDisplay();
 
-loadLayout();
+// Position game items on their decks.
+positionGameItems();
+
+// Start the game loop.
+requestAnimationFrame(gameLoop);

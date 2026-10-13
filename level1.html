@@ -44,20 +44,48 @@
 
  
         <div class="scoreboard">
-            <img src="assets/images/display-score.png" alt="" class="scoreboard-image">
+            <img src="assets/images/display-score.png" alt="Score Board Board" class="scoreboard-image">
 
             <div class="scoreboard-text">
-                <img src="assets/images/game-coin.png" alt="" class="coin-img">
+                <img src="assets/images/game-coin.png" alt="Player Score" class="coin-img">
                 <h3>SCORE</h3>
                 <p id="score-value">0</p>
             </div>
         </div>
+
+        <div class="player-life">
+            <div class="player-life-board">
+                <img src="assets/images/lives-board.png" alt="Player Life Board Image">
+            </div>
+
+            <div class="play-life-hearts" id="play-life-hearts">
+                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+            </div>
+        </div>
+
+
+        <div class="key-status-content">
+            <p id="key-status-text">KEY</p>
+            <img src="assets/images/key-board.png" alt="Key collected"  class="key-board">
+            <img src="assets/images/key2.png" alt="Key not collected"class="key-status-image">
+            <img src="assets/images/green-tick.png" alt="Key collected" class="key-collected-tick">
+        </div>
+
+        <div class="game-timer">
+            <img src="assets/images/timer-board.png" alt="Game timer Board" class="game-timer-board">
+            <p id="timer-value"> 05:00</p>
+
+        </div>
+
 
     </section>
 
     <script src="js/coins.js"></script>
     <script src="js/pirates.js"></script>
     <script src="js/game-elements.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/game.js"></script>
 
 

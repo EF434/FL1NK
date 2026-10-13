@@ -1204,6 +1204,101 @@ pointer-events: none;
     display: block;
 }
 
+.score-board-page{
+    background-image: url("../assets/images/score-page-bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 900px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
 
 
 
+/* Player lives scoreboard */
+.player-life {
+    position: relative;
+    width: 190px;
+    height: 65px;
+}
+
+.player-life-board {
+    position: absolute;
+    inset: 0;
+}
+
+.player-life-board img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.play-life-hearts {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.life-heart {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+
+.key-status-content {
+    position: relative;
+}
+
+.key-status-content p {
+    font-family: "Lilita One", cursive, sans-serif;
+    font-size: 23px;
+    position: absolute;
+    left: 50px;
+    top: 0px;
+    z-index: 2;
+}
+
+.key-board {
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 120px;
+    height: 70px;
+    z-index: 1;
+}
+
+.key-status-image{
+    position: absolute;
+    top: 18px;
+    left: 85px;
+    width: 40px;
+    height: 38px;
+    z-index: 1;
+}
+
+.key-collected-tick{
+    position: absolute;
+    top: 18px;
+    left: 120px;
+    width: 40px;
+    height: 38px;
+    z-index: 1;
+    
+}
+
+.game-timer-board{
+    position: absolute;
+    top: 0;
+    left: 380px;
+    width: 120px;
+    height: 70px;
+    z-index: 1;
+}
