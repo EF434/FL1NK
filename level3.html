@@ -1,87 +1,101 @@
-  <div class="login-box">
-            <form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Game</title>
+    <!-- Link Favicon-->
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
 
-                <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="person"></ion-icon>
-                    </span>
+    <!-- Link Css-->
+    <link rel="stylesheet" href="css/style.css">
 
-                    <input type="text" required>
-                    <label>Username</label>
-                </div>
-
-                <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="lock-closed"></ion-icon>
-                    </span>
-
-                    <input type="password" required>
-                    <label>Password</label>
-
-                    <span class="password-eye">
-                        <ion-icon name="eye"></ion-icon>
-                    </span>
-                </div>
+    <!-- Add fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
+    
+</head>
+<body>
 
 
-                <button type="submit"><ion-icon name="log-in-outline"></ion-icon> LOGIN
-                </button>
+    <main>
+        <div class="ocean-bg-video">
+            <video autoplay muted loop>
+                <source src="assets/videos/level3_bg_video.mp4" type="video/mp4">
+            </video>
 
-                <div class="register-link">
-                    <p>Don't have an account?</p>
-                    <a href="#">CREATE ACCOUNT</a>
-                </div>
+            <div class="pirate-ship_three">
+                
+                <canvas id="fl1nk-game-canvas-level3" width="1400" height="950"></canvas>
+            </div>
+        </div>
+    </main>
 
-                <div class="or">
-                    <span>OR</span>
-                </div>
 
-                <button type="button" class="guest-button">
-                    <ion-icon name="anchor"></ion-icon>
-                    PLAY AS GUEST
-                </button>
+    <section class="game-controls">
+        <div class="exit-button">
+            <a href="play_game.html" class="exit-button-link">
+                <img src="assets/images/exit-icon.png" alt="Exit Icon">
+            </a>
+        </div>
 
-            </form>
+ 
+        <div class="scoreboard">
+            <img src="assets/images/display-score.png" alt="Score Board Board" class="scoreboard-image">
+
+            <div class="scoreboard-text">
+                <img src="assets/images/game-coin.png" alt="Player Score" class="coin-img">
+                <h3>SCORE</h3>
+                <p id="score-value">0</p>
+            </div>
+        </div>
+
+        <div class="player-life">
+            <div class="player-life-board">
+                <img src="assets/images/lives-board.png" alt="Player Life Board Image">
+            </div>
+
+            <div class="play-life-hearts" id="play-life-hearts">
+                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+            </div>
+        </div>
+
+
+        <div class="key-status-content">
+            <p id="key-status-text">KEY</p>
+            <img src="assets/images/key-board.png" alt="Key collected"  class="key-board">
+            <img src="assets/images/key2.png" alt="Key not collected"class="key-status-image">
+            <img src="assets/images/green-tick.png" alt="Key collected" class="key-collected-tick">
+        </div>
+
+        <div class="game-timer">
+            <img src="assets/images/timer-board.png" alt="Game timer Board" class="game-timer-board">
+            <p id="timer-value"> 05:00</p>
 
         </div>
 
 
+    </section>
+
+    <!-- <script src="js/player.js"></script>
+    <script src="js/coins.js"></script>
+    <script src="js/fl1nk_spirate_animation.js"></script> -->
+
+    <script type="module" src="js/game.js"></script>
 
 
-
-
-        <div class="signup-page">
-            <div class="pirate-bg"></div>
-            <img class="signup-banner" src="assets/images/banner-title.png" alt="Pirate Banner">
-
-        </div>
-
-        
-        <div class="card-frame">
-
-            <div class="card-container">
-                <img class="signup-card" src="assets/images/fl1nk_card_frame.png" alt="Signup Card">
-                <h3 class="card-one-title">Welcome to FL1NK</h3>
-               <p class="card-one-description"> Choose your adventure and start exploring the seas! </p>
-            </div>
-
-            <div class="login-card"> 
-                <img class="login-signboard" src="assets\images\fl1nk-login-signboard.png" alt="Login Signboard">
-                <h3> Login </h3>
-                <h4> Welcome back, Pirate!</h4>
-                <p> Continue your adventure and check your progress.</p>
-
-
-            </div>
-
-            <div class="register-card">
-                <img class="login-signboard-two" src="assets/images/fl1nk-login-signboard.png" alt="Login Signboard 2">
-                <h3> Register </h3>
-                <h4>Join the crew!</h4>
-                <p> Create your player profile and start your adventure.</p>
-
-            </div>
-
-        <!--- ------------------------------------------------>
-         <!-- Login form --
-          
+    <!-- Adding external icons for footer-->
+    <script
+     type="module" 
+     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
+    </script>
+    <script
+     nomodule 
+     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
+    </script>
+    
+</body>
+</html>

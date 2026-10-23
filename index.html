@@ -17,6 +17,7 @@
 </head>
 <body>
     <header>
+        <!-- Navigate user to home page when they clieck the FL1NK Icon-->
         <a href="index.html" class="navbar-logo-link">
             <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
@@ -48,9 +49,12 @@
         <!-- Create main banner for the home page-->
         <div class="hero-banner-text">
             <!-- Create the text for the banner, apply CSS for styling-->
-            <h1 class="lilita-one-regular">THE MAZE <br>
-                <span class="font-styling">WON'T STAY STILL</span> 
+            <h1 class="lilita-one-regular">
+                <span id="first-line"></span>
+                <br>
+                <span class="font-styling" id="second-line"></span>
             </h1>
+
             <p> Navigate the ship, collect treasure, and 
                 find your way through the maze before time runs
                 out     
@@ -89,7 +93,7 @@
                 <img class="coin-icon" src="assets/images/coin-icon.png" alt="Coin Icon">
                 <img class="card-image"src="assets/images/content-bg2.png" alt="Game Step Card Two">
                 <h3  class="card-title">COLLECT COINS</h3>
-                <p  class="card-text">Grab coins to boost your score and unlock fun surprises!</p>
+                <p  class="card-text">Grab coins to boost your score!</p>
             </div>
 
             <!-- Adding the content for the step 3 card-->
@@ -98,7 +102,7 @@
                 <img class="cannonball-icon" src="assets/images/cannonball.png" alt="Cannonball Icon">
                 <img class="card-image" src="assets/images/content-bg3.png" alt="Game Step Card Three">
                 <h3  class="card-title">AVOID DANGERS</h3>
-                <p  class="card-text">Watch out for cannonballs, rocks and sneaky pirates!</p>
+                <p  class="card-text">Watch out for cannonballs, poison and sneaky pirates!</p>
             </div>
 
             <!-- Adding the content for the step 4 card-->
@@ -107,7 +111,7 @@
                 <img class="treasure-icon" src="assets/images/treasure-icon.png" alt="Treasure Icon">
                 <img class="card-image" src="assets/images/content-bg4.png" alt="Game Step Card Four">
                 <h3  class="card-title">FIND TREASURE</h3>
-                <p  class="card-text">Find the treasure chest at the end of each level to win!</p>
+                <p  class="card-text">Find the key and unlock treasure at the end of each level to win!</p>
             </div>
 
             <!-- Adding a button to redirect user to play game page-->
@@ -145,6 +149,8 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
+
+    <script src="js/home-page.js"></script>
 
 </body>
 </html>

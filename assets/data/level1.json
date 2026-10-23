@@ -1,0 +1,19 @@
+{
+  "decks": {
+    "1": {"startPoint": 380, "endPoint": 1040, "y": 871},
+    "2": {"startPoint": 264, "endPoint": 1100, "y": 779},
+    "3": {"startPoint": 219, "endPoint": 1115, "y": 654},
+    "4": {"startPoint": 201, "endPoint": 1127, "y": 527},
+    "5": {"startPoint": 250, "endPoint": 1076, "y": 418}
+},
+
+"ladders": [
+    {"x": 456, "bottomPoint": 1, "topPoint": 2},
+    {"x": 904, "bottomPoint": 2, "topPoint": 3},
+    {"x": 409, "bottomPoint": 3, "topPoint": 4},
+    {"x": 938, "bottomPoint": 3, "topPoint": 4},
+    {"x": 409, "bottomPoint": 4, "topPoint": 5},
+    {"x": 952, "bottomPoint": 4, "topPoint": 5}
+]
+
+}

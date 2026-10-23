@@ -1,248 +1,110 @@
 "use strict";
 
-// ---------- SETUP ----------
-const canvas = document.getElementById("pirate-game-canvas");
-const ctx = canvas.getContext("2d");
+import { Player_Fl1nk } from "./player_fl1nk.js";
+import { CoinManager } from "./coins.js";
+import {
+    drawLevel1Collisions,
+    checkLevel1Collisions
+} from "./level1_collisions.js";
 
-const WORLD_WIDTH = 1400;
-const WORLD_HEIGHT = 950;
-
-const PLAYER_WIDTH = 100;
-const PLAYER_HEIGHT = 110;
-const PLAYER_SPEED = 3;
-const LADDER_DISTANCE = 45; // how close you must be to use a ladder
-
-canvas.width = WORLD_WIDTH;
-canvas.height = WORLD_HEIGHT;
-
-const playerAnimator = new PlayerAnimator();
-
-let playerDirection = "idle";
-let playerMoving = false;
-
-// ---------- SHIP DATA ----------
-// For each deck:
-// startPoint = left end of the walking line
-// endPoint = right end of the walking line
-// lineHeight = vertical position of the walking line
-const decks = {
-    1: { startPoint: 397, endPoint: 993, lineHeight: 861 },
-    2: { startPoint: 264, endPoint: 1107, lineHeight: 769 },
-    3: { startPoint: 219, endPoint: 1115, lineHeight: 644 },
-    4: { startPoint: 201, endPoint: 1127, lineHeight: 517 },
-    5: { startPoint: 250, endPoint: 1076, lineHeight: 408 }
+const LEVEL_FILES = {
+    "1": "assets/data/level1.json",
+    "2": "assets/data/level2.json",
+    "3": "assets/data/level3.json"
 };
 
-// ---------- LADDERS ----------
-// bottomPoint = lower deck
-// topPoint = upper deck
-const ladders = [
-    { x: 469, bottomPoint: 1, topPoint: 2 },
-    { x: 926, bottomPoint: 2, topPoint: 3 },
-    { x: 421, bottomPoint: 3, topPoint: 4 },
-    { x: 958, bottomPoint: 3, topPoint: 4 },
-    { x: 415, bottomPoint: 4, topPoint: 5 },
-    { x: 971, bottomPoint: 4, topPoint: 5 }
-];
-
-// ---------- PLAYER ----------
-let currentDeck = 1;
-
-const player = {
-    x: 0,
-    y: 0
+const LEVEL_CANVAS_IDS = {
+    "1": "fl1nk-game-canvas-level1",
+    "2": "fl1nk-game-canvas-level2",
+    "3": "fl1nk-game-canvas-level3"
 };
 
-let leftPressed = false;
-let rightPressed = false;
+const levelEntry = Object.entries(LEVEL_CANVAS_IDS).find(([, canvasId]) =>
+    document.getElementById(canvasId)
+);
 
-// ---------- HTML LIVES SCOREBOARD ----------
-function updateLivesDisplay() {
-    const heartsContainer = document.getElementById("play-life-hearts");
-
-    if (!heartsContainer) {
-        return;
-    }
-
-    // Remove heart images until the number of hearts matches remaining lives.
-    while (heartsContainer.children.length > lives) {
-        heartsContainer.removeChild(heartsContainer.lastElementChild);
-    }
+if (!levelEntry) {
+    throw new Error("Could not find a canvas for Level 1, 2, or 3.");
 }
 
-// ---------- HTML KEY SCOREBOARD ----------
-function updateKeyDisplay() {
-    const keyImage = document.getElementById("key-status-image");
-    const keyText = document.getElementById("key-status-text");
-    const tickImage = document.getElementById("key-collected-tick");
+const [levelNumber, canvasId] = levelEntry;
+const canvas = document.getElementById(canvasId);
+const context = canvas.getContext("2d");
+const keysPressed = Object.create(null);
+const scoreElement = document.getElementById("score-value");
 
-    if (!keyImage || !keyText || !tickImage) return;
+let player;
+let coinManager;
 
-    if (hasKey) {
-        keyImage.alt = "Key collected";
-        keyText.textContent = "KEY COLLECTED";
-        tickImage.style.display = "block";
-    } else {
-        keyImage.alt = "Key not collected";
-        keyText.textContent = "KEY";
-        tickImage.style.display = "none";
-    }
-}
-
-// ---------- MOVEMENT ----------
-function updatePlayer() {
-    const deck = decks[currentDeck];
-
-    playerMoving = leftPressed || rightPressed;
-
-    if (leftPressed) {
-        playerDirection = "left";
-        player.x -= PLAYER_SPEED;
-    } else if (rightPressed) {
-        playerDirection = "right";
-        player.x += PLAYER_SPEED;
-    } else {
-        playerDirection = "idle";
-    }
-
-    // Keep the player inside the current deck.
-    player.x = Math.max(
-        deck.startPoint,
-        Math.min(player.x, deck.endPoint)
-    );
-
-    // Keep the player on the deck's walking line.
-    player.y = deck.lineHeight;
-}
-
-// ---------- LADDERS ----------
-// Go up when the player releases the up arrow near a ladder.
-function goUp() {
-    for (let i = 0; i < ladders.length; i++) {
-        const ladder = ladders[i];
-        const isClose = Math.abs(player.x - ladder.x) < LADDER_DISTANCE;
-
-        if (isClose && ladder.bottomPoint === currentDeck) {
-            currentDeck = ladder.topPoint;
-            player.x = ladder.x;
-            player.y = decks[currentDeck].lineHeight;
-            return;
-        }
-    }
-}
-
-// Go down when the player releases the down arrow near a ladder.
-function goDown() {
-    for (let i = 0; i < ladders.length; i++) {
-        const ladder = ladders[i];
-        const isClose = Math.abs(player.x - ladder.x) < LADDER_DISTANCE;
-
-        if (isClose && ladder.topPoint === currentDeck) {
-            currentDeck = ladder.bottomPoint;
-            player.x = ladder.x;
-            player.y = decks[currentDeck].lineHeight;
-            return;
-        }
-    }
-}
-
-// ---------- DRAW PLAYER ----------
-function drawPlayer() {
-    playerAnimator.draw(
-        ctx,
-        player.x - PLAYER_WIDTH / 2,
-        player.y - PLAYER_HEIGHT / 2,
-        PLAYER_WIDTH,
-        PLAYER_HEIGHT,
-        playerDirection,
-        playerMoving
-    );
-}
-
-// ---------- GAME LOOP ----------
-function gameLoop() {
-    // Update the game while it is still active.
-    if (gameWon === false && gameOver === false) {
-        updatePlayer();
-        updatePirate();
-        collectCoins();
-        updateGameItems();
-
-        // Refresh the HTML scoreboards.
-        updateLivesDisplay();
-        updateKeyDisplay();
-    }
-
-    // Draw everything on the canvas.
-    ctx.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
-
-    drawCoins();
-    drawGameItems();
-    drawPirate();
-    drawPlayer();
-    drawGameStatus();
-
-    requestAnimationFrame(gameLoop);
-}
-
-// ---------- KEYBOARD ----------
-// Holding left or right walks.
-// Release up or down to use a ladder.
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowLeft") {
-        leftPressed = true;
-    }
-
-    if (event.key === "ArrowRight") {
-        rightPressed = true;
-    }
-
-    // Stop arrow keys from scrolling the page.
-    if (
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown"
-    ) {
+window.addEventListener("keydown", event => {
+    if (event.key.startsWith("Arrow")) {
         event.preventDefault();
     }
+
+    keysPressed[event.key] = true;
 });
 
-document.addEventListener("keyup", function (event) {
-    if (event.key === "ArrowLeft") {
-        leftPressed = false;
-    }
+window.addEventListener("keyup", event => {
+    keysPressed[event.key] = false;
+});
 
-    if (event.key === "ArrowRight") {
-        rightPressed = false;
-    }
-
-    if (event.key === "ArrowUp") {
-        goUp();
-    }
-
-    if (event.key === "ArrowDown") {
-        goDown();
+window.addEventListener("blur", () => {
+    for (const key of Object.keys(keysPressed)) {
+        keysPressed[key] = false;
     }
 });
 
-// Stop walking if the browser window loses focus.
-window.addEventListener("blur", function () {
-    leftPressed = false;
-    rightPressed = false;
-});
+async function loadLevel() {
+    const levelFile = LEVEL_FILES[levelNumber];
 
-// ---------- START ----------
-// Start in the middle of deck 1.
-player.x = (decks[1].startPoint + decks[1].endPoint) / 2;
-player.y = decks[1].lineHeight;
+    try {
+        const response = await fetch(levelFile);
 
-// Display the correct scoreboard states at the start.
-updateLivesDisplay();
-updateKeyDisplay();
+        if (!response.ok) {
+            throw new Error(
+                `Could not load level data (${response.status}): ${levelFile}`
+            );
+        }
 
-// Position game items on their decks.
-positionGameItems();
+        const levelData = await response.json();
 
-// Start the game loop.
-requestAnimationFrame(gameLoop);
+        if (!levelData.decks || !Array.isArray(levelData.ladders)) {
+            throw new Error(`Level ${levelNumber} must contain decks and ladders.`);
+        }
+
+        player = new Player_Fl1nk(
+            context,
+            levelData,
+            levelData.spawn ?? {}
+        );
+
+        coinManager = new CoinManager(
+            context,
+            levelNumber,
+            scoreElement,
+            levelData.decks
+        );
+
+        window.setInterval(drawFrame, 20);
+    } catch (error) {
+        console.error(`Level ${levelNumber} could not start:`, error);
+    }
+}
+
+function drawFrame() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    player.move(keysPressed);
+
+    coinManager.collect(player);
+    coinManager.draw();
+
+    if (levelNumber === "1") {
+        checkLevel1Collisions(player);
+        drawLevel1Collisions(context, player.decks);
+    }
+
+    player.draw();
+}
+
+loadLevel();

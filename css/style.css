@@ -42,7 +42,7 @@ header {
 }
 
 .navbar-links {
-    margin-right: 3%;
+    margin-right: 50px;
     margin-left: auto;
 }
 
@@ -679,294 +679,11 @@ footer .wave#wave1{
 }
 
 
-.login-signboard{
-    position: absolute;
-    top: 265px;
-    left: 360px;
-    width: 275px;
-    Z-index: 10000;
 
-}
 
-.login-signboard-two{
-    position: absolute;
-    top: 265px;
-    left: 695px;
-    width: 275px;
-    Z-index: 10000;
-}
 
-.login-card h3, 
-.register-card h3 {
-    position: absolute;
-    font-size: 18px;
-    color: #ffede3;
-    font-weight: 1900;
-    font-family: 'Fantasy', 'Papyrus';
-    font-weight: bold;
-    text-transform: uppercase;
-    z-index: 10000;
 
-}
 
-.login-card h3 {
-  top: 281px;
-  left: 470px;
-}
-
-.register-card h3 {
-  top: 280px;
-  left: 800px;
-}
-
-.login-card h4, 
-.register-card h4 {
-    position: absolute;
-    font-size: 15px;
-    font-weight: 1900;
-    font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
-    color: #2b1e18;
-    font-weight: bold;
-    text-transform: uppercase;
-    z-index: 10000;
-
-}
-
-.login-card h4 {
-  top: 330px;
-  left: 400px;
-}
-
-.register-card h4 {
-  top: 330px;
-  left: 765px;
-}
-
-
-.login-card p, 
-.register-card p {
-    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
-    position: absolute;
-    top: 155px;
-    left: 80px;
-    width: 180px;
-    font-size: 13px;
-    text-align: center;
-    line-height: 1.2;
-
-}
-
-.login-card p {
-  top: 360px;
-  left: 400px;
-}
-
-.register-card p {
-  top: 360px;
-  left: 745px;
-}
-
-.login-box{
-    position: absolute;
-    width: 250px;
-    height: 325px;
-    background: transparent;
-    border-radius: 20px;
-    border: 2px solid rgba(255, 255, 255, .5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    left: 370px;
-    backdrop-filter: blur(15px);
-    z-index: 100;
-    top: 415px
-
-}
-.login-box {
-    position: absolute;
-    width: 250px;
-    height: 325px;
-    left: 370px;
-    top: 415px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 100;
-}
-
-.login-box form {
-    width: 180px;
-}
-
-
-/* INPUTS */
-
-.input-box {
-    position: relative;
-    width: 180px;
-    height: 32px;
-    margin: 7px 0;
-
-    background: #f8e4bd;
-    border: 2px solid #c79b62;
-    border-radius: 8px;
-}
-
-.input-box input {
-    width: 100%;
-    height: 100%;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    padding: 0 30px;
-    box-sizing: border-box;
-
-    font-size: 11px;
-    color: #3b2110;
-}
-
-.input-box label {
-    position: absolute;
-    left: 30px;
-    top: 8px;
-
-    font-size: 11px;
-    color: #8b6b4a;
-}
-
-
-/* ICONS */
-
-.input-box .icon {
-    position: absolute;
-    left: 8px;
-    top: 7px;
-
-    color: #79502e;
-    font-size: 13px;
-}
-
-.password-eye {
-    position: absolute;
-    right: 8px;
-    top: 7px;
-
-    color: #79502e;
-    font-size: 12px;
-}
-
-
-/* LOGIN BUTTON */
-
-.login-box button[type="submit"] {
-    width: 180px;
-    height: 32px;
-
-    margin-top: 8px;
-
-    background: #a95316;
-    color: white;
-
-    border: 2px solid #54230a;
-    border-radius: 8px;
-
-    font-size: 13px;
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.login-box button[type="submit"]:hover {
-    background: #c0670f;
-}
-
-
-/* REGISTER */
-
-.register-link {
-    text-align: center;
-    margin-top: 10px;
-
-    font-size: 11px;
-    color: #4b2a17;
-}
-
-.register-link p {
-    margin: 0 0 4px;
-}
-
-.register-link a {
-    display: block;
-
-    padding: 7px;
-
-    background: #f4d99f;
-    border: 2px solid #c28a4a;
-    border-radius: 7px;
-
-    color: #3f2413;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-.register-link a:hover {
-    background: #ffe8b5;
-}
-
-
-/* OR */
-
-.or {
-    display: flex;
-    align-items: center;
-
-    width: 180px;
-
-    margin: 5px 0;
-
-    font-size: 10px;
-    color: #704321;
-    text-align: center;
-}
-
-.or::before,
-.or::after {
-    content: "";
-    height: 1px;
-    background: #b88a52;
-    flex: 1;
-}
-
-.or span {
-    padding: 0 7px;
-}
-
-
-/* GUEST BUTTON */
-
-.login-box .guest-button {
-    width: 180px;
-    height: 32px;
-
-    background: #0062c4;
-    color: white;
-
-    border: 2px solid #063e72;
-    border-radius: 7px;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.login-box .guest-button:hover {
-    background: #0877df;
-}
 
 /* Main game area */
 .ocean-bg-video {
@@ -1013,133 +730,201 @@ footer .wave#wave1{
     }
 }
 
-.main-section{
-    width: 350px;
-    height: 500px;
-    overflow: hidden;
-    background: url("../assets/images/1.jpg") no-repeat center / cover;
-    border-radius: 10px;
-    box-shadow: 5px 20px 50px #ff7c01;
-    
-}
 
-#chk{
-    display: none;  
+/* ================ CSS for the login/register page ===================== */
 
-}
-
-.signup{
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.main-section label{
-    color: #fcfcfb;
-    font-size: 2.3em;
-    justify-content: center;
-    display: flex;
-    margin: 60px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: .5s ease-in-out
-
-}
-
-.main-section input:not(#chk) {
-    width: 60%;
-    height: 20px;
-    background: #ffe7bb;
-    justify-content: center;
-    display: flex;
-    margin: 20px auto;
-    padding: 10px;
-    border:none;
-    outline: none;
-    border-radius: 5px;
-}
-
-.main-section button {
-    width: 60%;
-    height: 40px;
-    margin: 10px auto;
-    justify-content: center;
-    display: block;
-    color: #fff;
-    background: #812d00ed;
-    font-size: 1em;
-    font-weight: bold;
-    margin-top: 20px;
-    outline: none;
-    border:none;
-    border-radius: 5px;
-    transition: .2s ease-in;
-    cursor: pointer;
-}
-
-.main button:hover{
-    background: #6d6d6d;
-}
-
-.login{
-    height: 460px;
-    background: #008337;
-    border-radius: 60% / 10%;
-    transform: translateY(-180px);
-    transition: 0.8s ease-in-out;
-}
-
-.login label{
-    color: #923d00;
-    transform: scale(.6);
-
-}
-
-#chk:checked ~ .login{
-    transform: translateY(-500px);
-}
-
-
-#chk:checked ~ .login label{
-    transform: scale(1);
-}
-
-#chk:checked ~ .signup label{
-    transform: scale(.6);
-}
-
-
-/* Login and Register Page Layout */
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    position: relative;
-    flex: 1;
-    min-height: 700px;
-}
-
-.main-section {
-    margin: 50px auto 0;
-    position: relative;
-    z-index: 5;
-}
-
-.login-register-page{
+.login-register-page {
     background-image: url("../assets/images/pirate-map-bg.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 500px;
+    min-height: 750px;
+    padding: 30px 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 }
 
+.main-section {
+    width: 750px;
+    height: 650px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #ff7c01;
+    box-sizing: border-box;
+}
+
+/* Hiding the checkbox */
+#checkbox {
+    display: none;
+}
+
+/* set the height and width of the register section */
+.signup {
+    position: relative;
+    width: 750px;
+    height: 655px;
+}
+
+/* create two colums for the fileds, */
+.signup form {
+    display: grid;
+    grid-template-columns: 330px 330px;
+    gap: 8px 20px;
+    padding: 0 35px;
+}
+
+
+/* Input fields */
+.signup input,
+.login input {
+    width: 300px;
+    height: 38px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    background: #ffe7bb;
+    font-family: 'Fredoka', Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* the signup and login */
+.main-section label {
+    margin-top: 5px;
+    color: #fcefd9;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Login and register headings */
+.main-section label[for="checkbox"] {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 3px;
+    font-size: 32px;
+}
+
+
+.error-message {
+    margin: 0;
+    color: #faf5f5;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+/* the sign up button */
+.signup form button,
+.login form button {
+    grid-column: span 2;
+    width: 200px;
+    margin: 8px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #ff7c01;
+    color: white;
+    font-family: 'Fredoka', Arial;
+    font-weight: bold;
+}
+.login form button{
+    display: block;
+    margin: 8px auto;
+}
+
+
+
+/* adding houver affect on sign up button  */
+.signup form button:hover,
+.login form button:hover {
+    background: #572d00;
+    box-shadow: 0 4px 10px #ff7c01;
+}
+
+/* Login section */
+.login {
+    position: relative;
+    height: 500px;
+    padding: 34px 35px;
+    box-sizing: border-box;
+
+    background: #008337;
+    border-radius: 60% / 10%;
+    transform: translateY(-100px);
+    transition: transform 0.6s ease-in-out;
+}
+
+/* Login heading */
+.login label {
+    font-size: 16px;
+    margin-left: 190px;
+}
+
+/* Login input fields */
+.login input {
+    display: block;
+    width: 300px;
+    margin: 10px auto;
+    
+}
+
+/* display an eye icon to reveal passowrd */
+.login-password-eye {
+    position: relative;
+
+}
+
+#eye-icon {
+    position: absolute;
+    right: 210px;
+    top: 12px;
+    color: #572d00;
+    cursor: pointer;
+}
+
+/* the transtions */
+#checkbox:checked ~ .login {
+    transform: translateY(-480px);
+}
+
+#checkbox:checked ~ .login label {
+    transform: scale(1);
+}
+
+#checkbox:checked ~ .signup label {
+    transform: scale(0.6);
+}
+
+.upload-picture {
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+/* Css for the profile pic thigy */
+.profile-pic-circle {
+    background: #008337;
+    width: 100px;
+    border: 3px solid #ffe7bb;
+    border-radius: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin: 0px auto;
+    display: grid;
+    place-items: center;
+}
+
+#profile-pic {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: none;
+}
+
+#profile-image {
+    display: none;
+}
 
 .pirate-bg{
     background-image: url("../assets/images/pirate-map-bg.png");
@@ -1166,34 +951,26 @@ pointer-events: none;
 }
 
 
-
+/* ======================== CSS FOR LEVEL 1 ======================== */
 
 .pirate-ship {
     position: absolute;
-    width: min(100vw, 147.368vh);
+    width: 1000px;
+    left:  250px;
     aspect-ratio: 1400 / 950;
-    height: auto;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
+    top: 2px;
     background-image: url("../assets/images/level1-ship.png");
-    background-size: 100% 100%;
+    background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
-
-    z-index: 2;
 }
 
-#pirate-game-canvas {
-    position: absolute;
-    inset: 0;
+#fl1nk-game-canvas-level1,
+#fl1nk-game-canvas-level2,
+#fl1nk-game-canvas-level3 {
     width: 100%;
     height: 100%;
     display: block;
-    cursor: crosshair;
 }
-
 
 
 #gameCanvas {
@@ -1204,16 +981,7 @@ pointer-events: none;
     display: block;
 }
 
-.score-board-page{
-    background-image: url("../assets/images/score-page-bg.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 900px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
+
 
 
 
@@ -1269,8 +1037,8 @@ pointer-events: none;
 .key-board {
     position: absolute;
     top: 0;
-    left: 30px;
-    width: 120px;
+    left: 13px;
+    width: 190px;
     height: 70px;
     z-index: 1;
 }
@@ -1302,3 +1070,97 @@ pointer-events: none;
     height: 70px;
     z-index: 1;
 }
+
+
+/* css ================ */
+
+.score-board-page{
+    background-image: url("../assets/images/score-page-bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-board-header {
+    text-align: center;
+    position: relative;
+    top: -330px
+}
+
+.score-board-header p {
+    font-family: 'Franklin Gothic Medium';
+    font-size: 22px;
+    position: relative;
+    top: -40px;
+}
+
+.player-main-card{
+    position: relative;
+    top: -720px;
+    right: -230px;
+    width: 800px;
+    height: 60px;
+    background-color: #be3900;
+    border-radius: 100px;
+}
+
+.player-main-card,
+.player-card-content{
+    font-family:'Franklin Gothic Medium';
+    color: #fffaf8;
+    font-size: 20px;
+    display: flex;    
+}
+.player-card-content h3 {
+    margin: 15px 255px 0px 30px;
+}
+
+.user-card-content {
+    position: relative;
+    top: -700px;
+    right: -300px;
+    width: 700px;
+    height: 65px;
+    background-color: #FAF0D7;
+    border: 4px dashed #75431F;
+    border-radius: 30px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+/* LEVEL 2 ======================================================================== */
+.pirate-ship_two {
+    position: absolute;
+    width: 1000px;
+    left:  250px;
+    height: 650px;
+    top: 5px;
+    background-image: url("../assets/images/level2-ship.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+/* LEVEL 3 ======================================================================== */
+.pirate-ship_three {
+    position: absolute;
+    width: 900px;
+    left:  250px;
+    height: 700px;
+    top: -10px;
+    background-image: url("../assets/images/level3-ship.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+/* ======================= Login/Register eye icon ====================== */

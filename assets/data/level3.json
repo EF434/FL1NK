@@ -1,0 +1,27 @@
+{
+  "decks": {
+    "1": {"startPoint": 270, "endPoint": 1120, "y": 870},
+    "2": {"startPoint": 250, "endPoint": 1160, "y": 781},
+    "3": {"startPoint": 220, "endPoint": 1190, "y": 682},
+    "4": {"startPoint": 200, "endPoint": 1210, "y": 584},
+    "5": {"startPoint": 180, "endPoint": 1220, "y": 487},
+    "6": {"startPoint": 165, "endPoint": 1230, "y": 393},
+    "7": {"startPoint": 175, "endPoint": 1220, "y": 315}
+  },
+  "ladders": [
+    {"x": 423, "bottomPoint": 1, "topPoint": 2},
+    {"x": 767, "bottomPoint": 1, "topPoint": 2},
+    {"x": 483, "bottomPoint": 2, "topPoint": 3},
+    {"x": 942, "bottomPoint": 2, "topPoint": 3},
+    {"x": 373, "bottomPoint": 3, "topPoint": 4},
+    {"x": 616, "bottomPoint": 3, "topPoint": 4},
+    {"x": 921, "bottomPoint": 3, "topPoint": 4},
+    {"x": 489, "bottomPoint": 4, "topPoint": 5},
+    {"x": 923, "bottomPoint": 4, "topPoint": 5},
+    {"x": 385, "bottomPoint": 5, "topPoint": 6},
+    {"x": 615, "bottomPoint": 5, "topPoint": 6},
+    {"x": 1014, "bottomPoint": 5, "topPoint": 6},
+    {"x": 529, "bottomPoint": 6, "topPoint": 7},
+    {"x": 876, "bottomPoint": 6, "topPoint": 7}
+  ]
+}

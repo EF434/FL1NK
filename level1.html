@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Game</title>
     <!-- Link Favicon-->
-    <link rel="icon" href="assets\images\favicon.png" type="image/png">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
 
     <!-- Link Css-->
     <link rel="stylesheet" href="css/style.css">
@@ -27,9 +27,8 @@
 
             <div class="pirate-ship">
                 
-                <canvas id="pirate-game-canvas"
-                        aria-label="FL1NK Pirate Maze Tracing Tool">
-                </canvas>
+                <canvas id="fl1nk-game-canvas-level1" width="1400" height="950"></canvas>
+
             </div>
         </div>
     </main>
@@ -82,11 +81,23 @@
 
     </section>
 
-    <script src="js/coins.js"></script>
-    <script src="js/pirates.js"></script>
-    <script src="js/game-elements.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/game.js"></script>
+    <!-- Load FL1NK game elements
+    <script type="module" src="js/fl1nk_spirate_animation.js"></script>
+    <script type="module"src="js/pirates.js"></script>
+    <script type="module"src="js/coins.js"></script>
+    <script type="module" src="js/key.js"></script>
+    <script type="module" src="js/poison.js"></script>
+    <script type="module" src="js/treasure.js"></script>
+
+    Load player movement and start the game 
+    <script src="js/player.js"></script> -->
+
+    <!-- Load FL1NK game -->
+    <script type="module" src="js/game.js"></script>
+
+
+
+ 
 
 
 
@@ -100,5 +111,6 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
+    
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Provide the title name-->
-    <title>Sign Up - FL1NK</title>
+    <title>Login/Register - FL1NK</title>
     <!-- Add a favicon and link external CSS file-->
     <link rel="icon" href="assets/images/favicon.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
@@ -15,8 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
     
 </head>
-<body class="home-page-style">
+<body class="signup-page-style">
     <header>
+        <!-- Navigate user to home page when they click the FL1NK Icon-->
         <a href="index.html" class="navbar-logo-link">
             <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
@@ -46,34 +47,105 @@
 
     <main class="login-register-page"> 
         <div class="main-section">
-            <input type="checkbox" id="chk" aria-hidden="true">
+            <!-- Create a checkbox for dynamic feature-->
+            <input type="checkbox" id="checkbox">
             <div class="signup">
+
+                <!-- Add Signup heading-->
+                <label for="checkbox">Sign up</label>
                 <form>
-                    <label for="chk" aria-hidden="true">Sign up</label>
-                    <input type="text" name="txt" placeholder="User name" required="">
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Password" required="">
-                    <button> Sign up</button>
+                    <!-- Profile Picture -->
+                    <div class="upload-picture">
+                        <label class="profile-pic-circle" id="profile-circle">
+                            <img id="profile-pic" src="" alt="User Profile Picture">
+                            <span id="plus-icon">+</span>
+                        </label>
+
+                        <input type="file" id="profile-image" accept="image/*" required>
+                        <p class="error-message" id="profile-pic-error"></p>
+                    </div>
+
+                    <!-- Add Fist name heading-->
+                    <div>
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Emaan Fatima" id="fullname" required="">
+                    <p class="error-message" id="user-name-error"></p>
+                    </div>
+
+
+                    <!-- Add Username heading-->
+                     <div>
+                    <label>Username</label>
+                    <input type="text" placeholder="emaans101" id="username" required="">
+                    <p class="error-message" id="username-error"></p>
+                    </div>
+
+                    <!-- Add Emial heading-->
+                    <div>
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="emaanedu.hw@gmail.com" required="">
+                    <p class="error-message" id="email-error"></p>
+                    </div>
+
+                    <!-- Add Fist name heading-->
+                    <div>
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Password" required="">
+                    <p class="error-message" id="password-error"></p>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                    <label>Re-enter Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                    <p class="error-message" id="confirm-password-error"></p>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div>
+                    <label>Date of Birth</label>
+                    <input type="date" id="user_dob" required>
+                    <p class="error-message" id="dob-error"></p>
+                    </div>
+
+                    <!-- Add Phone Number -->
+                    <div>
+                    <label>Contact Number</label>
+                    <input type="tel"  id="phone-number" placeholder="+971 00 000 000" required="">
+                    <p class="error-message" id="number-error"></p>
+                    </div>
+
+                    <!-- Sign Up button -->
+                     <p id="success-message"></p>
+                    <button type="button" onclick="processInput()">Sign up</button>
+
                 </form>
             
             </div>
 
             <div class="login"> 
                 <form>
-                    <label for="chk" aria-hidden="true">Login</label>
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Password" required="">
-                    <button>Login</button>
+                    <label for="checkbox">Login</label>
+
+                    <!-- Add email-->
+                    <label> Email</label>
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                   
+                    <!-- Add password-->
+                    <label>Password</label>
+                    <div class="login-password-eye">
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <ion-icon name="eye-outline" id="eye-icon" onclick="showPassword()"></ion-icon>
+                    </div>
+
+                    <!-- submit-->
+                    <p class="feedback-message" id="loginFeedback"></p>
+                    <button type="button">Login</button>
                 </form>
     
-
             </div>
             
         </div>
-        
-    
-
-
     </main>
        
 
@@ -94,6 +166,8 @@
         <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
     </footer>
 
+
+
     <!-- Adding external icons for footer in javascript-->
     <script
      type="module" 
@@ -103,6 +177,8 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
+
+    <script src="js/login-register.js"></script>
     
 </body>
 </html>
