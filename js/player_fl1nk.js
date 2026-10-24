@@ -8,8 +8,8 @@ export class Player_Fl1nk {
     ladders;
     animationData = fl1nkAnimationData;
 
-    width = 90;
-    height = 95;
+    width = 80;
+    height = 85;
     scale = 90 / 256;
     speed = 4;
     climbSpeed = 3;

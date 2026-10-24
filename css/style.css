@@ -1164,3 +1164,80 @@ pointer-events: none;
 }
 
 /* ======================= Login/Register eye icon ====================== */
+
+
+
+
+
+
+
+
+
+
+
+/* ======================= Level2 css  ====================== */
+
+/* ================= LEVEL 2 SHIELD PROGRESS BAR ================= */
+
+/* Shield display */
+.game_shield {
+    position: fixed;
+    top: 145px;
+    left: 15px;
+    width: 290px;
+    height: 85px;
+    display: none;
+    z-index: 12;
+}
+
+/* Shield image */
+.shield_img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Shield title */
+.shield-title {
+    position: absolute;
+    top: 15px;
+    left: 100px;
+    margin: 0;
+    font-family: "Lilita One", cursive;
+    font-size: 20px;
+    color: #4b230c;
+}
+
+/* Shield countdown */
+.shield-time {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    margin: 0;
+    font-family: "Lilita One", cursive;
+    font-size: 22px;
+    color: white;
+}
+
+/* Progress bar container */
+.shield-progress-bar {
+    position: absolute;
+    top: 58px;
+    left: 95px;
+    width: 125px;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Purple progress bar */
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #a855f7;
+    border-radius: 10px;
+}
+
+/* Red warning when 3 seconds remain */
+.progress-bar.shield-warning {
+    background-color: #ef4444;
+}

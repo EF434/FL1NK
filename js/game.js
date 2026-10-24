@@ -1,11 +1,11 @@
+
 "use strict";
 
 import { Player_Fl1nk } from "./player_fl1nk.js";
 import { CoinManager } from "./coins.js";
-import {
-    drawLevel1Collisions,
-    checkLevel1Collisions
-} from "./level1_collisions.js";
+import {drawLevel1Collisions, checkLevel1Collisions} from "./level1_collisions.js";
+import { checkLevel2Collisions, drawLevel2Collisions } from "./level2_collisions.js";
+import { move_pirate, draw_pirate } from "./pirate.js";
 
 const LEVEL_FILES = {
     "1": "assets/data/level1.json",
@@ -94,6 +94,9 @@ async function loadLevel() {
 function drawFrame() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Save FL1NK's position before moving
+    const previousX = player.xPos;
+
     player.move(keysPressed);
 
     coinManager.collect(player);
@@ -102,6 +105,21 @@ function drawFrame() {
     if (levelNumber === "1") {
         checkLevel1Collisions(player);
         drawLevel1Collisions(context, player.decks);
+    }
+
+    if (levelNumber === "2") {
+
+        // Move the pirate on Deck 3
+        move_pirate(player.decks);
+
+        // Check collisions with obstacles and pirate
+        checkLevel2Collisions(player, previousX);
+
+        // Draw the pirate
+        draw_pirate(context);
+
+        // Draw Level 2 key and treasure
+        drawLevel2Collisions(context, player.decks);
     }
 
     player.draw();

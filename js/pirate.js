@@ -1,3 +1,6 @@
+
+"use strict";
+
 // Load the enemy pirate sprite sheet
 const pirate_sprite_sheet = new Image();
 
@@ -25,10 +28,10 @@ let pirateDeck = 3;
 
 
 
-function move_pirate() {
+export function move_pirate(decks) {
 
     // Get the information for Deck 3
-    let pirate_deck_info = fl1nk_maze_design.decks[pirateDeck];
+    let pirate_deck_info = decks[pirateDeck];
 
     // Position the pirate on the deck
     pirateY = pirate_deck_info.y - pirateHeight;
@@ -38,23 +41,23 @@ function move_pirate() {
 
     // Turn left at the right boundary
     if (pirateX + pirateWidth >= pirate_deck_info.endPoint) {
+        pirateX = pirate_deck_info.endPoint - pirateWidth;
         pirateDirection = -1;
     }
 
     // Turn right at the left boundary
     if (pirateX <= pirate_deck_info.startPoint) {
+        pirateX = pirate_deck_info.startPoint;
         pirateDirection = 1;
     }
-
-    // Reuse the boundary function from player.js
-    pirateX = player_maze_limits(pirateX, pirateWidth, pirateDeck);
 }
 
 
 
-function draw_pirate() {
+export function draw_pirate(context) {
 
-    if (!pirate_sprite_sheet.complete) {
+    if (!pirate_sprite_sheet.complete ||
+        pirate_sprite_sheet.naturalWidth === 0) {
         return;
     }
 
@@ -96,4 +99,18 @@ function draw_pirate() {
         pirateWidth,
         pirateHeight
     );
+}
+
+
+
+// Return pirate position for Level 2 collisions
+export function get_pirate_position() {
+
+    return {
+        x: pirateX,
+        y: pirateY,
+        width: pirateWidth,
+        height: pirateHeight,
+        deck: pirateDeck
+    };
 }

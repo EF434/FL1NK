@@ -10,10 +10,10 @@ export const coins_for_every_level = {
     ],
 
     "2": [
-        { deck: 1, firstX: 400, count: 7 },
-        { deck: 2, firstX: 240, count: 10 },
+        { deck: 1, firstX: 400, count: 8 },
+        { deck: 2, firstX: 240, count: 8 },
         { deck: 3, firstX: 240, count: 10 },
-        { deck: 4, firstX: 240, count: 10 },
+        { deck: 4, firstX: 240, count: 8 },
         { deck: 5, firstX: 400, count: 7 }
     ],
 

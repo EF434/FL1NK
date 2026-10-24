@@ -10,6 +10,8 @@
     {"x": 455, "bottomPoint": 1, "topPoint": 2},
     {"x": 455, "bottomPoint": 2, "topPoint": 3},
     {"x": 815, "bottomPoint": 3, "topPoint": 4},
-    {"x": 870, "bottomPoint": 4, "topPoint": 5}
+    {"x": 870, "bottomPoint": 4, "topPoint": 5},
+    {"x": 455, "bottomPoint": 4, "topPoint": 5}
+
   ]
 }
