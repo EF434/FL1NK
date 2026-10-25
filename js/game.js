@@ -5,7 +5,8 @@ import { Player_Fl1nk } from "./player_fl1nk.js";
 import { CoinManager } from "./coins.js";
 import {drawLevel1Collisions, checkLevel1Collisions} from "./level1_collisions.js";
 import { checkLevel2Collisions, drawLevel2Collisions } from "./level2_collisions.js";
-import { move_pirate, draw_pirate } from "./pirate.js";
+import { Pirate, move_pirate, draw_pirate } from "./pirate.js";
+import { checkLevel3Collisions,drawLevel3Collisions } from "./level3_collisions.js";
 
 const LEVEL_FILES = {
     "1": "assets/data/level1.json",
@@ -35,6 +36,23 @@ const scoreElement = document.getElementById("score-value");
 
 let player;
 let coinManager;
+
+// Create two patrolling pirates for Level 3
+const level3Pirate1 = new Pirate(
+    "assets/images/level3_pirate1.png",
+    300,
+    3,
+    2,
+    1
+);
+
+const level3Pirate2 = new Pirate(
+    "assets/images/level3_pirate2.png",
+    800,
+    5,
+    3,
+    -1
+);
 
 window.addEventListener("keydown", event => {
     if (event.key.startsWith("Arrow")) {
@@ -120,6 +138,23 @@ function drawFrame() {
 
         // Draw Level 2 key and treasure
         drawLevel2Collisions(context, player.decks);
+    }
+
+    if (levelNumber === "3") {
+
+        // Move both Level 3 patrolling pirates
+        level3Pirate1.move(player.decks);
+        level3Pirate2.move(player.decks);
+
+        // Check poison bottle collisions
+        checkLevel3Collisions(player);
+
+        // Draw poison bottles on the decks
+        drawLevel3Collisions(context, player.decks);
+
+        // Draw both Level 3 pirates
+        level3Pirate1.draw(context);
+        level3Pirate2.draw(context);
     }
 
     player.draw();

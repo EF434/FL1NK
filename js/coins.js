@@ -11,6 +11,8 @@ export class CoinManager {
         this.scoreElement = scoreElement;
         this.score = 0;
 
+        this.coinSound = new Audio("assets/sounds/coin.mp3");
+
         for (const placement of coins_for_every_level[levelNumber]) {
             const deck = decks[placement.deck];
 
@@ -53,6 +55,11 @@ export class CoinManager {
                 this.coins.splice(index, 1);
                 this.score += POINTS_PER_COIN;
                 this.scoreElement.textContent = this.score;
+
+                this.coinSound.currentTime = 0;
+                this.coinSound.play().catch(() => {
+                    // The game continues if the browser blocks audio.
+                });
             }
         }
     }

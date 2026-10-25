@@ -1,5 +1,8 @@
-
 import { KeyTreasure } from "./key_treasure.js";
+
+// Sounds
+const keySound = new Audio("assets/sounds/key.mp3");
+const poisonSound = new Audio("assets/sounds/poison.mp3");
 
 // Poison images
 const poisonImage1 = new Image();
@@ -41,12 +44,19 @@ const level1KeyTreasure = new KeyTreasure(
     treasureX, treasureDeck, treasureWidth, treasureHeight
 );
 
-
 // Draw an image only after it has loaded successfully
 function drawLoadedImage(context, image, x, y, width, height) {
     if (image.complete && image.naturalWidth > 0) {
         context.drawImage(image, x, y, width, height);
     }
+}
+
+// Play a sound from the beginning
+function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {
+        // The game continues if the browser blocks audio.
+    });
 }
 
 // Draw poisons, key, and treasure on their decks
@@ -97,10 +107,18 @@ export function checkLevel1Collisions(player) {
             touchesItem(player, poison_two, poisonWidth, poison_deck2);
     }
 
+    // Remember whether FL1NK already has the key
+    const hadKeyBefore = level1KeyTreasure.hasKey;
+
     // Check key collection and treasure opening
     level1KeyTreasure.checkCollision(player);
 
-    // Remove one heart when FL1NK first touches poison
+    // Play the key sound only when the key is newly collected
+    if (!hadKeyBefore && level1KeyTreasure.hasKey) {
+        playSound(keySound);
+    }
+
+    // Remove one heart and play a sound on first poison contact
     if (touchingPoisonNow && !fl1nk_touched_poision) {
         const hearts = document.querySelectorAll(".life-heart");
         const lastHeart = hearts[hearts.length - 1];
@@ -108,6 +126,8 @@ export function checkLevel1Collisions(player) {
         if (lastHeart) {
             lastHeart.remove();
         }
+
+        playSound(poisonSound);
     }
 
     // FL1NK must leave the poison before another heart can be removed

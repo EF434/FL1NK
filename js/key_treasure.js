@@ -1,11 +1,10 @@
-
 "use strict";
 
 // Class for the key and treasure
 export class KeyTreasure {
 
     constructor(keyPath, treasureClosedPath, treasureOpenPath,
-                keyX, keyDeck, keyWidth,keyHeight,  treasureX, treasureDeck,
+                keyX, keyDeck, keyWidth, keyHeight, treasureX, treasureDeck,
                 treasureWidth, treasureHeight) {
 
         // Key and treasure images
@@ -17,6 +16,9 @@ export class KeyTreasure {
 
         this.treasureOpenImage = new Image();
         this.treasureOpenImage.src = treasureOpenPath;
+
+        // Treasure opening sound
+        this.treasureSound = new Audio("assets/sounds/treasure.mp3");
 
         // Key position and size
         this.keyX = keyX;
@@ -35,7 +37,6 @@ export class KeyTreasure {
         this.treasureIsOpen = false;
     }
 
-
     // Draw an image only after it has loaded successfully
     drawLoadedImage(context, image, x, y, width, height) {
 
@@ -43,7 +44,6 @@ export class KeyTreasure {
             context.drawImage(image, x, y, width, height);
         }
     }
-
 
     // Draw the key and treasure on their decks
     draw(context, decks) {
@@ -80,7 +80,6 @@ export class KeyTreasure {
         }
     }
 
-
     // Check whether FL1NK is on a deck and overlaps an item horizontally
     touchesItem(player, x, width, deck) {
 
@@ -88,7 +87,6 @@ export class KeyTreasure {
             player.xPos < x + width &&
             player.xPos + player.width > x;
     }
-
 
     // Check key and treasure interactions
     checkCollision(player) {
@@ -108,6 +106,14 @@ export class KeyTreasure {
             )
         ) {
             this.hasKey = true;
+
+            // Show the green tick on the information board
+            const keyTick = document.getElementById("key-tick");
+
+            if (keyTick) {
+                keyTick.style.display = "block";
+            }
+
             console.log("Key collected!");
         }
 
@@ -123,6 +129,12 @@ export class KeyTreasure {
             )
         ) {
             this.treasureIsOpen = true;
+
+            this.treasureSound.currentTime = 0;
+            this.treasureSound.play().catch(() => {
+                // The game continues if the browser blocks audio.
+            });
+
             console.log("Treasure opened!");
         }
     }

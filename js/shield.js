@@ -43,6 +43,13 @@ export class Shield {
             // Start the countdown
             this.shieldEndTime = Date.now() + this.shieldDuration * 1000;
 
+            // Show the green tick on the information board
+            const shieldTick = document.getElementById("shield-tick");
+
+            if (shieldTick) {
+                shieldTick.style.display = "block";
+            }
+
             console.log("Shield collected!");
         }
     }
@@ -83,28 +90,45 @@ export class Shield {
             );
         }
 
-        // Draw the countdown on the game canvas
+        // Get shield countdown elements
+        const shieldDisplay = document.getElementById("game_shield");
+        const shieldTime = document.getElementById("shield-time");
+        const shieldProgress = document.getElementById("progress-bar");
+
         if (this.isActive()) {
 
-            const secondsLeft = Math.ceil(
-                (this.shieldEndTime - Date.now()) / 1000
+            // Calculate the remaining time
+            const timeLeft = Math.max(
+                0,
+                this.shieldEndTime - Date.now()
             );
 
-            context.save();
+            const secondsLeft = Math.ceil(timeLeft / 1000);
 
-            context.fillStyle = "#ffffff";
-            context.font = "bold 28px Arial";
-            context.textAlign = "center";
-            context.shadowColor = "#8b5cf6";
-            context.shadowBlur = 12;
+            // Calculate the progress bar percentage
+            const progressPercentage =
+                (timeLeft / (this.shieldDuration * 1000)) * 100;
 
-            context.fillText(
-                "SHIELD: " + secondsLeft + "s",
-                context.canvas.width / 2,
-                60
-            );
+            // Show the shield progress bar
+            shieldDisplay.style.display = "block";
 
-            context.restore();
+            // Update the countdown
+            shieldTime.textContent = secondsLeft + "s";
+
+            // Reduce the progress bar
+            shieldProgress.style.width = progressPercentage + "%";
+
+            // Change the bar to red when 3 seconds remain
+            if (secondsLeft <= 3) {
+                shieldProgress.classList.add("shield-warning");
+            } else {
+                shieldProgress.classList.remove("shield-warning");
+            }
+
+        } else {
+
+            // Hide the shield progress bar
+            shieldDisplay.style.display = "none";
         }
     }
 }
