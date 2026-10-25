@@ -3,10 +3,10 @@
 
 import { Player_Fl1nk } from "./player_fl1nk.js";
 import { CoinManager } from "./coins.js";
-import {drawLevel1Collisions, checkLevel1Collisions} from "./level1_collisions.js";
+import { drawLevel1Collisions, checkLevel1Collisions } from "./level1_collisions.js";
 import { checkLevel2Collisions, drawLevel2Collisions } from "./level2_collisions.js";
 import { Pirate, move_pirate, draw_pirate } from "./pirate.js";
-import { checkLevel3Collisions,drawLevel3Collisions } from "./level3_collisions.js";
+import { drawLevel3Collisions, checkLevel3Collisions, drawMapHint } from "./level3_collisions.js";
 
 const LEVEL_FILES = {
     "1": "assets/data/level1.json",
@@ -34,8 +34,17 @@ const context = canvas.getContext("2d");
 const keysPressed = Object.create(null);
 const scoreElement = document.getElementById("score-value");
 
+// Get the timer from the information board
+const timerElement = document.getElementById("game-timer-text");
+
 let player;
 let coinManager;
+
+// Timer settings for all three levels
+let timeRemaining = 300;
+let gameOver = false;
+let gameInterval;
+let timerInterval;
 
 // Create two patrolling pirates for Level 3
 const level3Pirate1 = new Pirate(
@@ -72,6 +81,57 @@ window.addEventListener("blur", () => {
     }
 });
 
+
+// ============== Game Timer ==============
+
+// Display the remaining time on the information board
+function updateTimer() {
+
+    let minutes = Math.floor(timeRemaining / 60);
+    let seconds = timeRemaining % 60;
+
+    if (timerElement) {
+        timerElement.textContent =
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+    }
+}
+
+
+// Start the 5-minute countdown
+function startTimer() {
+
+    updateTimer();
+
+    timerInterval = window.setInterval(function() {
+
+        if (gameOver) {
+            return;
+        }
+
+        timeRemaining--;
+
+        updateTimer();
+
+        // End the game when time runs out
+        if (timeRemaining <= 0) {
+
+            gameOver = true;
+
+            clearInterval(timerInterval);
+            clearInterval(gameInterval);
+
+            console.log("Time is up! Game Over!");
+
+            alert("Time is up! Game Over!");
+        }
+
+    }, 1000);
+}
+
+
+// ============== Load Level ==============
+
 async function loadLevel() {
     const levelFile = LEVEL_FILES[levelNumber];
 
@@ -103,13 +163,26 @@ async function loadLevel() {
             levelData.decks
         );
 
-        window.setInterval(drawFrame, 20);
+        // Start the game animation
+        gameInterval = window.setInterval(drawFrame, 20);
+
+        // Start the 5-minute timer
+        startTimer();
+
     } catch (error) {
         console.error(`Level ${levelNumber} could not start:`, error);
     }
 }
 
+
+// ============== Draw Game ==============
+
 function drawFrame() {
+
+    if (gameOver) {
+        return;
+    }
+
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Save FL1NK's position before moving
@@ -155,6 +228,8 @@ function drawFrame() {
         // Draw both Level 3 pirates
         level3Pirate1.draw(context);
         level3Pirate2.draw(context);
+
+        drawMapHint(context);
     }
 
     player.draw();

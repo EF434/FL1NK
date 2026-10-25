@@ -1188,7 +1188,9 @@ pointer-events: none;
     background-color: #ef4444;
 }
 
-.level2-info-board {
+/* ============== Level Information Board ============== */
+
+.levels-info-board {
     position: fixed;
     top: 70px;
     left: 20px;
@@ -1196,23 +1198,29 @@ pointer-events: none;
     z-index: 20;
 }
 
-.level2-info-board .info-board-image {
+.levels-info-board .info-board-image {
     width: 100%;
     height: auto;
     display: block;
 }
+
 .key-tick,
-.shield-tick {
+.shield-tick,
+.map-tick {
     position: absolute;
     width: 35px;
     height: auto;
-    display: none; 
-    
+    display: none;
+}
+
+.map-tick {
+    top: 41px;
+    right: 23px;
 }
 
 .key-tick {
-    top: 50px;
-    right: 29px;
+    top: 121px;
+    right: 23px;
 }
 
 .shield-tick {
@@ -1222,14 +1230,34 @@ pointer-events: none;
 
 #game-timer-text {
     position: absolute;
-    top: 277px;
-    left: 115px;
+    top: 210px;
+    left: 100px;
     margin: 0;
-    color: rgb(46, 0, 51);
+    color: white;
     font-size: 20px;
     font-weight: bold;
 }
+/* ======================= Level3 css  ====================== */
+/* Level 3 instruction board */
+.level3_info {
+    position: absolute;
+    bottom: 20px;
+    right: -28px;
+    width: 400px;
+    height: 310px;
 
+}
+
+/* Level 3 Legend */
+.level3-legend {
+    position: absolute;
+    bottom: 335px;
+    right: 10px;
+    width: 345px;
+    height: 210px;
+    z-index: 10;
+    pointer-events: none;
+}
 /* ================= About Me Page ================= */
 
 
