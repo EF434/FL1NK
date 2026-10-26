@@ -133,3 +133,11 @@ export function checkLevel1Collisions(player) {
     // FL1NK must leave the poison before another heart can be removed
     fl1nk_touched_poision = touchingPoisonNow;
 }
+
+
+// ============== CHECK LEVEL 1 VICTORY ==============
+
+// Return true when FL1NK has unlocked the treasure
+export function isLevel1Complete() {
+    return level1KeyTreasure.treasureIsOpen;
+}

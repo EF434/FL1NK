@@ -970,7 +970,7 @@ pointer-events: none;
     width: 100%;
     height: 100%;
     display: block;
-}
+}l
 
 
 #gameCanvas {
@@ -987,14 +987,16 @@ pointer-events: none;
 
 /* Player lives scoreboard */
 .player-life {
-    position: relative;
+    position: fixed;
+    top: 5px;
+    left: 25px;
     width: 190px;
     height: 65px;
+    z-index: 20;
 }
 
 .player-life-board {
     position: absolute;
-    inset: 0;
 }
 
 .player-life-board img {
@@ -1023,7 +1025,9 @@ pointer-events: none;
 
 /* css ================ */
 
-.score-board-page{
+/* ============== SCOREBOARD PAGE ============== */
+
+.score-board-page {
     background-image: url("../assets/images/score-page-bg.png");
     background-position: center;
     background-repeat: no-repeat;
@@ -1031,64 +1035,95 @@ pointer-events: none;
     height: 900px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .score-board-header {
     text-align: center;
-    position: relative;
-    top: -330px
+    margin-top: 30px;
 }
 
 .score-board-header p {
     font-family: 'Franklin Gothic Medium';
     font-size: 22px;
-    position: relative;
-    top: -40px;
+    margin-top: -30px;
 }
 
-.player-main-card{
-    position: relative;
-    top: -720px;
-    right: -230px;
+/* Leaderboard positioning */
+.leaderboard {
     width: 800px;
+    max-width: 90%;
+    margin: -700px auto 100px;
+}
+
+/* Leaderboard heading */
+.player-main-card {
+    width: 100%;
     height: 60px;
     background-color: #be3900;
     border-radius: 100px;
 }
 
-.player-main-card,
-.player-card-content{
-    font-family:'Franklin Gothic Medium';
+.player-card-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium';
     color: #fffaf8;
     font-size: 20px;
-    display: flex;    
-}
-.player-card-content h3 {
-    margin: 15px 255px 0px 30px;
 }
 
+.player-card-content h3 {
+    margin: 15px 0;
+}
+
+/* Registered players container */
+#leaderboard-players {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Individual player cards */
 .user-card-content {
-    position: relative;
-    top: -700px;
-    right: -300px;
-    width: 700px;
-    height: 65px;
+    width: 90%;
+    min-height: 65px;
+    margin: 0 auto;
     background-color: #FAF0D7;
     border: 4px dashed #75431F;
     border-radius: 30px;
-
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
+    text-align: center;
 }
 
+.user-card-content h3 {
+    font-family: 'Franklin Gothic Medium';
+    font-size: 22px;
+    color: #75431F;
+    margin: 10px;
+    overflow-wrap: anywhere;
+}
+
+/* No registered players message */
+.leaderboard-empty {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium';
+    font-size: 22px;
+    color: #75431F;
+    background-color: #FAF0D7;
+    padding: 20px;
+    border-radius: 20px;
+}
 
 /* LEVEL 2 ======================================================================== */
 .pirate-ship_two {
     position: absolute;
     width: 1000px;
-    left:  250px;
+    left:  210px;
     height: 650px;
     top: 5px;
     background-image: url("../assets/images/level2-ship.png");
@@ -1116,15 +1151,19 @@ pointer-events: none;
 
 
 
+/* ======================= Level 2 css  ====================== */
+.level1_info {
+    position: absolute;
+    bottom: 50px;
+    right: -70px;
+    width: 420px;
+    height: 470px;
+
+}
 
 
 
 
-
-
-
-
-/* ======================= Level2 css  ====================== */
 
 /* ================= LEVEL 2 SHIELD PROGRESS BAR ================= */
 
@@ -1188,55 +1227,18 @@ pointer-events: none;
     background-color: #ef4444;
 }
 
+.level2_info {
+    position: absolute;
+    bottom: 0px;
+    right: 15px;
+    width: 300px;
+    height: 550px;
+
+}
+
 /* ============== Level Information Board ============== */
 
-.levels-info-board {
-    position: fixed;
-    top: 70px;
-    left: 20px;
-    width: 200px;
-    z-index: 20;
-}
 
-.levels-info-board .info-board-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.key-tick,
-.shield-tick,
-.map-tick {
-    position: absolute;
-    width: 35px;
-    height: auto;
-    display: none;
-}
-
-.map-tick {
-    top: 41px;
-    right: 23px;
-}
-
-.key-tick {
-    top: 121px;
-    right: 23px;
-}
-
-.shield-tick {
-    top: 128px;
-    right: 29px;
-}
-
-#game-timer-text {
-    position: absolute;
-    top: 210px;
-    left: 100px;
-    margin: 0;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
 /* ======================= Level3 css  ====================== */
 /* Level 3 instruction board */
 .level3_info {
@@ -1257,6 +1259,106 @@ pointer-events: none;
     height: 210px;
     z-index: 10;
     pointer-events: none;
+}
+
+/* ============== LEVEL INFORMATION BOARDS ============== */
+
+/* Shared board positioning for all three levels */
+.level1-info-board,
+.level2-info-board,
+.level3-info-board {
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    width: 200px;
+    height: auto;
+    z-index: 20;
+}
+
+/* Board image for all three levels */
+.level1-info-board .info-board-image,
+.level2-info-board .info-board-image,
+.level3-info-board .info-board-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Shared green tick styling */
+.key-tick,
+.shield-tick,
+.map-tick {
+    position: absolute;
+    width: 35px;
+    height: auto;
+    display: none;
+}
+
+/* Shared timer styling */
+#game-timer-text {
+    position: absolute;
+    margin: 0;
+    font-family: "Lilita One";
+    font-size: 20px;
+    color: #a45405;
+    text-align: center;
+}
+
+
+/* ============== LEVEL 1 ============== */
+
+/* Golden key tick */
+.level1-info-board .key-tick {
+    top: 31px;
+    left: 138px;
+}
+
+/* Timer */
+.level1-info-board #game-timer-text {
+    top: 113px;
+    left: 101px;
+}
+
+
+/* ============== LEVEL 2 ============== */
+
+/* Golden key tick */
+.level2-info-board .key-tick {
+    bottom: 185px;
+    left: 136px;
+}
+
+/* Shield tick */
+.level2-info-board .shield-tick {
+    top: 128px;
+    left: 136px;
+}
+
+/* Timer */
+.level2-info-board #game-timer-text {
+    top: 208px;
+    left: 100px;
+}
+
+
+/* ============== LEVEL 3 ============== */
+
+/* Treasure map tick */
+.level3-info-board .map-tick {
+    top: 41px;
+    left: 142px;
+}
+
+/* Golden key tick */
+.level3-info-board .key-tick {
+    top: 121px;
+    left: 142px;
+}
+
+/* Timer */
+.level3-info-board #game-timer-text {
+    top: 208px;
+    left: 100px;
 }
 /* ================= About Me Page ================= */
 
@@ -1371,4 +1473,165 @@ pointer-events: none;
     height: auto;
     border-radius: 15px;
     border: 5px solid #8b5a2b;
+}
+
+
+
+
+/* ============== GAME VICTORY DISPLAY for all levels============== */
+
+
+.game-resut-display {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.player_victory_display {
+    position: relative;
+}
+
+.victory-img {
+    width: 465px;
+    display: block;
+}
+
+.victory_display_content {
+    position: absolute;
+    top: 200px;
+    left: 90px;
+    width: 275px;
+    text-align: center;
+}
+
+.victory_display_title {
+    position: relative;
+    left: 15px;
+    font-family: "Lilita One";
+    font-size: 30px;
+    color: #00c6ee;
+    text-shadow: 2px 2px 0 #4a4038;
+    margin: 23px 0;
+}
+
+#victory_display_message {
+    position: relative;
+    font-family: 'Franklin Gothic Medium';
+    font-size: 20px;
+    color: #60330e;
+    text-align: center;
+    line-height: 1.2;
+    margin: 8px 0 15px;
+    left: 20px;
+}
+
+.display_score {
+    position: relative;
+    font-family: "Lilita One";
+    font-size: 25px;
+    color: #006adb;
+    margin: 5px 0;
+    left: 15px;
+}
+
+#game_score {
+    position: relative;
+    font-family: "Lilita One";
+    font-size: 35px;
+    color: #d78100;
+    margin: 5px 0 12px;
+    left: 15px;
+}
+
+.victory-next-level,
+.victory-exit-level {
+    position: relative;
+    width: 160px;
+    padding: 10px;
+    margin: 5px;
+    font-family: "Lilita One";
+    font-size: 17px;
+    color: white;
+    left: 15px;
+    border: 3px solid #5a2b08;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.victory-next-level {
+    background-color: #298b35;
+}
+
+.victory-exit-level {
+    background-color: #236ca9;
+}
+
+
+/* GAME LOSING ELEMTS */
+
+.player_lost_display {
+    position: relative;
+}
+
+.losing-img {
+    width: 480px;
+    display: block;
+}
+
+.losing_display_content {
+    position: absolute;
+    top: 200px;
+    left: 90px;
+    width: 275px;
+    text-align: center;
+}
+
+.losing_display_title {
+    position: relative;
+    left: -10px;
+    top: 20px;
+    font-family: "Lilita One";
+    font-size: 40px;
+    color: #d62828;
+    text-shadow: 2px 2px 0 #4a4038;
+    margin: 23px 0;
+}
+
+#losing_display_message {
+    position: relative;
+    left: 5px;
+    top: 20px;
+    font-family: 'Franklin Gothic Medium';
+    font-size: 20px;
+    color: #60330e;
+    text-align: center;
+    line-height: 1.2;
+    margin: 8px 0 15px;
+}
+
+.losing-next-level,
+.losing-exit-level {
+    position: relative;
+    top: 30px;
+    left: 5px;
+    width: 160px;
+    padding: 10px;
+    margin: 5px;
+    font-family: "Lilita One";
+    font-size: 17px;
+    color: white;
+    border: 3px solid #a04601;
+    border-radius: 10px;
+}
+
+.losing-next-level {
+    background-color: #ef6305;
+}
+
+.losing-exit-level {
+    background-color: #00598d;
 }

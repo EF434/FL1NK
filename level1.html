@@ -64,11 +64,51 @@
             </div>
         </div>
 
-        
+        <div class="level1-info-board">
+            <img src="assets/images/game-status-board3.png" alt="Game Information board" class="info-board-image">
+            <img src="assets/images/green-tick.png" alt="Green tick icon" class="key-tick" id="key-tick">
+            <img src="assets/images/green-tick.png" alt="Green tick icon" class="shield-tick" id="shield-tick">
+            <p id="game-timer-text">05:00</p>
+        </div>
+
+        <div class="level1_info_images">
+            <img src="assets/images/level1_info_sheet.png" alt="Level 3 Instructions" class="level1_info">
+        </div>
 
 
     </section>
 
+    <section>
+        <div id="game-resut-display" class="game-resut-display">
+            <div class="player_victory_display">
+                <img src="assets/images/player_won_img.png" alt="Game victory display" id="victory-img" class="victory-img">
+                <div class="victory_display_content">
+                    <h1 class="victory_display_title"> LEVEL COMPLETE!</h1>
+                    <p id="victory_display_message">Congratulations! <br> You found the treasure!</p>
+                    <p class="display_score">FINAL SCORE</p>
+                    <h2 id="game_score">0</h2>
+                    <button class="victory-next-level">NEXT LEVEL </button>
+                    <button class="victory-exit-level">EXIT </button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div id="game-lost-display" class="game-resut-display">
+            <div class="player_lost_display">
+            <img src="assets/images/player_lost_img.png" alt="Game lost display" id="losing-img" class="losing-img">
+            <div class="losing_display_content">
+                <h1 class="losing_display_title">GAME OVER</h1>
+                <p id="losing_display_message"> YOU LOST <br> Better Luck Next Time! </p>
+                <button class="losing-next-level">REPLAY LEVEL</button>
+                <button class="losing-exit-level">EXIT</button>
+            </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Load FL1NK game -->
     <script type="module" src="js/game.js"></script>

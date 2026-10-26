@@ -69,13 +69,43 @@
         </div>
 
 
-        <div class="levels-info-board">
+        <div class="level3-info-board">
             <img src="assets/images/game-status-board2.png" alt="Game Information board"  class="info-board-image">
             <img src="assets/images/green-tick.png" alt="Treasure map collected" class="map-tick" id="map-tick">
             <img src="assets/images/green-tick.png" alt="Golden key collected" class="key-tick" id="key-tick">
             <p id="game-timer-text">05:00</p>
         </div>
 
+    </section>
+
+     <section>
+        <div id="game-resut-display" class="game-resut-display">
+            <div class="player_victory_display">
+                <img src="assets/images/player_won_img.png" alt="Game victory display" id="victory-img" class="victory-img">
+                <div class="victory_display_content">
+                    <h1 class="victory_display_title"> LEVEL COMPLETE!</h1>
+                    <p id="victory_display_message">Congratulations! <br> You found the treasure!</p>
+                    <p class="display_score">FINAL SCORE</p>
+                    <h2 id="game_score">0</h2>
+                    <button class="victory-exit-level">EXIT </button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div id="game-lost-display" class="game-resut-display">
+            <div class="player_lost_display">
+            <img src="assets/images/player_lost_img.png" alt="Game lost display" id="losing-img" class="losing-img">
+            <div class="losing_display_content">
+                <h1 class="losing_display_title">GAME OVER</h1>
+                <p id="losing_display_message"> YOU LOST <br> Better Luck Next Time! </p>
+                <button class="losing-exit-level">EXIT</button>
+            </div>
+            </div>
+        </div>
     </section>
 
     <script type="module" src="js/game.js"></script>

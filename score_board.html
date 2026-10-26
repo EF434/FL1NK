@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
-    
+
 </head>
 <body>
     <header>
@@ -56,7 +56,7 @@
                     <p class="font-styling"> who will find the most treasure? hmmm...</p>
                 </div>
             </div>
-                
+
 
             <div class="leaderboard">
                 <div class="player-main-card">
@@ -66,13 +66,12 @@
                         <h3> Score </h3>
                     </div>
                 </div>
-                <div class="user-card-content">
-                        <h3> 0 </h3>
-                        <h3> name </h3>
-                        <h3> 0 </h3>
+
+                <!-- Registered players will be displayed here -->
+                <div id="leaderboard-players">
                 </div>
             </div>
-        
+
         </main>
 
      <footer>
@@ -80,7 +79,7 @@
         <div class="waves">
             <div class="wave" id="wave1"></div>
         </div>
-        
+
         <!-- Add footer section with icons, redirect user to the social media pages-->
         <ul class="social-icons">
             <li><a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a></li>
@@ -97,9 +96,12 @@
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
     </script>
     <script
-    
+
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
+
+    <!-- JavaScript to display registered players and scores -->
+    <script src="js/score_board.js"></script>
 </body>
 </html>

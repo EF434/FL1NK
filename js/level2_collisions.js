@@ -1,4 +1,3 @@
-
 import { get_pirate_position } from "./pirate.js";
 import { KeyTreasure } from "./key_treasure.js";
 import { Shield } from "./shield.js";
@@ -170,4 +169,12 @@ export function drawLevel2Collisions(context, decks) {
 
     // Draw the shield and countdown
     level2Shield.draw(context, decks);
+}
+
+
+// ============== CHECK LEVEL 2 VICTORY ==============
+
+// Return true when FL1NK has unlocked the Level 2 treasure
+export function isLevel2Complete() {
+    return level2KeyTreasure.treasureIsOpen;
 }
