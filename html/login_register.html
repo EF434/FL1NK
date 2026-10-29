@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,48 +8,67 @@
     <!-- Provide the title name-->
     <title>Login/Register - FL1NK</title>
     <!-- Add a favicon and link external CSS file-->
-    <link rel="icon" href="assets/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="../assets/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../css/style.css">
     <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
-    
 </head>
 <body class="signup-page-style">
     <header>
         <!-- Navigate user to home page when they click the FL1NK Icon-->
-        <a href="index.html" class="navbar-logo-link">
-            <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
+        <a href="../index.html" class="navbar-logo-link">
+            <img class="navbar-logo" src="../assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
 
         <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
                 <!-- Home page icon-->
-                <li><a href="index.html"> 
-                    <img src="assets/images/home-page-icon.png" alt="Home Page icon"></a>
+                <li><a href="../index.html">
+                    <img src="../assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
                 <!-- Home page icon-->
                 <li><a href="login_register.html">
-                    <img src="assets/images/signup-icon.png" alt="Login Page Icon"></a>
+                    <img src="../assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
                 <!-- Home page icon-->
                 <li><a href="score_board.html">
-                    <img src="assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
+                    <img src="../assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
                 <!-- Home page icon-->
                 <li><a href="play_game.html">
-                    <img src="assets/images/play-icon.png" alt="Play Game Icon"></a>
+                    <img src="../assets/images/play-icon.png" alt="Play Game Icon"></a>
                 </li>
                 <li><a href="about_me.html">
-                    <img src="assets/images/about_page-icon.png" alt="About Us Icon"></a>
+                    <img src="../assets/images/about_page-icon.png" alt="About Us Icon"></a>
+                </li>
+            
+                <!-- show user profile pic after logged in -->
+                <li id="nav-profile-pic" class="nav-profile-pic" hidden>
+
+                    <!-- profile pic icon -->
+                    <button type="button" class="nav-profile" id="nav-profile">
+                        <img id="user_pic" class="user-pic" src="../assets/images/default_pic.png" alt="Player Profile Picture">
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+                        <p id="nav-profile-usrname"></p>
+                        <p id="nav-profile-score"></p>
+                        <button type="button" class="navbar-logout-button" onclick="logout()">
+                            Logout
+                        </button>
+
+                    </div>
+
                 </li>
             </ul>
         </nav>
     </header>
 
-    <main class="login-register-page"> 
+    <main class="login-register-page">
         <div class="main-section">
             <!-- Create a checkbox for dynamic feature-->
             <input type="checkbox" id="checkbox">
@@ -59,7 +79,7 @@
                 <form>
                     <!-- Profile Picture -->
                     <div class="upload-picture">
-                        <label class="profile-pic-circle" id="profile-circle">
+                        <label for="profile-image" class="profile-pic-circle" id="profile-circle">
                             <img id="profile-pic" src="" alt="User Profile Picture">
                             <span id="plus-icon">+</span>
                         </label>
@@ -70,70 +90,67 @@
 
                     <!-- Add Fist name heading-->
                     <div>
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Emaan Fatima" id="fullname" required="">
-                    <p class="error-message" id="user-name-error"></p>
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Emaan Fatima" id="fullname" required="">
+                        <p class="error-message" id="user-name-error"></p>
                     </div>
 
-
                     <!-- Add Username heading-->
-                     <div>
-                    <label>Username</label>
-                    <input type="text" placeholder="emaans101" id="username" required="">
-                    <p class="error-message" id="username-error"></p>
+                    <div>
+                        <label>Username</label>
+                        <input type="text" placeholder="emaans101" id="username" required="">
+                        <p class="error-message" id="username-error"></p>
                     </div>
 
                     <!-- Add Emial heading-->
                     <div>
-                    <label>Email</label>
-                    <input type="email" id="email" placeholder="emaanedu.hw@gmail.com" required="">
-                    <p class="error-message" id="email-error"></p>
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="emaanedu.hw@gmail.com" required="">
+                        <p class="error-message" id="email-error"></p>
                     </div>
 
                     <!-- Add Fist name heading-->
                     <div>
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Password" required="">
-                    <p class="error-message" id="password-error"></p>
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="Password" required="">
+                        <p class="error-message" id="password-error"></p>
                     </div>
 
                     <!-- Confirm Password -->
                     <div>
-                    <label>Re-enter Password</label>
-                    <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-                    <p class="error-message" id="confirm-password-error"></p>
+                        <label>Re-enter Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                        <p class="error-message" id="confirm-password-error"></p>
                     </div>
 
                     <!-- Date of Birth -->
                     <div>
-                    <label>Date of Birth</label>
-                    <input type="date" id="user_dob" required>
-                    <p class="error-message" id="dob-error"></p>
+                        <label>Date of Birth</label>
+                        <input type="date" id="user_dob" required>
+                        <p class="error-message" id="dob-error"></p>
                     </div>
 
                     <!-- Add Phone Number -->
                     <div>
-                    <label>Contact Number</label>
-                    <input type="tel"  id="phone-number" placeholder="+971 00 000 000" required="">
-                    <p class="error-message" id="number-error"></p>
+                        <label>Contact Number</label>
+                        <input type="tel" id="phone-number" placeholder="+971 00 000 000" required="">
+                        <p class="error-message" id="number-error"></p>
                     </div>
 
                     <!-- Sign Up button -->
-                     <p id="success-message"></p>
+                    <p id="success-message"></p>
                     <button type="button" onclick="processInput()">Sign up</button>
-
                 </form>
-            
             </div>
 
-            <div class="login"> 
+            <div class="login">
                 <form>
                     <label for="checkbox">Login</label>
 
                     <!-- Add email-->
-                    <label> Email</label>
+                    <label>Email</label>
                     <input type="email" id="loginEmail" placeholder="Email" required>
-                   
+
                     <!-- Add password-->
                     <label>Password</label>
                     <div class="login-password-eye">
@@ -143,22 +160,18 @@
 
                     <!-- submit-->
                     <p class="feedback-message" id="loginFeedback"></p>
-                    <button type="button">Login</button>
+                    <button type="button" onclick="login()">Login</button>
                 </form>
-    
             </div>
-            
         </div>
     </main>
-       
-
 
     <footer>
         <!-- Adding the waves animation with css-->
         <div class="waves">
             <div class="wave" id="wave1"></div>
         </div>
-        
+
         <!-- Add footer section with icons, redirect user to the social media pages-->
         <ul class="social-icons">
             <li><a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a></li>
@@ -169,19 +182,17 @@
         <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
     </footer>
 
-
-
     <!-- Adding external icons for footer in javascript-->
     <script
-     type="module" 
-     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
+        type="module"
+        src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
     </script>
     <script
-     nomodule 
-     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
+        nomodule
+        src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
 
-    <script src="js/login-register.js"></script>
-    
+    <script src="../js/login-register.js"></script>
+    <script src="../js/navbar_profile.js"></script>
 </body>
 </html>

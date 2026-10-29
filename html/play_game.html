@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Declarations for the Home page-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Provide the title name-->
+    <title>Play Game - FL1NK</title>
+    <!-- Add a favicon and link external CSS file-->
+    <link rel="icon" href="../assets/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Add external fonts from Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="navbar-logo-link">
+            <img class="navbar-logo" src="../assets/images/nav-logo.png" alt="FL1NK Logo">
+        </a>
+
+        <!-- Home Page Navigation Bar links -->
+        <nav class="navbar-links">
+            <ul>
+                <!-- Home page icon-->
+                <li><a href="../index.html"> 
+                    <img src="../assets/images/home-page-icon.png" alt="Home Page icon"></a>
+                </li>
+                <!-- Home page icon-->
+                <li><a href="login_register.html">
+                    <img src="../assets/images/signup-icon.png" alt="Login Page Icon"></a>
+                </li>
+                <!-- Home page icon-->
+                <li><a href="score_board.html">
+                    <img src="../assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
+                </li>
+                <!-- Home page icon-->
+                <li><a href="play_game.html">
+                    <img src="../assets/images/play-icon.png" alt="Play Game Icon"></a>
+                </li>
+                <li><a href="about_me.html">
+                    <img src="../assets/images/about_page-icon.png" alt="About Us Icon"></a>
+                </li>
+
+                                <!-- show user profile pic after logged in -->
+                <li id="nav-profile-pic" class="nav-profile-pic" hidden>
+
+                    <!-- profile pic icon -->
+                    <button type="button" class="nav-profile" id="nav-profile">
+                        <img id="user_pic" class="user-pic" src="../assets/images/default_pic.png" alt="Player Profile Picture">
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+                        <p id="nav-profile-usrname"></p>
+                        <p id="nav-profile-score"></p>
+                        <button type="button" class="navbar-logout-button" onclick="logout()">
+                            Logout
+                        </button>
+
+                    </div>
+
+                </li>
+            </ul>
+        </nav>
+    </header> 
+
+
+    <main> 
+        <div class="play-game-video">
+
+            <video autoplay muted loop>
+                <source src="../assets/videos/play-game-bg.mp4" type="video/mp4">
+            </video>
+
+            <img class="play-game-banner" src="../assets/images/play-banner.png" alt="FL1NK Banner">
+
+            <div class="play-game-text">
+            <h1> PLAY GAME</h1>
+            <p> — Choose your level and set sail! — </p>
+            </div>
+
+            <div class="game-level-cards">
+
+                <div class="level">
+                <img class="game-level-card" src="../assets/images/level-card.png" alt="Game Level Card">
+                <img class="level-banner1" src="../assets/images/level-banner.png" alt="Level Banner 1">
+                <h3  class="level-title1">Level 1</h3>
+                <img class="level-one" src="../assets/images/level-one.png" alt="Level One">
+                <p class="level-description1"> The lost Treasure</p>
+                <a href="level1.html" class="play-button level-button">PLAY NOW</a> 
+                </div>
+
+                <div class="leve2">
+                <img class="game-level-card" src="../assets/images/level-card.png" alt="Game Level Card">
+                <img class="level-banner2" src="../assets/images/level-banner.png" alt="Level Banner 2">
+                <h3  class="level-title2">Level 2</h3>
+                <p class="level-description2"> The mysterious Island</p>
+                <img class="level-two" src="../assets/images/level-two.png" alt="Level Two">
+                <a href="level2.html" class="play-button level-button" id="level2-button">PLAY NOW</a>
+                <img src="../assets/images/lock.png" alt="Level 2 Lock" class="levels-lock" id="level2-lock"> 
+                </div>
+
+                <div class="leve3">
+                <img class="game-level-card" src="../assets/images/level-card.png" alt="Game Level Card">
+                <img class="level-banner3" src="../assets/images/level-banner.png" alt="Level Banner 3">
+                <h3  class="level-title3">Level 3</h3>
+                <img class="level-three" src="../assets/images/level-three.png" alt="Level Three">
+                <p class="level-description3"> The hidden Cave</p>
+                <a href="level3.html" class="play-button level-button" id="level3-button">PLAY NOW</a>   
+                <img src="../assets/images/lock.png" alt="Level 3 Lock" class="levels-lock" id="level3-lock"> 
+                </div>
+
+            </div>
+        </div>
+
+     </main>
+
+     <section>
+        <div class="guest_user_popup" id="guest_user_popup">
+            <div class="guest_popup">
+                <img src="../assets/images/guest_popup.png" alt="Guest User Popup" class="popup_img">
+                <div class="popup_img_content">
+                    <p> Either login/register first or continue as guest!</p>
+                    <a href="login_register.html" class="popup_button"> LOGIN / REGISTER </a>
+                    <button type="button" class="popup_button" id="guest_button">PLAY AS GUEST</button>
+                </div>
+            </div>
+        </div>
+     </section>
+
+
+      <footer>
+        <!-- Adding the waves animation with css-->
+        <div class="lazy-bg" class="waves">
+            <div class="wave" id="wave1"></div>
+        </div>
+        
+        <!-- Add footer section with icons, redirect user to the social media pages-->
+        <ul class="social-icons">
+            <li><a href="https://www.facebook.com/"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="https://x.com/"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></a></li>
+        </ul>
+        <!-- Addedd copyright text-->
+        <p class="copyright-text">© 2026 FL1NK. All rights reserved.</p>
+    </footer>
+
+    <!-- Adding external icons for footer in javascript-->
+    <script
+     type="module" 
+     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js">
+    </script>
+    <script
+     nomodule 
+     src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
+    </script>
+    <script src="../js/navbar_profile.js"></script>
+    <script src="../js/guest_mode.js"></script>
+    <script src="../js/level_lock.js"></script>
+
+
+</body>
+</html>

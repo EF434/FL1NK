@@ -1,119 +1,76 @@
-"use strict";
 
-// ============== FL1NK SCOREBOARD ==============
+// get info from id
+let leaderboardPlayers = document.getElementById("leaderboard-players");
 
-// Get the leaderboard container
-const leaderboardPlayers = document.getElementById("leaderboard-players");
-
-
-// Get all registered players from localStorage
+// get info of registerd players
 function getRegisteredPlayers() {
 
+    // Store all registered players
     let players = [];
 
-    // Go through all saved information in localStorage
-    for (let i = 0; i < localStorage.length; i++) {
+    // Go through localStorage
+    let i = 0 
+    for (; i < localStorage.length; i++) {
 
         let key = localStorage.key(i);
-        let savedData = localStorage.getItem(key);
+        let player = JSON.parse(localStorage.getItem(key));
 
-        try {
-
-            // Convert JSON data into a JavaScript object
-            let player = JSON.parse(savedData);
-
-            // Check whether the saved data belongs to a registered player
-            if (
-                player &&
-                typeof player === "object" &&
-                typeof player.email === "string" &&
-                typeof player.username === "string" &&
-                player.email === key
-            ) {
-
-                // Get the player's total best score
-                let score = Number(player.totalScore || 0);
-
-                // Add the player to the leaderboard array
-                players.push({
-                    username: player.username,
-                    score: Number.isFinite(score) && score >= 0 ? score : 0
-                });
-            }
-
-        } catch (error) {
-
-            // Ignore other information saved in localStorage
+        // Check if it is a registered player
+        if (player == null) {
             continue;
         }
-    }
 
-    // Sort players from highest score to lowest score
-    players.sort(function(player1, player2) {
-
-        if (player2.score !== player1.score) {
-            return player2.score - player1.score;
+        if (player.email != key) {
+            continue;
         }
 
-        return player1.username.localeCompare(player2.username);
-    });
+        // Get the player's score
+        let score = player.totalScore;
+        players.push({username: player.username, score: score});
+    }
 
+    // sort player's score high to low
+    players.sort((player1, player2) => {
+        // handle when two scores are the same
+        if (player1.score == player2.score) {
+            return player1.username.localeCompare(player2.username);
+        }
+
+        return player2.score - player1.score;
+    });
+        
     return players;
 }
 
-
-// Display the registered players on the scoreboard
+// Display the leaderboard
 function displayLeaderboard() {
 
+    // get the score board content
     let players = getRegisteredPlayers();
 
-    // Clear the previous player cards
     leaderboardPlayers.innerHTML = "";
 
-    // Display a message if there are no registered players
-    if (players.length === 0) {
-
-        let message = document.createElement("p");
-
-        message.textContent = "No players registered yet!";
-        message.className = "leaderboard-empty";
-
-        leaderboardPlayers.appendChild(message);
-
+    // if no players registered than display message
+    if (players.length == 0) {
+        leaderboardPlayers.innerHTML = 
+        "<p class='leaderboard-empty'>No players registered yet!</p>";
         return;
     }
 
-    // Create a scoreboard card for every registered player
-    for (let i = 0; i < players.length; i++) {
+    // display each player's rank, score and username
+    let i = 0;
+    for (; i < players.length; i++) {
 
-        let player = players[i];
+        let player = players[i]; // get each player
 
-        // Create the player card
-        let playerCard = document.createElement("div");
-        playerCard.className = "user-card-content";
-
-        // Create the rank
-        let rank = document.createElement("h3");
-        rank.textContent = i + 1;
-
-        // Create the player username
-        let username = document.createElement("h3");
-        username.textContent = player.username;
-
-        // Create the player's total score
-        let score = document.createElement("h3");
-        score.textContent = player.score;
-
-        // Add rank, username and score to the player card
-        playerCard.appendChild(rank);
-        playerCard.appendChild(username);
-        playerCard.appendChild(score);
-
-        // Display the player card
-        leaderboardPlayers.appendChild(playerCard);
+        // display content
+        leaderboardPlayers.innerHTML += 
+        `<div class="user-card-content">
+                <h3>${i + 1}</h3>
+                <h3>${player.username}</h3>
+                <h3>${player.score}</h3>
+        </div>`;
     }
 }
 
-
-// Display the leaderboard when the page loads
 displayLeaderboard();

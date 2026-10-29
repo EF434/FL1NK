@@ -141,7 +141,7 @@ export class Pirate {
 
 // Create the original Level 2 pirate
 const level2Pirate = new Pirate(
-    "assets/images/pirate-sprite-sheet.png",
+    "../assets/images/pirate-sprite-sheet.png",
     300,
     3,
     2,

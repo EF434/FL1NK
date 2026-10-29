@@ -18,7 +18,7 @@ export class KeyTreasure {
         this.treasureOpenImage.src = treasureOpenPath;
 
         // Treasure opening sound
-        this.treasureSound = new Audio("assets/sounds/treasure.mp3");
+        this.treasureSound = new Audio("../assets/sounds/treasure.mp3");
 
         // Key position and size
         this.keyX = keyX;

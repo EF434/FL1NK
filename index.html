@@ -30,20 +30,40 @@
                     <img src="assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
                 <!-- Home page icon-->
-                <li><a href="login_register.html">
+                <li><a href="html/login_register.html">
                     <img src="assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
                 <!-- Home page icon-->
-                <li><a href="score_board.html">
+                <li><a href="html/score_board.html">
                     <img src="assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
                 <!-- Home page icon-->
-                <li><a href="play_game.html">
+                <li><a href="html/play_game.html">
                     <img src="assets/images/play-icon.png" alt="Play Game Icon"></a>
                 </li>
 
-                <li><a href="about_me.html">
+                <li><a href="html/about_me.html">
                     <img src="assets/images/about_page-icon.png" alt="About Us Icon"></a>
+                </li>
+
+                <!-- show user profile pic after logged in -->
+                <li id="nav-profile-pic" class="nav-profile-pic" hidden>
+
+                    <!-- profile pic icon -->
+                    <button type="button" class="nav-profile" id="nav-profile">
+                        <img id="user_pic" class="user-pic" src="../assets/images/default_pic.png" alt="Player Profile Picture">
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+                        <p id="nav-profile-usrname"></p>
+                        <p id="nav-profile-score"></p>
+                        <button type="button" class="navbar-logout-button" onclick="logout()">
+                            Logout
+                        </button>
+
+                    </div>
+
                 </li>
             </ul>
         </nav>
@@ -64,13 +84,14 @@
                 out     
             </p>
             <!-- Play Game button on banner-->
-            <a class="play-button" href="play_game.html">Play Game</a>
+            <a class="play-button" href="html/play_game.html">Play Game</a>
+            <a class="about-button " href="#about-game">About the Game</a>
 
         </div>
 
     </section>
 
-    <main class="play-game-section">
+    <main class="play-game-section" id="about-game">
         <!-- Game Information Section-->
          <div class="section-content">
             <!-- Add text and apply CSS for styling-->
@@ -120,7 +141,7 @@
 
             <!-- Adding a button to redirect user to play game page-->
             <div class="playing-button-section">
-                    <a class="playing-button" href="play_game.html">ARE YOU READY TO PLAY?</a>
+                    <a class="playing-button" href="html/play_game.html">ARE YOU READY TO PLAY?</a>
                     <p class="play-subtext">The maze is waiting... can you find FL1NK?</p>
             </div> 
 
@@ -156,6 +177,7 @@
 
     <script src="js/home-page.js"></script>
     <script src="js/background_music.js"></script>
+    <script src="js/navbar_profile.js"></script>
 
 </body>
 </html>

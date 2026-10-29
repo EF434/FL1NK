@@ -1,5 +1,3 @@
-// For each deck, set the deck number, first coin x position, and number of coins.
-// The y position is set automatically from the deck height.
 export const coins_for_every_level = {
     "1": [
         { deck: 1, firstX: 400, count:  7 },

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Game</title>
     <!-- Link Favicon-->
-    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+    <link rel="icon" href="../assets/images/favicon.png" type="image/png">
 
     <!-- Link Css-->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <!-- Add fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,12 +22,12 @@
     <main>
         <div class="ocean-bg-video">
             <video autoplay muted loop>
-                <source src="assets/videos/level2_bg_video.mp4" type="video/mp4">
+                <source src="../assets/videos/level3_bg_video.mp4" type="video/mp4">
             </video>
 
-            <div class="pirate-ship_two">
+            <div class="pirate-ship_three">
                 
-                <canvas id="fl1nk-game-canvas-level2" width="1400" height="950"></canvas>
+                <canvas id="fl1nk-game-canvas-level3" width="1400" height="950"></canvas>
             </div>
         </div>
     </main>
@@ -36,16 +36,16 @@
     <section class="game-controls">
         <div class="exit-button">
             <a href="play_game.html" class="exit-button-link">
-                <img src="assets/images/exit-icon.png" alt="Exit Icon">
+                <img src="../assets/images/exit-icon.png" alt="Exit Icon">
             </a>
         </div>
 
  
         <div class="scoreboard">
-            <img src="assets/images/display-score.png" alt="Score Board Board" class="scoreboard-image">
+            <img src="../assets/images/display-score.png" alt="Score Board Board" class="scoreboard-image">
 
             <div class="scoreboard-text">
-                <img src="assets/images/game-coin.png" alt="Player Score" class="coin-img">
+                <img src="../assets/images/game-coin.png" alt="Player Score" class="coin-img">
                 <h3>SCORE</h3>
                 <p id="score-value">0</p>
             </div>
@@ -53,54 +53,41 @@
 
         <div class="player-life">
             <div class="player-life-board">
-                <img src="assets/images/lives-board.png" alt="Player Life Board Image">
+                <img src="../assets/images/lives-board.png" alt="Player Life Board Image">
             </div>
 
             <div class="play-life-hearts" id="play-life-hearts">
-                <img src="assets/images/heart.png" alt="Life" class="life-heart">
-                <img src="assets/images/heart.png" alt="Life" class="life-heart">
-                <img src="assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="../assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="../assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="../assets/images/heart.png" alt="Life" class="life-heart">
             </div>
         </div>
 
-        <div class="level2-info-board">
-            <img src="assets/images/game-status-board.png" alt="Game Information board" class="info-board-image">
-            <img src="assets/images/green-tick.png" alt="Green tick icon" class="key-tick" id="key-tick">
-            <img src="assets/images/green-tick.png" alt="Green tick icon" class="shield-tick" id="shield-tick">
+        <div class="level3_info_images">
+            <img src="../assets/images/level3_info_sheet.png" alt="Level 3 Instructions" class="level3_info">
+            <img src="../assets/images/level3_legend.png" alt="Level 3 Instructions" class="level3-legend">
+        </div>
+
+
+        <div class="level3-info-board">
+            <img src="../assets/images/game-status-board2.png" alt="Game Information board"  class="info-board-image">
+            <img src="../assets/images/green-tick.png" alt="Treasure map collected" class="map-tick" id="map-tick">
+            <img src="../assets/images/green-tick.png" alt="Golden key collected" class="key-tick" id="key-tick">
             <p id="game-timer-text">05:00</p>
         </div>
-
-
-        <!-- Shield progress bar -->
-        <div class="game_shield" id="game_shield">
-            <img src="assets/images/game_shield.png" alt="Game Shield" class="shield_img">
-            <p class="shield-title">SHIELD</p>
-            <p class="shield-time" id="shield-time">10s</p>
-
-            <div class="shield-progress-bar">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-        </div>
-
-        <div class="level2_info_images">
-            <img src="assets/images/level2_info_sheet.png" alt="Level 2 Instructions" class="level2_info">
-        </div>
-
-
 
     </section>
 
      <section>
         <div id="game-resut-display" class="game-resut-display">
             <div class="player_victory_display">
-                <img src="assets/images/player_won_img.png" alt="Game victory display" id="victory-img" class="victory-img">
+                <img src="../assets/images/player_won_img.png" alt="Game victory display" id="victory-img" class="victory-img">
                 <div class="victory_display_content">
                     <h1 class="victory_display_title"> LEVEL COMPLETE!</h1>
                     <p id="victory_display_message">Congratulations! <br> You found the treasure!</p>
                     <p class="display_score">FINAL SCORE</p>
                     <h2 id="game_score">0</h2>
-                    <button class="victory-next-level">NEXT LEVEL </button>
-                    <button class="victory-exit-level">EXIT </button>
+                    <button class="victory-exit-level" src="play_game.html">EXIT </button>
 
                 </div>
             </div>
@@ -111,20 +98,17 @@
     <section>
         <div id="game-lost-display" class="game-resut-display">
             <div class="player_lost_display">
-            <img src="assets/images/player_lost_img.png" alt="Game lost display" id="losing-img" class="losing-img">
+            <img src="../assets/images/player_lost_img.png" alt="Game lost display" id="losing-img" class="losing-img">
             <div class="losing_display_content">
                 <h1 class="losing_display_title">GAME OVER</h1>
                 <p id="losing_display_message"> YOU LOST <br> Better Luck Next Time! </p>
-                <button class="losing-next-level">REPLAY LEVEL</button>
-                <button class="losing-exit-level">EXIT</button>
+                <button class="losing-exit-level" src="play_game.html">EXIT</button>
             </div>
             </div>
         </div>
     </section>
 
-    <script type="module" src="js/game.js"></script>
-
-
+    <script type="module" src="../js/game.js"></script>
 
 
     <!-- Adding external icons for footer-->

@@ -1,15 +1,15 @@
 import { KeyTreasure } from "./key_treasure.js";
 
 // Sounds
-const keySound = new Audio("assets/sounds/key.mp3");
-const poisonSound = new Audio("assets/sounds/poison.mp3");
+const keySound = new Audio("../assets/sounds/key.mp3");
+const poisonSound = new Audio("../assets/sounds/poison.mp3");
 
 // Poison images
 const poisonImage1 = new Image();
-poisonImage1.src = "assets/images/poison_1.png";
+poisonImage1.src = "../assets/images/poison_1.png";
 
 const poisonImage2 = new Image();
-poisonImage2.src = "assets/images/poison_2.png";
+poisonImage2.src = "../assets/images/poison_2.png";
 
 // Poison size and positions
 const poisonWidth = 100;
@@ -37,9 +37,9 @@ let fl1nk_touched_poision = false;
 
 // Create key and treasure for Level 1
 const level1KeyTreasure = new KeyTreasure(
-    "assets/images/level1_key.png",
-    "assets/images/treasure-locked1.png",
-    "assets/images/treasure-open1.png",
+    "../assets/images/level1_key.png",
+    "../assets/images/treasure-locked1.png",
+    "../assets/images/treasure-open1.png",
     keyX, keyDeck, keyWidth, keyHeight,
     treasureX, treasureDeck, treasureWidth, treasureHeight
 );

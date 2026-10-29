@@ -11,7 +11,7 @@ export class CoinManager {
         this.scoreElement = scoreElement;
         this.score = 0;
 
-        this.coinSound = new Audio("assets/sounds/coin.mp3");
+        this.coinSound = new Audio("../assets/sounds/coin.mp3");
 
         for (const placement of coins_for_every_level[levelNumber]) {
             const deck = decks[placement.deck];
@@ -25,7 +25,7 @@ export class CoinManager {
         }
 
         this.image = new Image();
-        this.image.src = "assets/images/coin.png";
+        this.image.src = "../assets/images/coin.png";
     }
 
     draw() {

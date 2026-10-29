@@ -35,7 +35,7 @@ export class Player_Fl1nk {
         this.currentDeck = spawn.deck ?? mazeData.spawn?.deck ?? 1;
         this.xPos = spawn.x ?? mazeData.spawn?.x ?? 910;
         this.image = new Image();
-        this.image.src = "assets/images/fl1nk-spirate-sheet.png";
+        this.image.src = "../assets/images/fl1nk-spirate-sheet.png";
 
         this.snapToDeck();
     }

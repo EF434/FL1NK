@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Provide the title name-->
-    <title>Home - FL1NK</title>
+    <title>About Me - FL1NK</title>
     <!-- Add a favicon and link external CSS file-->
-    <link rel="icon" href="assets/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="../assets/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../css/style.css">
     <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,32 +18,52 @@
 <body>
     <header>
         <!-- Navigate user to home page when they clieck the FL1NK Icon-->
-        <a href="index.html" class="navbar-logo-link">
-            <img class="navbar-logo" src="assets/images/nav-logo.png" alt="FL1NK Logo">
+        <a href="../index.html" class="navbar-logo-link">
+            <img class="navbar-logo" src="../assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
 
         <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
                 <!-- Home page icon-->
-                <li><a href="index.html"> 
-                    <img src="assets/images/home-page-icon.png" alt="Home Page icon"></a>
+                <li><a href="../index.html"> 
+                    <img src="../assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
                 <!-- Home page icon-->
                 <li><a href="login_register.html">
-                    <img src="assets/images/signup-icon.png" alt="Login Page Icon"></a>
+                    <img src="../assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
                 <!-- Home page icon-->
                 <li><a href="score_board.html">
-                    <img src="assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
+                    <img src="../assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
                 <!-- Home page icon-->
                 <li><a href="play_game.html">
-                    <img src="assets/images/play-icon.png" alt="Play Game Icon"></a>
+                    <img src="../assets/images/play-icon.png" alt="Play Game Icon"></a>
                 </li>
 
                 <li><a href="about_me.html">
-                    <img src="assets/images/about_page-icon.png" alt="About Us Icon"></a>
+                    <img src="../assets/images/about_page-icon.png" alt="About Us Icon"></a>
+                </li>
+
+                                <!-- show user profile pic after logged in -->
+                <li id="nav-profile-pic" class="nav-profile-pic" hidden>
+
+                    <!-- profile pic icon -->
+                    <button type="button" class="nav-profile" id="nav-profile">
+                        <img id="user_pic" class="user-pic" src="../assets/images/default_pic.png" alt="Player Profile Picture">
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="nav-profile-dropdown" id="nav-profile-dropdown">
+                        <p id="nav-profile-usrname"></p>
+                        <p id="nav-profile-score"></p>
+                        <button type="button" class="navbar-logout-button" onclick="logout()">
+                            Logout
+                        </button>
+
+                    </div>
+
                 </li>
             </ul>
         </nav>
@@ -53,7 +73,7 @@
 
         <div class="about-founder-section">
 
-            <img src="assets/images/emaan-profile.png" alt="Founder of FL1NK" class="my-picture">
+            <img src="../assets/images/emaan-profile.png" alt="Founder of FL1NK" class="my-picture">
 
             <div class="info-about-me">
                 <h1>Meet the Founder</h1>
@@ -110,10 +130,7 @@
             </div>
 
             <!-- First Year Project Picture -->
-            <img
-                src="assets/images/game_inspo.png"
-                alt="First Year Pirate Maze Search Algorithm Project"
-                class="story-picture">
+            <img src="../assets/images/game_inspo.png" alt="First Year Pirate Maze Search Algorithm Project" class="story-picture">
 
         </div>
 
@@ -146,7 +163,9 @@
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
 
-    <script src="js/home-page.js"></script>
+    <script src="../js/home-page.js"></script>
+    <script src="../js/navbar_profile.js"></script>
+
 
 </body>
 </html>

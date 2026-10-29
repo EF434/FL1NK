@@ -3,33 +3,33 @@
 
 // Load images
 const poisonImage = new Image();
-poisonImage.src = "assets/images/poison_2.png";
+poisonImage.src = "../assets/images/poison_2.png";
 
 const mapImage = new Image();
-mapImage.src = "assets/images/map.png";
+mapImage.src = "../assets/images/map.png";
 
 const keyImage = new Image();
-keyImage.src = "assets/images/key3.png";
+keyImage.src = "../assets/images/key3.png";
 
 const chestImage = new Image();
-chestImage.src = "assets/images/chest.png";
+chestImage.src = "../assets/images/chest.png";
 
 // Load open treasure chest images
 const openTreasureImage = new Image();
-openTreasureImage.src = "assets/images/open_chest.png";
+openTreasureImage.src = "../assets/images/open_chest.png";
 
 const openEmptyImage = new Image();
-openEmptyImage.src = "assets/images/empty_open_chest.png";
+openEmptyImage.src = "../assets/images/empty_open_chest.png";
 
 // Load treasure map hint images
 const leftHintImage = new Image();
-leftHintImage.src = "assets/images/left_treasure_hint.png";
+leftHintImage.src = "../assets/images/left_treasure_hint.png";
 
 const rightHintImage = new Image();
-rightHintImage.src = "assets/images/right_treasure_hint.png";
+rightHintImage.src = "../assets/images/right_treasure_hint.png";
 
 // Map collection sound
-const mapSound = new Audio("assets/sounds/key.mp3");
+const mapSound = new Audio("../assets/sounds/key.mp3");
 
 // Key collection sound
 const keySound = new Audio("assets/sounds/key.mp3");

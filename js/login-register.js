@@ -1,22 +1,43 @@
 
-// Save the upladed image
+"use strict";
+
+// saving the image user uploaded
 let uploaded_image = "";
 const image_input = document.querySelector("#profile-image");
 const profile_circle = document.querySelector("#profile-circle");
 
-profile_circle.onclick = () => {image_input.click();};
+// Taking in the image user uplaoded and display it
 image_input.onchange = () => {
-    const reader = new FileReader();
 
+    // check if user already uploaded image
+    if (!image_input.files[0]) {
+        return;
+    }
+
+    let reader = new FileReader();
+
+    // display and store the image
     reader.onload = () => {
-        uploaded_image = reader.result;
-        document.getElementById("profile-pic").src = uploaded_image;
-        document.getElementById("profile-pic").style.display = "block";
-        document.getElementById("plus-icon").style.display = "none";
-    };
 
+        uploaded_image = reader.result;
+
+        profile_pic.src = uploaded_image;
+        plus_icon.style.display = "none";
+
+        localStorage.setItem("profile_image", uploaded_image);
+    };
+    // read the uploaded image
     reader.readAsDataURL(image_input.files[0]);
 };
+
+// Loading the saved image and display it
+let saved_image = localStorage.getItem("profile_image");
+
+if (saved_image) {
+    uploaded_image = saved_image;
+    profile_pic.src = saved_image;
+    plus_icon.style.display = "none";
+}
 
 
 function processInput() {
@@ -38,7 +59,6 @@ function processInput() {
     const phoneRegex = /^\+9715\d{8}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    
 
     // Clear previous error messages
     document.getElementById("profile-pic-error").innerHTML = "";
@@ -51,16 +71,23 @@ function processInput() {
     document.getElementById("number-error").innerHTML = "";
 
     // ensure all the fileds are correct before submitting form
-    let CorrectFields = true   
+    let CorrectFields = true;
 
 
     // Check profile picture
     if (!user_image.files[0]) {
-        document.getElementById("profile-pic-error").textContent ="Please upload a profile picture.";
+        document.getElementById("profile-pic-error").textContent =
+            "Please upload a profile picture.";
         CorrectFields = false;
     }
     else if (!user_image.files[0].type.startsWith("image/")) {
-        document.getElementById("profile-pic-error").textContent= "Please only select an image"
+        document.getElementById("profile-pic-error").textContent =
+            "Please only select an image";
+        CorrectFields = false;
+    }
+    else if (!uploaded_image) {
+        document.getElementById("profile-pic-error").textContent =
+            "Please wait for your profile picture to load.";
         CorrectFields = false;
     }
 
@@ -68,67 +95,68 @@ function processInput() {
     if (fullname.trim() === "") {
         document.getElementById("user-name-error").innerHTML =
             "❌ Please enter your full name.";
-        CorrectFields = false;  
+        CorrectFields = false;
     }
     // confirm password with regex
     else if (!nameRegex.test(fullname)) {
         document.getElementById("user-name-error").innerHTML =
-        "❌ Please enter a valid full name!"
-        CorrectFields = false   
+            "❌ Please enter a valid full name!";
+        CorrectFields = false;
     }
 
     // Check username
     if (username.trim() === "") {
         document.getElementById("username-error").innerHTML =
-        "❌ Please enter a username.";
+            "❌ Please enter a username.";
         CorrectFields = false;
     }
     // confirm username with regex
     else if (!usernameRegex.test(username)) {
         document.getElementById("username-error").innerHTML =
-        "Username must be 3-10 characters"
-         CorrectFields = false   
+            "Username must be 3-10 characters";
+        CorrectFields = false;
     }
 
     // Check email
     if (email.trim() === "") {
         document.getElementById("email-error").innerHTML =
-        "❌ Please enter your email.";
+            "❌ Please enter your email.";
         CorrectFields = false;
 
     } else if (!emailRegex.test(email)) {
         document.getElementById("email-error").innerHTML =
-        "❌ Please eneter a valid email! "
-         CorrectFields = false  
+            "❌ Please eneter a valid email! ";
+        CorrectFields = false;
 
     } else if (localStorage[email] !== undefined) {
         document.getElementById("email-error").textContent =
-        "❌ Account already registered! Please log in.";
+            "❌ Account already registered! Please log in.";
         CorrectFields = false;
     }
 
     // Check password
     if (password === "") {
         document.getElementById("password-error").innerHTML =
-        "❌ Please enter a password.";
+            "❌ Please enter a password.";
         CorrectFields = false;
 
     } else if (!passwordRegex.test(password)) {
         document.getElementById("password-error").innerHTML =
-        "❌ Password must be 6+ characters with uppercase, lowercase & a number."
+            "❌ Password must be 6+ characters with uppercase, lowercase & a number.";
         CorrectFields = false;
-        
+
     } else {
-    document.getElementById("password-error").textContent = "";
+        document.getElementById("password-error").textContent = "";
     }
 
     // Compare enetrd password to re entered password
     if (confirm_password === "") {
-        document.getElementById("confirm-password-error").innerHTML = 
-        "❌ Please Re-enter password to proceed";
+        document.getElementById("confirm-password-error").innerHTML =
+            "❌ Please Re-enter password to proceed";
         CorrectFields = false;
     } else if (confirm_password !== password) {
-        document.getElementById("confirm-password-error").textContent = "Passwords do not match.";
+        document.getElementById("confirm-password-error").textContent =
+            "Passwords do not match.";
         CorrectFields = false;
     }
 
@@ -140,10 +168,9 @@ function processInput() {
 
     } else if (!phoneRegex.test(phone)) {
         document.getElementById("number-error").textContent =
-            "Invalid UAE number. E.g., +971523080212"
+            "Invalid UAE number. E.g., +971523080212";
         CorrectFields = false;
     }
-
 
     // Check date of birth
     if (dob === "") {
@@ -152,20 +179,23 @@ function processInput() {
         CorrectFields = false;
 
     } else if (dob > new Date().toISOString().slice(0, 10)) {
-    document.getElementById("dob-error").textContent =
-        "Invalid! Date can't be in future";
-    CorrectFields = false;
+        document.getElementById("dob-error").textContent =
+            "Invalid! Date can't be in future";
+        CorrectFields = false;
     }
 
     // Display feedback message after all fields are correct
     if (CorrectFields) {
-        StoreUser();
 
-        // Display register sucessful message 
-        document.getElementById("success-message").textContent =`Registration Successful, ${username}!`;
+        // Save the account only when registration is valid
+        let accountSaved = StoreUser();
+
+        if (accountSaved) {
+            // Display register sucessful message
+            document.getElementById("success-message").textContent =
+                `Registration Successful, ${username}! Please log in.`;
+        }
     }
-
-
 }
 
 
@@ -177,7 +207,6 @@ function init() {
     heading.onmouseover = () => {
         heading.style.color = "#472200";
         heading.style.textShadow = "0 0 12px #ff7c01";
-        
     };
 
     // remove the affect when user clicks awat
@@ -187,8 +216,9 @@ function init() {
     };
 }
 
+
 // ========== Browser storage implemetion of the game
-function StoreUser(){
+function StoreUser() {
     // create object to store user details
     let UserObject = {};
 
@@ -200,60 +230,82 @@ function StoreUser(){
     UserObject.phone = document.getElementById("phone-number").value;
     UserObject.dob = document.getElementById("user_dob").value;
 
+    // Save the uploaded profile picture
+    UserObject.profileImage = uploaded_image;
+
+    // Create the player's starting game scores
+    UserObject.levelScores = {
+        1: 0,
+        2: 0,
+        3: 0
+    };
+
+    UserObject.totalScore = 0;
+    UserObject.completedLevels = [];
+
     // store user info
-    localStorage[UserObject.email] = JSON.stringify(UserObject)
-
+    try {
+        localStorage[UserObject.email] = JSON.stringify(UserObject);
+        return true;
+    } catch (error) {
+        document.getElementById("profile-pic-error").textContent =
+            "Could not save account. Please try a smaller picture.";
+        console.error("Registration storage error:", error);
+        return false;
+    }
 }
+
+
 // login functionality
-function login(){
+function login() {
 
-    let email = document.getElementById("loginEmail").value
-    let password = document.getElementById("passwordInput").value;
-
+    let email = document.getElementById("loginEmail").value;
+    let password = document.getElementById("login-password").value;
+    let loginFeedback = document.getElementById("loginFeedback");
 
     // Clear previous messages
-    document.getElementById("loginFailure").textContent = "";
-    document.getElementById("loginPara").textContent = "";
+    loginFeedback.textContent = "";
 
-    // verify if user has account
-    if(localStorage[email] == undefined){
-        // inform user about unsucesssful login
-        document.getElementById("loginFailure").innerHTML = 
-        "Email not found! Register first to proceed"
+    // verify if user has account and display message
+    if (localStorage[email] == undefined) {
+        loginFeedback.textContent = "Email not found! Register first to proceed";
         return;
-    } 
+    }
+    
+    // getting registerd user's info
+    let UserObject = JSON.parse(localStorage[email]);
 
-    else{
+    // check password and display meesage accordinlgy
+    if (password != UserObject.password) {
+        loginFeedback.textContent = "Password is not correct! Try again!";
+        return;
+    }
+    
+    loginFeedback.textContent = " Thank you ${UserObject.name} logged in successfully!";
 
-        // convert to object
-        let UserObject = JSON.parse(localStorage[email]);
+    // create session sotrage for the logged in user
+    sessionStorage.setItem("loggedInUserEmail", UserObject.email);
 
-        // sucessful login 
-        if (password === UserObject.password){
-            document.getElementById("loginPara").innerHTML = UserObject.email + "logged in successfully!";
-            sessionStorage.loggedInUserEmail = UserObject.email;
-        }
-        else {
-            document.getElementById("loginFailure").innerHTML =  "Password not correct! Try again.";
-        }
-        
-    }   
-}
+    // Redirect to the homepage to show the profile
+    window.location.href = "play_game.html";
+    }
 
 // show passowrd when user clicks eye icon
-function showPassword(){
+function showPassword() {
+
     let password = document.getElementById("login-password");
     let display_eye = document.getElementById("eye-icon");
 
-    if (password.type === "password"){
+    if (password.type === "password") {
         password.type = "text";
+        display_eye.setAttribute("name", "eye-off-outline");
     }
-    else{
-        password.type = "password"
+    else {
+        password.type = "password";
+        display_eye.setAttribute("name", "eye-outline");
     }
 }
+
+
 // Running this function when the window loads
 window.onload = init;
-
-
-

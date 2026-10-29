@@ -24,18 +24,16 @@ const treasureHeight = 85;
 
 // Create key and treasure for Level 2
 const level2KeyTreasure = new KeyTreasure(
-    "assets/images/level2_key.png",
-    "assets/images/treasure_locked_2.png",
-    "assets/images/treasure-open2.png",
+    "../assets/images/level2_key.png",
+    "../assets/images/treasure_locked_2.png",
+    "../assets/images/treasure-open2.png",
     keyX, keyDeck, keyWidth, keyHeight,
     treasureX, treasureDeck, treasureWidth, treasureHeight
 );
 
 // Create shield for Level 2 on the left side of Deck 3
 const level2Shield = new Shield(
-    "assets/images/shield.png",
-    220, 3
-);
+    "../assets/images/shield.png",220, 3);
 
 // Check whether FL1NK touches an obstacle
 function touchesObstacle(player, obstacle) {
