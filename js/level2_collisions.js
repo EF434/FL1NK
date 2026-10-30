@@ -1,5 +1,5 @@
 import { get_pirate_position } from "./pirate.js";
-import { KeyTreasure } from "./key_treasure.js";
+import { KeyTreasure } from "./levels_game_elements.js";
 import { Shield } from "./shield.js";
 
 const level2Obstacles = [

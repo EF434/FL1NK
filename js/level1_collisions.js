@@ -1,4 +1,4 @@
-import { KeyTreasure } from "./key_treasure.js";
+import { KeyTreasure } from "./levels_game_elements.js";
 
 // Sounds
 const keySound = new Audio("../assets/sounds/key.mp3");

@@ -1,8 +1,8 @@
 "use strict";
 
 // Importing classes from other files in game.js to run everything
-import { Player_Fl1nk } from "./player_fl1nk.js";
-import { CoinManager } from "./coins.js";
+import { Player_Fl1nk } from "./characters_animations.js";
+import { Fl1nk_Coins } from "./coins.js";
 import { savePlayerScore } from "./player_scores.js";
 import {drawLevel1Collisions, checkLevel1Collisions, isLevel1Complete} from "./level1_collisions.js";
 import {checkLevel2Collisions, drawLevel2Collisions, isLevel2Complete} from "./level2_collisions.js";
@@ -16,23 +16,23 @@ const LEVEL_CANVAS_IDS = {"1": "fl1nk-game-canvas-level1", "2": "fl1nk-game-canv
 
 
 // <<<<<<<<<<<< Get the level that user selected >>>>>>>>
-let LevelNumber = "";
+let levelNumber  = "";
 
 // Get each level canavs, and assing it to the varibale
 if (document.getElementById(LEVEL_CANVAS_IDS["1"])){
-    LevelNumber = "1";
+    levelNumber = "1";
 } else if (document.getElementById(LEVEL_CANVAS_IDS["2"])){
-    LevelNumber = "2";
+    levelNumber = "2";
 } else if (document.getElementById(LEVEL_CANVAS_IDS["3"])){
-    LevelNumber = "3";
+    levelNumber = "3";
 } else {
     console.log("Unable to load the canvas! There is an error");
 }
 
 // Create and setup the canvas
+const canvasId = LEVEL_CANVAS_IDS[levelNumber];
 const canvas = document.getElementById(canvasId);
 const context = canvas.getContext("2d");
-const canvasId = LEVEL_CANVAS_IDS[levelNumber];
 
 // store the keys user clicked and get ids for the game UI
 const keysPressed = {};
@@ -49,10 +49,10 @@ const losingExitButton = document.querySelector(".losing-exit-level");
 
 // Defining all the important game variables
 let player;
-let coinManager;
+let fl1nk_coin;
 let gameInterval;
 let timerInterval;
-const timeRemaining = 300;
+let timeRemaining = 300;
 let gameOver = false;
 
 
@@ -129,10 +129,17 @@ function showVictoryPopup() {
 
     // stoping the game
     endGame();
-    savePlayerScore(levelNumber, coinManager.score); // saving score
+
+    // sotring the score based on if player was registered or not
+    if (sessionStorage.getItem("loggedInUserEmail")) {
+        savePlayerScore(levelNumber, fl1nk_coin.score); // saving score
+
+    } else {
+        sessionStorage.setItem("fl1nkGuestScore", fl1nk_coin.score);
+    }
 
     if (victoryScore) {
-        victoryScore.textContent = coinManager.score;
+        victoryScore.textContent = fl1nk_coin.score;
     }
 
     // display the popup and add message in colsole
@@ -216,7 +223,7 @@ function loadLevel() {
             player = new Player_Fl1nk(context, levelData);
 
             // Adding the coins for each level
-            coinManager = new CoinManager(context,levelNumber, scoreElement, levelData.decks);
+            fl1nk_coin = new Fl1nk_Coins(context,levelNumber, scoreElement, levelData.decks);
 
             gameInterval = setInterval(drawFrame, 20);
             startTimer();
@@ -238,8 +245,8 @@ function drawFrame() {
 
     // Move FL1NK & collect and draw fl1nk
     player.move(keysPressed);
-    coinManager.collect(player);
-    coinManager.draw();
+    fl1nk_coin.collect(player);
+    fl1nk_coin.draw();
 
     // if it's 'level 1', then calling this collision logic
     if (levelNumber === "1") {

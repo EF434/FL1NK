@@ -2,7 +2,7 @@
 
 export let fl1nkAnimationData = { fl1nk_frames: [] };
 
-//E Define the size of each frame in spirate sheet
+// Define the size of each frame in spirate sheet
 let frameSize = 256;
 
 // Loop over each row and column in spirate sheet, and get the postion, and dimentions

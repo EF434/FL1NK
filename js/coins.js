@@ -1,66 +1,82 @@
+// import the coin positions
 import { coins_for_every_level } from "./coin_positions.js";
 
+// define the coin elements
 const COIN_SIZE = 40;
-const POINTS_PER_COIN = 5;
-const COIN_SPACING = 90;
+const COIN_SCORE = 5;
 
-export class CoinManager {
+
+// This class maanges all the coins logic
+export class Fl1nk_Coins {
+    // setting up the required varibales for the game logic
     constructor(context, levelNumber, scoreElement, decks) {
         this.context = context;
         this.coins = [];
         this.scoreElement = scoreElement;
         this.score = 0;
-
-        this.coinSound = new Audio("../assets/sounds/coin.mp3");
-
-        for (const placement of coins_for_every_level[levelNumber]) {
-            const deck = decks[placement.deck];
-
-            for (let index = 0; index < placement.count; index++) {
-                this.coins.push({
-                    x: placement.firstX + index * COIN_SPACING,
-                    y: deck.y - COIN_SIZE - 20
-                });
-            }
-        }
-
+        this.coin_sound = new Audio("../assets/sounds/coin.mp3");
         this.image = new Image();
         this.image.src = "../assets/images/coin.png";
-    }
 
-    draw() {
-        if (!this.image.complete || this.image.naturalWidth === 0) return;
+    // get coin positions in the defined file
+    let coinPositions = coins_for_every_level[levelNumber];
 
-        for (const coin of this.coins) {
-            this.context.drawImage(
-                this.image,
-                coin.x,
-                coin.y,
-                COIN_SIZE,
-                COIN_SIZE
-            );
+    // Go over each deck to assign coins
+    let i = 0
+    for (; i < coinPositions.length; i++) {
+
+        let place_coins = coinPositions[i];
+        let deck = decks[place_coins.deck];
+
+
+        // create the coins for each deck
+        let coinX = place_coins.firstX;
+        let coinY = deck.y - COIN_SIZE - 20;
+
+        for (let coin_index = 0; coin_index < place_coins.count; coin_index++) {
+
+        // Store the coin position
+        this.coins.push({ x: coinX, y: coinY });
+
+        // Move to the next coin position
+        coinX = coinX + 90;
         }
     }
+    }
 
+   draw() {
+
+    // Draw all coins
+    for (let i = 0; i < this.coins.length; i++) {
+    this.context.drawImage(this.image, this.coins[i].x, this.coins[i].y,40,40);
+    }
+}
+
+    // collect the coins for the players
     collect(player) {
-        for (let index = this.coins.length - 1; index >= 0; index--) {
-            const coin = this.coins[index];
-            const touchingCoin =
-                player.xPos < coin.x + COIN_SIZE &&
-                player.xPos + player.width > coin.x &&
-                player.yPos < coin.y + COIN_SIZE &&
-                player.yPos + player.height > coin.y;
 
-            if (touchingCoin) {
-                this.coins.splice(index, 1);
-                this.score += POINTS_PER_COIN;
-                this.scoreElement.textContent = this.score;
+        for (let i = this.coins.length - 1; i >= 0; i--) {
 
-                this.coinSound.currentTime = 0;
-                this.coinSound.play().catch(() => {
-                    // The game continues if the browser blocks audio.
-                });
-            }
+            let coin = this.coins[i];
+
+            // Check FL1NK's horizontal position
+            if (player.xPos < coin.x - 90) continue;
+            if (player.xPos > coin.x + 40) continue;
+
+            // Check FL1NK's vertical position
+            if (player.yPos < coin.y - 95) continue;
+            if (player.yPos > coin.y + 40) continue;
+
+            // Collect the coin
+            this.coins.splice(i, 1);
+
+            // Add points
+            this.score = this.score + COIN_SCORE;
+            this.scoreElement.textContent = this.score;
+
+            // Play sound
+            this.coin_sound.currentTime = 0;
+            this.coin_sound.play();
         }
     }
 }
