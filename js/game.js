@@ -1,12 +1,11 @@
 "use strict";
 
 // Importing classes from other files in game.js to run everything
-import { Player_Fl1nk } from "./characters_animations.js";
-import { Fl1nk_Coins } from "./coins.js";
-import { savePlayerScore } from "./player_scores.js";
+import { Fl1nk_Coins } from "./coins.js"
+import { savePlayerScore } from "./score_board.js";
 import {drawLevel1Collisions, checkLevel1Collisions, isLevel1Complete} from "./level1_collisions.js";
 import {checkLevel2Collisions, drawLevel2Collisions, isLevel2Complete} from "./level2_collisions.js";
-import {Pirate,move_pirate,draw_pirate} from "./pirate.js";
+import { Player_Fl1nk, Pirate } from "./characters_animations.js";
 import {drawLevel3Collisions,checkLevel3Collisions,drawMapHint,isLevel3Complete} from "./level3_collisions.js";
 
 
@@ -69,7 +68,8 @@ window.onkeyup = function(event) {
 };
 
 
-// Creating two instances of the two deinfed classess to add patroling pirates in level 2
+// Creatw instances to add  pirates in level 2 & 3
+const level2Pirate = new Pirate("../assets/images/pirate-sprite-sheet.png", 300, 3, 2, 1);
 const level3Pirate1 = new Pirate("../assets/images/level3_pirate1.png",300,3,2,1);
 const level3Pirate2 = new Pirate("../assets/images/level3_pirate2.png",800,5,3,-1);
 
@@ -115,8 +115,9 @@ function endGame() {
     }
     gameOver = true;
 
-    // Stop the game loop
+    // Stop the game loop and time
     clearInterval(gameInterval);
+    clearInterval(timerInterval);
 }
 
 
@@ -241,12 +242,12 @@ function drawFrame() {
 
     // clear the previous frame and player position
     context.clearRect(0, 0, canvas.width, canvas.height);
-    const previousX = player.xPos;
+    const previousX = player.horizontal_position;
 
     // Move FL1NK & collect and draw fl1nk
     player.move(keysPressed);
     fl1nk_coin.collect(player);
-    fl1nk_coin.draw();
+    fl1nk_coin.draw_fl1nk();
 
     // if it's 'level 1', then calling this collision logic
     if (levelNumber === "1") {
@@ -259,10 +260,10 @@ function drawFrame() {
     else if (levelNumber === "2") {
 
         // draw the collision and patrolling pirate
-        move_pirate(player.decks);
-        checkLevel2Collisions(player, previousX);
+        level2Pirate.move(player.decks);
+        checkLevel2Collisions(player, previousX, level2Pirate);
 
-        draw_pirate(context);
+        level2Pirate.draw(context);
         drawLevel2Collisions(context, player.decks);
     }
 
@@ -285,7 +286,7 @@ function drawFrame() {
 
 
     // draw fl1nk character
-    player.draw();
+    player.draw_fl1nk();
 
 
 

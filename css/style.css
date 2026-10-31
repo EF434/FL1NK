@@ -371,31 +371,38 @@ footer .wave#wave1{
 /* =======================================*/
 
 
-.hero-banner{
-    background-image: url("../assets/images/banner.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.hero-banner {
+    position: relative;
     height: 650px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-left: 8%;
-    
+    overflow: hidden;
+}
+
+.hero-banner::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    background-image: url("../assets/images/banner.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(1px);
 }
 
 .hero-banner-text {
+    position: relative;
+    z-index: 1;
     font-family: "Comic Neue", cursive, sans-serif;
     font-size: 24px;
-    color: #7a2500;
-    font-weight: 700; 
+    font-weight: 700;
     line-height: 1.5;
-    color: #00155a; 
+    color: #000000;
     margin: 0;
     max-width: 600px;
     text-align: center;
-
-
 }
 
 .play-button {
@@ -667,9 +674,11 @@ footer .wave#wave1{
 }
 
 .about-button{
-    background-color: #fd9904;
-    border-radius: 100px;
+    background-color: #3f1a002f;
+    border-radius: 10px;
+    font-size: 22px;
 }
+
 .play-subtext {
     font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
     color: #2b1e18;

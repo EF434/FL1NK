@@ -115,7 +115,7 @@ export function getPlayerScores() {
 
 
 // get info from id
-let leaderboardPlayers = document.getElementById("leaderboard-players");
+const leaderboardPlayers = document.getElementById("leaderboard-players");
 
 // Handle the scores of a guest player
 if (!sessionStorage.getItem("loggedInUserEmail")) {

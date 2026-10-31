@@ -1,6 +1,4 @@
-import { get_pirate_position } from "./pirate.js";
-import { KeyTreasure } from "./levels_game_elements.js";
-import { Shield } from "./shield.js";
+import { KeyTreasure, Shield } from "./levels_game_elements.js";
 
 const level2Obstacles = [
     { x: 1015, y: 765, width: 35, height: 40 },
@@ -53,7 +51,7 @@ function touchesObstacle(player, obstacle) {
 }
 
 // Check Level 2 collisions
-export function checkLevel2Collisions(player, previousX) {
+export function checkLevel2Collisions(player, previousX, pirate) {
 
     let touchingObstacleNow = false;
 
@@ -116,22 +114,22 @@ export function checkLevel2Collisions(player, previousX) {
         }
 
         // Check whether FL1NK touches the pirate on Deck 3
-        const pirate = get_pirate_position();
 
-        if (player.currentDeck === pirate.deck) {
+        // Check if FL1NK touches the pirate
+        if (player.currentDeck === pirate.pirateDeck) {
 
-            // Smaller collision area for the pirate
+            // Smaller collision area for pirate
             const pirateCollision = {
-                x: pirate.x + 15,
-                y: pirate.y + 10,
-                width: pirate.width - 30,
-                height: pirate.height - 20
+                x: pirate.pirateX + 15,
+                y: pirate.pirateY + 10,
+                width: pirate.pirateWidth - 30,
+                height: pirate.pirateHeight - 20
             };
 
             if (touchesObstacle(player, pirateCollision)) {
                 touchingObstacleNow = true;
             }
-        }
+}
     }
 
     // Check Level 2 key and treasure

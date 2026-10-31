@@ -1,11 +1,12 @@
 /* ============== Import the spirate sheet and get each frame from there ==============*/ 
 
+// store and export spirate animation frames
 export let fl1nkAnimationData = { fl1nk_frames: [] };
 
-// Define the size of each frame in spirate sheet
+// set size of each frame in spirate sheet
 let frameSize = 256;
 
-// Loop over each row and column in spirate sheet, and get the postion, and dimentions
+// Loop over to get position and size of all frames
 for (let row = 0; row < 4; row++) {
     for (let column = 0; column < 4; column++) {
         fl1nkAnimationData.fl1nk_frames.push({

@@ -60,12 +60,12 @@ export class Fl1nk_Coins {
             let coin = this.coins[i];
 
             // Check FL1NK's horizontal position
-            if (player.xPos < coin.x - 90) continue;
-            if (player.xPos > coin.x + 40) continue;
+            if (player.horizontal_position < coin.x - 80) continue;
+            if (player.horizontal_position > coin.x + 40) continue;
 
             // Check FL1NK's vertical position
-            if (player.yPos < coin.y - 95) continue;
-            if (player.yPos > coin.y + 40) continue;
+            if (player.vertical_position < coin.y - 95) continue;
+            if (player.vertical_position > coin.y + 40) continue;
 
             // Collect the coin
             this.coins.splice(i, 1);

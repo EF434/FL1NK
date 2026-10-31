@@ -1,460 +1,352 @@
 "use strict";
 
-// Class for the key and treasure
+
+/////// This file is a shared file for Key, Treasure and Shield logic     ///////
+/////// It consists of two classess for handle this logic across 3 levels ///////
+
+///////////////////////////////////////
+//         Key and Treasure Class
+//////////////////////////////////////
 export class KeyTreasure {
 
-    constructor(keyPath, treasureClosedPath, treasureOpenPath,
-                keyX, keyDeck, keyWidth, keyHeight, treasureX, treasureDeck,
-                treasureWidth, treasureHeight) {
+    constructor(key, treasure) {
 
-        // Key and treasure images
-        this.keyImage = new Image();
-        this.keyImage.src = keyPath;
+        this.key = key;
+        this.treasure = treasure;
 
-        this.treasureClosedImage = new Image();
-        this.treasureClosedImage.src = treasureClosedPath;
+        // Set key image
+        this.key_image = new Image();
+        this.key_image.src = key.image;
 
-        this.treasureOpenImage = new Image();
-        this.treasureOpenImage.src = treasureOpenPath;
+        // set treasure image when closed and open
+        this.treasure_closed_img = new Image();
+        this.treasure_closed_img.src = treasure.treasure_closed_img;
 
-        // Treasure opening sound
-        this.treasureSound = new Audio("../assets/sounds/treasure.mp3");
+        this.treasure_open_img = new Image();
+        this.treasure_open_img.src = treasure.treasure_open_img;
 
-        // Key position and size
-        this.keyX = keyX;
-        this.keyDeck = keyDeck;
-        this.keyWidth = keyWidth;
-        this.keyHeight = keyHeight;
+        // Treasure and key sound
+        this.treasure_sound = new Audio("../assets/sounds/treasure.mp3");
+        this.key_sound = new Audio("../assets/sounds/key.mp3");
 
-        // Treasure position and size
-        this.treasureX = treasureX;
-        this.treasureDeck = treasureDeck;
-        this.treasureWidth = treasureWidth;
-        this.treasureHeight = treasureHeight;
-
-        // Key and treasure status
-        this.hasKey = false;
-        this.treasureIsOpen = false;
+        // key and treasure status
+        this.collected_key = false;
+        this.unlocked_treasure = false;
     }
 
-    // Draw an image only after it has loaded successfully
-    drawLoadedImage(context, image, x, y, width, height) {
-
-        if (image.complete && image.naturalWidth > 0) {
-            context.drawImage(image, x, y, width, height);
-        }
-    }
-
-    // Draw the key and treasure on their decks
     draw(context, decks) {
 
-        const keyPlatform = decks[this.keyDeck];
-        const treasurePlatform = decks[this.treasureDeck];
+        // find the deck wkere the key and treasure is
+        const key_deck = decks[this.key.deck];
+        const treasure_Deck = decks[this.treasure.deck];
 
-        if (!this.hasKey && keyPlatform) {
-
-            this.drawLoadedImage(
-                context,
-                this.keyImage,
-                this.keyX,
-                keyPlatform.y - this.keyHeight,
-                this.keyWidth,
-                this.keyHeight
+        // draw the key  on deck if fl1nk didn't collect it 
+        if (!this.collected_key && key_deck) {
+            context.drawImage(
+                this.key_image,
+                this.key.x, key_deck.y - this.key.height,
+                this.key.width, this.key.height
             );
         }
 
-        if (treasurePlatform) {
+        // draw the treasure image
+        if (treasure_Deck) {
+            let image = this.treasure_closed_img; // load image
 
-            const treasureImage = this.treasureIsOpen
-                ? this.treasureOpenImage
-                : this.treasureClosedImage;
+            // if treasure open display the relavent image
+            if (this.unlocked_treasure === true) {
+                image = this.treasure_open_img;
+            }
 
-            this.drawLoadedImage(
-                context,
-                treasureImage,
-                this.treasureX,
-                treasurePlatform.y - this.treasureHeight,
-                this.treasureWidth,
-                this.treasureHeight
-            );
+            // draw the image
+            if (image.complete) {
+                context.drawImage(
+                    image,
+                    this.treasure.x, treasure_Deck.y - this.treasure.height,
+                    this.treasure.width, this.treasure.height
+                );
+            }
         }
     }
 
-    // Check whether FL1NK is on a deck and overlaps an item horizontally
-    touchesItem(player, x, width, deck) {
-
-        return player.currentDeck === deck &&
-            player.xPos < x + width &&
-            player.xPos + player.width > x;
-    }
-
-    // Check key and treasure interactions
     checkCollision(player) {
 
+        // if climbing then do nothing
         if (player.climbing) {
             return;
         }
 
-        // Collect the key
-        if (
-            !this.hasKey &&
-            this.touchesItem(
-                player,
-                this.keyX,
-                this.keyWidth,
-                this.keyDeck
-            )
-        ) {
-            this.hasKey = true;
-
-            // Show the green tick on the information board
-            const keyTick = document.getElementById("key-tick");
-
-            if (keyTick) {
-                keyTick.style.display = "block";
+        // Arrow fucntion to check if player touches an item on the same deck
+        const touches = (item) => {
+            if (player.currentDeck !== item.deck) {
+                return false;
             }
 
-            console.log("Key collected!");
+            if (player.horizontal_position >= item.x + item.width) {
+                return false;
+            }
+
+            if (player.horizontal_position + player.width <= item.x) {
+                return false;
+            }
+
+            return true;
+        };
+
+        if (!this.collected_key) {
+            if (touches(this.key)) {
+                this.collected_key = true;
+
+                const key_tick = document.getElementById("key-tick");
+
+                if (key_tick) {
+                    key_tick.style.display = "block";
+                }
+
+                this.key_sound.currentTime = 0;
+                this.key_sound.play();
+            }
         }
 
-        // Open the treasure if FL1NK has the key
-        if (
-            this.hasKey &&
-            !this.treasureIsOpen &&
-            this.touchesItem(
-                player,
-                this.treasureX,
-                this.treasureWidth,
-                this.treasureDeck
-            )
-        ) {
-            this.treasureIsOpen = true;
-
-            this.treasureSound.currentTime = 0;
-            this.treasureSound.play().catch(() => {
-                // The game continues if the browser blocks audio.
-            });
-
-            console.log("Treasure opened!");
+        // open treasure after key is collected
+        if (this.collected_key) {
+            if (!this.unlocked_treasure) {
+                if (touches(this.treasure)) {
+                    // open treasure and play the sound
+                    this.unlocked_treasure = true;
+                    this.treasure_sound.currentTime = 0;
+                    this.treasure_sound.play();
+                }
+            }
         }
+        
     }
 }
 
 
 
-// Class for the shield power-up
+////////////////////////////////////////////
+//          Shield Class for level 2
+////////////////////////////////////////////
 export class Shield {
 
-    constructor(imagePath, shieldX, shieldDeck) {
+    constructor(image_path, shieldX, shieldDeck) {
 
-        // Load the shield image
+        // load the shield image
         this.shieldImage = new Image();
-        this.shieldImage.src = imagePath;
+        this.shieldImage.src = image_path;
 
-        // Shield position and size
+        // set shield position and dimentions
         this.shieldX = shieldX;
         this.shieldDeck = shieldDeck;
         this.shieldWidth = 65;
         this.shieldHeight = 65;
 
-        // Shield timer
-        this.shieldDuration = 10;
-        this.shieldEndTime = 0;
-
-        // Shield status
-        this.shieldCollected = false;
-        this.shieldActive = false;
+        // set shield status
+        this.shield_collected = false;
+        this.shield_active = false;
     }
 
     // Check whether FL1NK touches the shield
     checkCollision(player) {
 
-        if (this.shieldCollected || player.climbing) {
+        // don't collect if already collected
+        if (this.shield_collected) {
             return;
         }
 
-        if (
-            player.currentDeck === this.shieldDeck &&
-            player.xPos < this.shieldX + this.shieldWidth &&
-            player.xPos + player.width > this.shieldX
-        ) {
-            this.shieldCollected = true;
-            this.shieldActive = true;
-
-            // Start the countdown
-            this.shieldEndTime = Date.now() + this.shieldDuration * 1000;
-
-            // Show the green tick on the information board
-            const shieldTick = document.getElementById("shield-tick");
-
-            if (shieldTick) {
-                shieldTick.style.display = "block";
-            }
-
-            console.log("Shield collected!");
-        }
-    }
-
-    // Check whether shield protection is active
-    isActive() {
-
-        if (this.shieldActive && Date.now() >= this.shieldEndTime) {
-            this.shieldActive = false;
-            console.log("Shield expired!");
-        }
-
-        return this.shieldActive;
-    }
-
-    // Stop the shield after collecting the key
-    stop() {
-        this.shieldActive = false;
-    }
-
-    // Draw the shield on its deck
-    draw(context, decks) {
-
-        const shieldPlatform = decks[this.shieldDeck];
-
-        if (
-            !this.shieldCollected &&
-            shieldPlatform &&
-            this.shieldImage.complete &&
-            this.shieldImage.naturalWidth > 0
-        ) {
-            context.drawImage(
-                this.shieldImage,
-                this.shieldX,
-                shieldPlatform.y - this.shieldHeight,
-                this.shieldWidth,
-                this.shieldHeight
-            );
-        }
-
-        // Get shield countdown elements
-        const shieldDisplay = document.getElementById("game_shield");
-        const shieldTime = document.getElementById("shield-time");
-        const shieldProgress = document.getElementById("progress-bar");
-
-        if (this.isActive()) {
-
-            // Calculate the remaining time
-            const timeLeft = Math.max(
-                0,
-                this.shieldEndTime - Date.now()
-            );
-
-            const secondsLeft = Math.ceil(timeLeft / 1000);
-
-            // Calculate the progress bar percentage
-            const progressPercentage =
-                (timeLeft / (this.shieldDuration * 1000)) * 100;
-
-            // Show the shield progress bar
-            shieldDisplay.style.display = "block";
-
-            // Update the countdown
-            shieldTime.textContent = secondsLeft + "s";
-
-            // Reduce the progress bar
-            shieldProgress.style.width = progressPercentage + "%";
-
-            // Change the bar to red when 3 seconds remain
-            if (secondsLeft <= 3) {
-                shieldProgress.classList.add("shield-warning");
-            } else {
-                shieldProgress.classList.remove("shield-warning");
-            }
-
-        } else {
-
-            // Hide the shield progress bar
-            shieldDisplay.style.display = "none";
-        }
-    }
-}
-
-
-
-"use strict";
-
-// ============== FL1NK Level Locking ==============
-
-// Get the logged-in player's email
-let levelLockPlayerEmail = sessionStorage.getItem("loggedInUserEmail");
-
-// Get the lock images
-let level2Lock = document.getElementById("level2-lock");
-let level3Lock = document.getElementById("level3-lock");
-
-// Get the level buttons
-let level2Button = document.getElementById("level2-button");
-let level3Button = document.getElementById("level3-button");
-
-// Check whether a registered player is logged in
-if (levelLockPlayerEmail) {
-
-    // Get the registered player's saved account
-    let savedPlayer = localStorage.getItem(levelLockPlayerEmail);
-
-    if (savedPlayer) {
-
-        // Convert the saved JSON into a JavaScript object
-        let player = JSON.parse(savedPlayer);
-
-        // Get the levels completed by this player
-        let completedLevels = player.completedLevels || [];
-
-        // Lock Level 2 until Level 1 is completed
-        if (!completedLevels.includes(1)) {
-
-            level2Lock.style.display = "block";
-            level2Button.removeAttribute("href");
-            level2Button.textContent = "LOCKED";
-            level2Button.classList.add("locked");
-        }
-
-        // Lock Level 3 until Level 2 is completed
-        if (!completedLevels.includes(2)) {
-
-            level3Lock.style.display = "block";
-            level3Button.removeAttribute("href");
-            level3Button.textContent = "LOCKED";
-            level3Button.classList.add("locked");
-        }
-    }
-}
-
-
-
-// Class for the shield power-up
-export class Shield {
-
-    constructor(imagePath, shieldX, shieldDeck) {
-
-        // Load the shield image
-        this.shieldImage = new Image();
-        this.shieldImage.src = imagePath;
-
-        // Shield position and size
-        this.shieldX = shieldX;
-        this.shieldDeck = shieldDeck;
-        this.shieldWidth = 65;
-        this.shieldHeight = 65;
-
-        // Shield timer
-        this.shieldDuration = 10;
-        this.shieldEndTime = 0;
-
-        // Shield status
-        this.shieldCollected = false;
-        this.shieldActive = false;
-    }
-
-    // Check whether FL1NK touches the shield
-    checkCollision(player) {
-
-        if (this.shieldCollected || player.climbing) {
+        // only collect if deck and shield on same deck
+        if (player.currentDeck !== this.shieldDeck) {
             return;
         }
 
-        if (
-            player.currentDeck === this.shieldDeck &&
-            player.xPos < this.shieldX + this.shieldWidth &&
-            player.xPos + player.width > this.shieldX
-        ) {
-            this.shieldCollected = true;
-            this.shieldActive = true;
+        // check whether player touches the shield
+        const playerLeft = player.horizontal_position;
+        const playerRight = playerLeft + player.width;
+        const shieldLeft = this.shieldX;
+        const shieldRight = shieldLeft + this.shieldWidth;
 
-            // Start the countdown
-            this.shieldEndTime = Date.now() + this.shieldDuration * 1000;
-
-            // Show the green tick on the information board
-            const shieldTick = document.getElementById("shield-tick");
-
-            if (shieldTick) {
-                shieldTick.style.display = "block";
-            }
-
-            console.log("Shield collected!");
-        }
-    }
-
-    // Check whether shield protection is active
-    isActive() {
-
-        if (this.shieldActive && Date.now() >= this.shieldEndTime) {
-            this.shieldActive = false;
-            console.log("Shield expired!");
+        if (playerRight <= shieldLeft) {
+            return;
         }
 
-        return this.shieldActive;
-    }
-
-    // Stop the shield after collecting the key
-    stop() {
-        this.shieldActive = false;
-    }
-
-    // Draw the shield on its deck
-    draw(context, decks) {
-
-        const shieldPlatform = decks[this.shieldDeck];
-
-        if (
-            !this.shieldCollected &&
-            shieldPlatform &&
-            this.shieldImage.complete &&
-            this.shieldImage.naturalWidth > 0
-        ) {
-            context.drawImage(
-                this.shieldImage,
-                this.shieldX,
-                shieldPlatform.y - this.shieldHeight,
-                this.shieldWidth,
-                this.shieldHeight
-            );
+        if (playerLeft >= shieldRight) {
+            return;
         }
 
-        // Get shield countdown elements
-        const shieldDisplay = document.getElementById("game_shield");
+        // When fl1nk collects shield, activate timer, and display tick 
+        this.shield_collected = true;
+        this.shield_active = true;
+        this.shieldTimeLeft = 10;
+
+        const shield_tick = document.getElementById("shield-tick");
+        const display_shield = document.getElementById("game_shield");
         const shieldTime = document.getElementById("shield-time");
-        const shieldProgress = document.getElementById("progress-bar");
+        const progress_bar = document.getElementById("progress-bar");
 
-        if (this.isActive()) {
+        // display the tick & start timer
+        if (shield_tick) {
+            shield_tick.style.display = "block";
+        }
 
-            // Calculate the remaining time
-            const timeLeft = Math.max(
-                0,
-                this.shieldEndTime - Date.now()
-            );
+        if (display_shield) {
+            display_shield.style.display = "block";
+        }
 
-            const secondsLeft = Math.ceil(timeLeft / 1000);
+        if (shieldTime) {
+            shieldTime.textContent = this.shieldTimeLeft + "s";
+        }
 
-            // Calculate the progress bar percentage
-            const progressPercentage =
-                (timeLeft / (this.shieldDuration * 1000)) * 100;
+        if (progress_bar) {
+            progress_bar.style.width = "100%";
+            progress_bar.classList.remove("shield-warning");
+        }
 
-            // Show the shield progress bar
-            shieldDisplay.style.display = "block";
 
-            // Update the countdown
-            shieldTime.textContent = secondsLeft + "s";
+        // control the timer when fl1nk collects it
+        this.shieldTimer = setInterval(() => {
+            this.shieldTimeLeft--;
 
-            // Reduce the progress bar
-            shieldProgress.style.width = progressPercentage + "%";
-
-            // Change the bar to red when 3 seconds remain
-            if (secondsLeft <= 3) {
-                shieldProgress.classList.add("shield-warning");
-            } else {
-                shieldProgress.classList.remove("shield-warning");
+            // display the updated time
+            if (shieldTime) {
+                shieldTime.textContent = this.shieldTimeLeft + "s";
             }
 
-        } else {
+            // if the progress is still there then update it
+            if (progress_bar) {
+                const updated_time = this.shieldTimeLeft / 10;
+                progress_bar.style.width = (updated_time * 100) + "%";
 
-            // Hide the shield progress bar
-            shieldDisplay.style.display = "none";
+                // if 3s are remaing then display red in progress bar
+                if (this.shieldTimeLeft <= 3) {
+                    progress_bar.classList.add("shield-warning");
+                }
+            }
+
+            // stop it if no time remaning
+            if (this.shieldTimeLeft <= 0) {
+                this.stop();
+            }
+        }, 1000);}
+
+        
+
+
+        // draw the shield image until fl1nk collects it
+        draw(context, decks) {
+            const shield_deck = decks[this.shieldDeck];
+
+            if (!this.shield_collected && shield_deck) {
+                context.drawImage(
+                    this.shieldImage,
+                    this.shieldX, shield_deck.y - this.shieldHeight,
+                    this.shieldWidth, this.shieldHeight
+                );
+            }
+        }
+        
+        // stop shield timer and hide it from display
+        stop() {
+            clearInterval(this.shieldTimer);
+            this.shield_active = false;
+
+            const display_shield = document.getElementById("game_shield");
+
+            if (display_shield) {
+                display_shield.style.display = "none";
+            }
+        }
+        
+
+}
+
+////////////////////////////////////////////////////
+//      Lock levels if player didn't complete it yet 
+////////////////////////////////////////////////////
+
+const player_email = sessionStorage.getItem("loggedInUserEmail");
+const savedPlayer = localStorage.getItem(player_email);
+
+
+if (savedPlayer) {
+    const player = JSON.parse(savedPlayer);
+    const completed_levels = player.completedLevels || []; // get completed levels
+
+    // check if player completed level 1, if not display lock 
+    const level_1_completed = completed_levels.includes(1);
+
+    if (level_1_completed === false) {
+
+        // get the lock and button
+        const lock = document.getElementById("level2-lock");
+        const button = document.getElementById("level2-button");
+
+        lock.style.display = "block";
+        button.textContent = "LOCKED";
+        button.removeAttribute("href");
+    }
+
+     // check if player completed level 2, if not display lock 
+    const level2Completed = completed_levels.includes(2);
+
+    if (level2Completed === false) {
+        const lock = document.getElementById("level3-lock");
+        const button = document.getElementById("level3-button");
+
+        lock.style.display = "block";
+        button.textContent = "LOCKED";
+        button.removeAttribute("href");
+    }
+}
+
+// Reusable function to draw image on canvas once it is loaded sucessfully
+export function drawLoadedImage(context, image, x, y, width, height) {
+    if (image.complete && image.naturalWidth > 0) {
+        context.drawImage(image, x, y, width, height);
+    }
+}
+
+//////////////////////////////////////////////////////////
+///      Reusable functions for level Collision Logic
+//////////////////////////////////////////////////////////
+
+// Check if FL1NK touches an item on the same deck   
+export function touchesItem(player, x, width, deck) {
+    if (player.currentDeck !== deck) {
+        return false;
+    }
+
+    if (player.horizontal_position >= x + width) {
+        return false;
+    }
+
+    if (player.horizontal_position + player.width <= x) {
+        return false;
+    }
+
+    return true;
+}
+
+
+// Play the sound for an item
+export function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play();
+}
+
+// Remove the hearts if fl1nk touched a collision
+export function remove_heart(touched_now, touched_before) {
+    if (touched_now) {
+        if (!touched_before) {
+            const hearts = document.querySelectorAll(".life-heart");
+            const last_heart = hearts[hearts.length - 1]; // get last heart
+
+            // remove heart at the end
+            if (last_heart) {
+                last_heart.remove();
+            }
         }
     }
+
+    return touched_now;
 }
