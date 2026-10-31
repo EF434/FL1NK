@@ -2,7 +2,7 @@
 ///             Level 1 Game Collisions
 //////////////////////////////////////////////////
 
-// import the KeyTreasure class
+// import the KeyTreasure class and helper functions
 import { KeyTreasure, drawLoadedImage, touchesItem, playSound, remove_heart  } from "./levels_game_elements.js";
 
 // get the posion sound
@@ -37,7 +37,13 @@ const treasureDeck = 5;
 const treasureWidth = 90;
 const treasureHeight = 70;
 
-let fl1nk_touched_poision = false;
+let touched_poision_before = false;
+let audioAllowed = false;
+
+// play sound after player clicks key
+document.addEventListener("keydown", () => {
+    audioAllowed = true;
+}, { once: true });
 
 // create key and treasure using the class
 const level1KeyTreasure = new KeyTreasure(
@@ -89,18 +95,18 @@ export function draw_level_1_collisions(context, decks) {
 
 
 
-// Check poison, key, and treasure interactions
+// Check all the level 1 collisions
 export function check_level_1_collisions(player) {
-    let touched_poison = false;
+    let touched_poison_now = false;
 
     // if player is not climbing, check they touched the poison bottle
     if (!player.climbing) {
         if (touchesItem(player, poison_one, poisonWidth, poison_deck1)) {
-            touched_poison = true;
+            touched_poison_now = true;
         }
 
         if (touchesItem(player, poison_two, poisonWidth, poison_deck2)) {
-            touched_poison = true;
+            touched_poison_now = true;
         }
     }
 
@@ -108,12 +114,12 @@ export function check_level_1_collisions(player) {
     level1KeyTreasure.checkCollision(player);
 
     // play sound when touching it first
-    if (touchingPoisonNow && !fl1nk_touched_poision) {
+    if (audioAllowed && touched_poison_now && !touched_poision_before) {
             playSound(poisonSound);
         }
 
     // Remove one heart on first poison contact
-    fl1nk_touched_poision = remove_heart(touchingPoisonNow, fl1nk_touched_poision);
+    touched_poision_before = remove_heart(touched_poison_now, touched_poision_before);
 }
 
 

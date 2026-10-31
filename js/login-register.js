@@ -5,6 +5,10 @@
 let uploaded_image = "";
 const image_input = document.querySelector("#profile-image");
 const profile_circle = document.querySelector("#profile-circle");
+const profile_pic = document.getElementById("profile-pic");
+const plus_icon = document.getElementById("plus-icon");
+const user_pic = document.getElementById("user_pic");
+const nav_profile_pic = document.getElementById("nav-profile-pic");
 
 // Taking in the image user uplaoded and display it
 image_input.onchange = () => {
@@ -23,6 +27,8 @@ image_input.onchange = () => {
 
         profile_pic.src = uploaded_image;
         plus_icon.style.display = "none";
+        user_pic.src = uploaded_image;
+        nav_profile_pic.hidden = false;
 
         localStorage.setItem("profile_image", uploaded_image);
     };
@@ -37,6 +43,8 @@ if (saved_image) {
     uploaded_image = saved_image;
     profile_pic.src = saved_image;
     plus_icon.style.display = "none";
+    user_pic.src = saved_image;
+    nav_profile_pic.hidden = false; 
 }
 
 
@@ -50,6 +58,7 @@ function processInput() {
     const confirm_password = document.querySelector("#confirm-password").value;
     const phone = document.querySelector("#phone-number").value;
     const dob = document.querySelector("#user_dob").value;
+
 
 
     // Regex for validations

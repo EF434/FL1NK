@@ -1,20 +1,26 @@
-import { KeyTreasure, Shield } from "./levels_game_elements.js";
+///////////////////////////////////////////////////
+///             Level 2 Game Collisions
+//////////////////////////////////////////////////
 
-const level2Obstacles = [
-    { x: 1015, y: 765, width: 35, height: 40 },
-    { x: 505, y: 495, width: 35, height: 40 },
-    { x: 1030, y: 495, width: 80, height: 55 }
+// import the KeyTreasure, Shield class and helper functions
+import { KeyTreasure, Shield, remove_heart, touchesItem  } from "./levels_game_elements.js";
+
+// store the positions of the 3 obstacles on ship
+const ship_obstacles = [
+    { x: 1015, y: 765, width: 35, deck: 2 },
+    { x: 505, y: 495, width: 35, deck: 4 },
+    { x: 1030, y: 495, width: 80, deck: 4 }
 ];
 
-let fl1nkTouchedObstacle = false;
+let fl1nk_touched_obstcale = false;
 
-// Key position and size
+// Key position and dimentions
 const keyX = 980;
 const keyDeck = 2;
 const keyWidth = 70;
 const keyHeight = 75;
 
-// Treasure position and size
+// Treasure position and dimentions
 const treasureX = 350;
 const treasureDeck = 5;
 const treasureWidth = 90;
@@ -22,103 +28,71 @@ const treasureHeight = 85;
 
 // Create key and treasure for Level 2
 const level2KeyTreasure = new KeyTreasure(
-    "../assets/images/level2_key.png",
-    "../assets/images/treasure_locked_2.png",
-    "../assets/images/treasure-open2.png",
-    keyX, keyDeck, keyWidth, keyHeight,
-    treasureX, treasureDeck, treasureWidth, treasureHeight
+    //  pass the key
+    {
+        image: "../assets/images/level2_key.png",
+        x: keyX,
+        deck: keyDeck,
+        width: keyWidth,
+        height: keyHeight
+    },
+    // pass the treasure
+    {
+        treasure_closed_img: "../assets/images/treasure_locked_2.png",
+        treasure_open_img: "../assets/images/treasure-open2.png",
+        x: treasureX,
+        deck: treasureDeck,
+        width: treasureWidth,
+        height: treasureHeight
+    }
 );
 
-// Create shield for Level 2 on the left side of Deck 3
-const level2Shield = new Shield(
-    "../assets/images/shield.png",220, 3);
+// create the shield for level 2
+const level2Shield = new Shield("../assets/images/shield.png",220,3);
 
-// Check whether FL1NK touches an obstacle
-function touchesObstacle(player, obstacle) {
 
-    // Smaller collision area for FL1NK
-    const playerX = player.xPos + 25;
-    const playerY = player.yPos + 20;
-    const playerWidth = player.width - 50;
-    const playerHeight = player.height - 30;
 
-    return (
-        playerX < obstacle.x + obstacle.width &&
-        playerX + playerWidth > obstacle.x &&
-        playerY < obstacle.y + obstacle.height &&
-        playerY + playerHeight > obstacle.y
-    );
-}
-
-// Check Level 2 collisions
-export function checkLevel2Collisions(player, previousX, pirate) {
-
-    let touchingObstacleNow = false;
+// Check all the level 2 collisions
+export function check_level_2_collisions(player, previousX, pirate) {
+    let touched_hazard_now = false;
 
     // Check shield collection
     level2Shield.checkCollision(player);
 
     // Stop FL1NK from crossing the spiked ball without the shield
-    const spike = level2Obstacles[0];
+    const spike = ship_obstacles[0];
 
-    if (
-        player.currentDeck === 2 &&
-        !player.climbing &&
-        !level2Shield.isActive() &&
-        !level2KeyTreasure.hasKey
-    ) {
+    // stop fl1nk from crossing the spike if they don't have the shield
+    if (player.currentDeck === 2) {
+        if (!player.climbing) {
+            if (!level2Shield.shield_active) {
+                if (!level2KeyTreasure.collected_key) {
 
-        // Stop FL1NK when approaching from the left
-        if (
-            previousX + player.width <= spike.x &&
-            player.xPos + player.width > spike.x
-        ) {
-            player.xPos = spike.x - player.width;
-        }
+                    // stop fl1nk from moving foward
+                    if (previousX + player.width <= spike.x) {
+                        if (player.horizontal_position + player.width > spike.x) {
+                            player.horizontal_position = spike.x - player.width;
+                        }
+                    }
 
-        // Stop FL1NK when approaching from the right
-        if (
-            previousX >= spike.x + spike.width &&
-            player.xPos < spike.x + spike.width
-        ) {
-            player.xPos = spike.x + spike.width;
-        }
-
-        // Prevent FL1NK from remaining inside the spike
-        if (
-            player.xPos < spike.x + spike.width &&
-            player.xPos + player.width > spike.x
-        ) {
-            if (previousX + player.width / 2 < spike.x + spike.width / 2) {
-                player.xPos = spike.x - player.width;
-            } else {
-                player.xPos = spike.x + spike.width;
+                }
             }
         }
     }
 
     if (!player.climbing) {
+        // check if fl1nk touched the pther obstacles
+        for (let i = 1; i < ship_obstacles.length; i++) {
+            const obstacle = ship_obstacles[i];
 
-        for (const obstacle of level2Obstacles) {
-
-            // Shield protects only against the Deck 2 spiked ball
-            if (obstacle === level2Obstacles[0]) {
-                // The spiked ball blocks movement instead of removing hearts
-                continue;
-            }
-
-            if (touchesObstacle(player, obstacle)) {
-                touchingObstacleNow = true;
+            if (touchesItem(player, obstacle.x, obstacle.width, obstacle.deck)) {
+                touched_hazard_now = true;
                 break;
             }
         }
 
-        // Check whether FL1NK touches the pirate on Deck 3
-
-        // Check if FL1NK touches the pirate
         if (player.currentDeck === pirate.pirateDeck) {
-
-            // Smaller collision area for pirate
+            // create a small collision area around the pirate
             const pirateCollision = {
                 x: pirate.pirateX + 15,
                 y: pirate.pirateY + 10,
@@ -126,51 +100,58 @@ export function checkLevel2Collisions(player, previousX, pirate) {
                 height: pirate.pirateHeight - 20
             };
 
-            if (touchesObstacle(player, pirateCollision)) {
-                touchingObstacleNow = true;
+            // if pirate and fl1nk touch, collision happned
+            if (
+                touchesItem(
+                    player,
+                    pirateCollision.x,
+                    pirateCollision.width,
+                    pirate.pirateDeck
+                )
+            ) {
+                touched_hazard_now = true;
             }
-}
-    }
-
-    // Check Level 2 key and treasure
-    // FL1NK must have active shield protection to collect the key
-    if (
-        level2KeyTreasure.hasKey ||
-        level2Shield.isActive()
-    ) {
-        level2KeyTreasure.checkCollision(player);
-    }
-
-    // Stop shield protection when the key is collected
-    if (level2KeyTreasure.hasKey && level2Shield.shieldActive) {
-        level2Shield.stop();
-    }
-
-    if (touchingObstacleNow && !fl1nkTouchedObstacle) {
-
-        const hearts = document.querySelectorAll(".life-heart");
-        const lastHeart = hearts[hearts.length - 1];
-
-        if (lastHeart) {
-            lastHeart.remove();
         }
     }
 
-    fl1nkTouchedObstacle = touchingObstacleNow;
+    // If the player collected shiled than can get key and treasure
+    let can_get_Key_Treasure = false;
+
+    if (level2Shield.shield_active) {
+        can_get_Key_Treasure = true;
+    }
+
+    if (level2KeyTreasure.collected_key) {
+        can_get_Key_Treasure = true;
+    }
+
+    if (can_get_Key_Treasure) {
+        level2KeyTreasure.checkCollision(player);
+    }
+
+    // Deactivate shield protection when key collected
+    if (level2KeyTreasure.collected_key) {
+        if (level2Shield.shield_active) {
+            level2Shield.stop();
+        }
+    }
+
+    // remove heart if touched obstacle
+    fl1nk_touched_obstcale = remove_heart(
+        touched_hazard_now,
+        fl1nk_touched_obstcale
+    );
 }
 
-// Draw Level 2 key and treasure
-export function drawLevel2Collisions(context, decks) {
-    level2KeyTreasure.draw(context, decks);
 
-    // Draw the shield and countdown
+// Draw Level 2 key, treasure & shield
+export function draw_level_2_collisions(context, decks) {
+
+    level2KeyTreasure.draw(context, decks);
     level2Shield.draw(context, decks);
 }
 
-
-// ============== CHECK LEVEL 2 VICTORY ==============
-
-// Return true when FL1NK has unlocked the Level 2 treasure
-export function isLevel2Complete() {
-    return level2KeyTreasure.treasureIsOpen;
+// Return true, when treasure unlocked
+export function level_2_completed() {
+    return level2KeyTreasure.unlocked_treasure;
 }

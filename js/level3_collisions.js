@@ -1,7 +1,12 @@
-
 "use strict";
+///////////////////////////////////////////////////
+///             Level 3 Game Collisions
+//////////////////////////////////////////////////
 
-// Load images
+// import the helper functions
+import {drawLoadedImage,touchesItem, playSound, remove_heart} from "./levels_game_elements.js";
+
+//Load all the images for the game
 const poisonImage = new Image();
 poisonImage.src = "../assets/images/poison_2.png";
 
@@ -14,159 +19,142 @@ keyImage.src = "../assets/images/key3.png";
 const chestImage = new Image();
 chestImage.src = "../assets/images/chest.png";
 
-// Load open treasure chest images
 const openTreasureImage = new Image();
 openTreasureImage.src = "../assets/images/open_chest.png";
 
 const openEmptyImage = new Image();
 openEmptyImage.src = "../assets/images/empty_open_chest.png";
 
-// Load treasure map hint images
 const leftHintImage = new Image();
 leftHintImage.src = "../assets/images/left_treasure_hint.png";
 
 const rightHintImage = new Image();
 rightHintImage.src = "../assets/images/right_treasure_hint.png";
 
-// Map collection sound
-const mapSound = new Audio("../assets/sounds/key.mp3");
+// Game sound affects
+const mapSound = new Audio("../assets/sounds/map.mp3");
+const keySound = new Audio("../assets/sounds/key.mp3");
+const chestSound = new Audio("../assets/sounds/treasure.mp3");
+const poisonSound = new Audio("../assets/sounds/poison.mp3");
+const pirateSound = new Audio("../assets/sounds/poison.mp3");
 
-// Key collection sound
-const keySound = new Audio("assets/sounds/key.mp3");
-
-// Poison bottle size
+// poison dimentions
 const poisonWidth = 65;
 const poisonHeight = 65;
 
-// Poison bottle positions
+// poison bottles positions
 const poisons = [
     { x: 535, deck: 2 },
     { x: 715, deck: 4 },
     { x: 610, deck: 7 }
 ];
 
-// Map position and size
+// Map position and dimentions
 const mapX = 350;
 const mapDeck = 4;
 const mapWidth = 85;
 const mapHeight = 65;
 
-// Key position and size
+// Key position and dimentions
 const keyX = 720;
 const keyDeck = 5;
 const keyWidth = 80;
 const keyHeight = 45;
 
-// Treasure chest positions and size
+// Treasure  size and dimentions
 const chestWidth = 100;
 const chestHeight = 75;
 
+// treasure bottles positions
 const chests = [
     { x: 350, deck: 7, opened: false },
     { x: 1010, deck: 7, opened: false }
 ];
 
-// Map collection status
+// Map and key status
 let hasMap = false;
-
-// Key collection status
 let hasKey = false;
 
-// Randomly select the real treasure chest
-// 0 = left chest, 1 = right chest
-let realChest = Math.floor(Math.random() * 2);
+// randomly make a chest the real chest
+const realChest = Math.floor(Math.random() * chests.length);
 
-// Level completion status
+// game status checks
 let level3Complete = false;
-
-// Treasure map hint settings
-let showMapHint = false;
-let mapHintStartTime = 0;
-const mapHintDuration = 5000;
-
-// Check whether FL1NK is touching poison
-let fl1nkTouchedPoison = false;
-
+let show_hint_map = false;
+let fl1nk_touched_poison = false;
+let fl1nk_touched_hazard = false;
+let fl1nk_touched_pirate = false;
 
 // Draw items on their decks
-export function drawLevel3Collisions(context, decks) {
+export function draw_level_3_collisions(context, decks) {
 
-    // Draw poison bottles
-    if (poisonImage.complete && poisonImage.naturalWidth > 0) {
+    // Get poison bottles and draw them
+    for (let i = 0; i < poisons.length; i++) {
+        const poison = poisons[i];
+        const deck = decks[poison.deck];
 
-        for (const poison of poisons) {
-
-            const deck = decks[poison.deck];
-
-            if (deck) {
-                context.drawImage(
-                    poisonImage,
-                    poison.x,
-                    deck.y - poisonHeight,
-                    poisonWidth,
-                    poisonHeight
-                );
-            }
+        // draw poison image on deck
+        if (deck) {
+            drawLoadedImage(
+                context, poisonImage,
+                poison.x, deck.y - poisonHeight,
+                poisonWidth, poisonHeight
+            );
         }
     }
 
-    // Draw map only if FL1NK has not collected it
-    if (
-        !hasMap &&
-        mapImage.complete &&
-        mapImage.naturalWidth > 0
-    ) {
-        context.drawImage(
-            mapImage,
-            mapX,
-            decks[mapDeck].y - mapHeight,
-            mapWidth,
-            mapHeight
-        );
+    // Draw map until it's collected by player
+    if (!hasMap) {
+        const map_deck = decks[mapDeck];
+
+        if (map_deck) {
+            drawLoadedImage(
+                context,
+                mapImage,mapX,
+                map_deck.y - mapHeight,
+                mapWidth,mapHeight
+            );
+        }
     }
 
-    // Draw key on Deck 5
-    if (
-        !hasKey &&
-        keyImage.complete &&
-        keyImage.naturalWidth > 0
-    ) {
-        context.drawImage(
-            keyImage,
-            keyX,
-            decks[keyDeck].y - keyHeight,
-            keyWidth,
-            keyHeight
-        );
+    // Draw key until it's collected by player
+    if (!hasKey) {
+        const key_deck = decks[keyDeck];
+
+        if (key_deck) {
+            drawLoadedImage(
+                context,
+                keyImage, keyX,
+                key_deck.y - keyHeight,
+                keyWidth, keyHeight
+            );
+        }
     }
 
     // Draw treasure chests
     for (let i = 0; i < chests.length; i++) {
-
+        // get the chest
         const chest = chests[i];
+        const chest_deck = decks[chest.deck];
 
-        // Closed chest by default
-        let currentChestImage = chestImage;
+        if (chest_deck) {
+            let image = chestImage;
 
-        // Select the correct open chest image
-        if (chest.opened) {
+            // display image based on status
+            if (chest.opened) {
+                image = openEmptyImage;
 
-            if (i === realChest) {
-                currentChestImage = openTreasureImage;
-            } else {
-                currentChestImage = openEmptyImage;
+                if (i === realChest) {
+                    image = openTreasureImage;
+                }
             }
-        }
 
-        // Draw chest when its image has loaded
-        if (
-            currentChestImage.complete &&
-            currentChestImage.naturalWidth > 0
-        ) {
-            context.drawImage(
-                currentChestImage,
+            // draw the image
+            drawLoadedImage(
+                context,
+                image,
                 chest.x,
-                decks[chest.deck].y - chestHeight,
+                chest_deck.y - chestHeight,
                 chestWidth,
                 chestHeight
             );
@@ -175,175 +163,166 @@ export function drawLevel3Collisions(context, decks) {
 }
 
 
-// Check whether FL1NK touches an item
-function touchesItem(player, x, width, deck) {
-
-    return player.currentDeck === deck &&
-        player.xPos < x + width &&
-        player.xPos + player.width > x;
-}
-
 
 // Check Level 3 collisions
-export function checkLevel3Collisions(player) {
+export function check_level_3_collisions(player, pirates) {
+    let touched_poison_now = false;
+    let touched_hazard_now = false;
+    let touched_pirate_now = false;
 
-    let touchingPoisonNow = false;
 
-    // Check collisions only when FL1NK is not climbing
+    // check if fl1nk touched a poison bottle
     if (!player.climbing) {
+        for (let i = 0; i < poisons.length; i++) {
+            const poison = poisons[i];
 
-        // Check poison collisions
-        for (const poison of poisons) {
-
-            if (
-                touchesItem(
-                    player,
-                    poison.x,
-                    poisonWidth,
-                    poison.deck
-                )
-            ) {
-                touchingPoisonNow = true;
+            if (touchesItem(player, poison.x, poisonWidth, poison.deck)) {
+                touched_poison_now = true;
+                 touched_hazard_now = true;
                 break;
             }
         }
 
-        // Check whether FL1NK collects the map
-        if (
-            !hasMap &&
-            touchesItem(player, mapX, mapWidth, mapDeck)
-        ) {
+        // check if fl1nk touched pirate
+        for (const pirate of pirates) {
+            if (player.currentDeck === pirate.pirateDeck) {
+                // create a small collision area around the pirate
+                const pirateCollision = {
+                    x: pirate.pirateX + 15,
+                    y: pirate.pirateY + 10,
+                    width: pirate.pirateWidth - 30,
+                    height: pirate.pirateHeight - 20
+                };
 
-            hasMap = true;
-
-            // Play map collection sound
-            mapSound.currentTime = 0;
-            mapSound.play().catch(() => {
-                // Continue if the browser blocks audio
-            });
-
-            // Show the correct treasure map hint
-            showMapHint = true;
-            mapHintStartTime = Date.now();
-
-            // Show green tick for collected map
-            document.getElementById("map-tick").style.display = "block";
-
-            console.log("Treasure map collected!");
-        }
-
-        // Check whether FL1NK collects the key
-        if (
-            !hasKey &&
-            touchesItem(player, keyX, keyWidth, keyDeck)
-        ) {
-
-            hasKey = true;
-
-            // Play key collection sound
-            keySound.currentTime = 0;
-            keySound.play().catch(() => {
-                // Continue if the browser blocks audio
-            });
-
-            // Show green tick for collected key
-            document.getElementById("key-tick").style.display = "block";
-
-            console.log("Level 3 key collected!");
-        }
-
-        // Check treasure chest collisions
-        if (hasKey && !level3Complete) {
-
-            for (let i = 0; i < chests.length; i++) {
-
-                const chest = chests[i];
-
-                // Open a chest only once
+                // if pirate and fl1nk touch, collision happned
                 if (
-                    !chest.opened &&
                     touchesItem(
                         player,
-                        chest.x,
-                        chestWidth,
-                        chest.deck
+                        pirateCollision.x,
+                        pirateCollision.width,
+                        pirate.pirateDeck
                     )
                 ) {
+                    touched_hazard_now = true;
+                    touched_pirate_now = true;
 
-                    chest.opened = true;
+                    if (!fl1nk_touched_pirate) {
+                        playSound(pirateSound);
+                    }
 
-                    // Check if FL1NK found the real treasure
-                    if (i === realChest) {
+                }
+            }
+        }
 
-                        level3Complete = true;
+        // Collect the map
+        if (!hasMap) {
 
-                        console.log("Real treasure found!");
-                        console.log("Level 3 completed!");
+            // play sound when map touched
+            if (touchesItem(player, mapX, mapWidth, mapDeck)) {
+                hasMap = true;
+                playSound(mapSound);
 
-                    } else {
+                // show the hint
+                show_hint_map = true;
+                let hint_seconds_remaining = 3;
+                let map_hint_timer;
 
-                        console.log("Empty treasure chest!");
-                        console.log("Find the other chest!");
+                // hide the hint after timer over
+                map_hint_timer = setInterval(() => {
+                    hint_seconds_remaining--;
+
+                    if (hint_seconds_remaining <= 0) {
+                        show_hint_map = false;
+                        clearInterval(map_hint_timer);
+                    }
+                }, 1000);
+
+                // tick the checkbox
+                const mapTick = document.getElementById("map-tick");
+
+                if (mapTick) {
+                    mapTick.style.display = "block";
+                }
+            }
+        }
+
+        // collected the key
+        if (!hasKey) {
+            // play the sound
+            if (touchesItem(player, keyX, keyWidth, keyDeck)) {
+                hasKey = true;
+                playSound(keySound);
+
+                // tick the checkbox
+                const keyTick = document.getElementById("key-tick");
+
+                if (keyTick) {
+                    keyTick.style.display = "block";
+                }
+            }
+        }
+
+        // open chest once key collected
+        if (hasKey) {
+            if (!level3Complete) {
+                for (let i = 0; i < chests.length; i++) {
+                    const chest = chests[i];
+
+                    if (!chest.opened) {
+                        if (touchesItem(player, chest.x, chestWidth, chest.deck)) {
+                            chest.opened = true;
+                            playSound(chestSound);
+
+                            // level completed
+                            if (i === realChest) {
+                                level3Complete = true;
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    // Remove one heart when FL1NK first touches poison
-    if (touchingPoisonNow && !fl1nkTouchedPoison) {
-
-        const hearts = document.querySelectorAll(".life-heart");
-        const lastHeart = hearts[hearts.length - 1];
-
-        if (lastHeart) {
-            lastHeart.remove();
+    fl1nk_touched_pirate = touched_pirate_now;
+    // play sound
+    if (touched_poison_now) {
+        if (!fl1nk_touched_poison) {
+            playSound(poisonSound);
         }
     }
 
-    // FL1NK must leave poison before losing another heart
-    fl1nkTouchedPoison = touchingPoisonNow;
+    // remember if fl1nk touched poision
+    fl1nk_touched_poison = touched_poison_now;
+
+    // Remove a heart on first poison contact
+    fl1nk_touched_hazard = remove_heart(
+        touched_hazard_now,
+        fl1nk_touched_hazard
+    );
 }
 
 
 // Draw the treasure map hint image
 export function drawMapHint(context) {
-
-    // Do not draw if the hint is not active
-    if (!showMapHint) {
+    if (!show_hint_map) {
         return;
     }
 
-    // Hide the hint after 5 seconds
-    if (Date.now() - mapHintStartTime >= mapHintDuration) {
-        showMapHint = false;
-        return;
-    }
+    // set chest by default in case
+    let hintImage = rightHintImage;
 
-    // Select the correct hint image
-    let hintImage;
-
+    // show the hint randomly based onreal chest
     if (realChest === 0) {
         hintImage = leftHintImage;
-    } else {
-        hintImage = rightHintImage;
     }
 
-    // Draw the hint in the centre of the game
-    if (hintImage.complete && hintImage.naturalWidth > 0) {
-
-        context.drawImage(
-            hintImage,
-            200,
-            125,
-            1000,
-            650
-        );
-    }
+    // display the image
+    drawLoadedImage(context, hintImage, 200, 125, 1000, 650);
 }
 
 
-// Check whether Level 3 is completed
-export function isLevel3Complete() {
+// Return true, when treasure unlocked
+export function level_3_completed() {
     return level3Complete;
 }

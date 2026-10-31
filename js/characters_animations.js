@@ -231,9 +231,9 @@
 
         // display spirate sheet row based on direction 
         let row = 0;
-        if (this.direction == "right") {
+        if (this.direction == "left") {
             row = 1;
-        } else if (this.direction == "left") {
+        } else if (this.direction == "right") {
             row = 2;
         } else if (this.direction == "up") {
             row = 3;
@@ -247,7 +247,7 @@
         this.context.drawImage(
             this.image,
             frame.position.x, frame.position.y,
-            256, 256,
+            317, 310.25,
             this.horizontal_position, this.vertical_position,
             this.width, this.height
         );

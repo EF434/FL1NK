@@ -3,10 +3,10 @@
 // Importing classes from other files in game.js to run everything
 import { Fl1nk_Coins } from "./coins.js"
 import { savePlayerScore } from "./score_board.js";
-import {drawLevel1Collisions, checkLevel1Collisions, isLevel1Complete} from "./level1_collisions.js";
-import {checkLevel2Collisions, drawLevel2Collisions, isLevel2Complete} from "./level2_collisions.js";
+import {draw_level_1_collisions, check_level_1_collisions, level_1_completed} from "./level1_collisions.js";
+import {draw_level_2_collisions, check_level_2_collisions, level_2_completed} from "./level2_collisions.js";
 import { Player_Fl1nk, Pirate } from "./characters_animations.js";
-import {drawLevel3Collisions,checkLevel3Collisions,drawMapHint,isLevel3Complete} from "./level3_collisions.js";
+import {draw_level_3_collisions,check_level_3_collisions,drawMapHint,level_3_completed} from "./level3_collisions.js";
 
 
 // << Defining the levels json files, and the canva id of each level >>>>
@@ -247,12 +247,12 @@ function drawFrame() {
     // Move FL1NK & collect and draw fl1nk
     player.move(keysPressed);
     fl1nk_coin.collect(player);
-    fl1nk_coin.draw_fl1nk();
+    fl1nk_coin.draw();
 
     // if it's 'level 1', then calling this collision logic
     if (levelNumber === "1") {
-        checkLevel1Collisions(player);
-        drawLevel1Collisions(context, player.decks);
+        check_level_1_collisions(player);
+        draw_level_1_collisions(context, player.decks);
     }
 
 
@@ -261,10 +261,10 @@ function drawFrame() {
 
         // draw the collision and patrolling pirate
         level2Pirate.move(player.decks);
-        checkLevel2Collisions(player, previousX, level2Pirate);
+        check_level_2_collisions(player, previousX, level2Pirate);
 
         level2Pirate.draw(context);
-        drawLevel2Collisions(context, player.decks);
+        draw_level_2_collisions(context, player.decks);
     }
 
 
@@ -275,8 +275,8 @@ function drawFrame() {
         level3Pirate1.move(player.decks);
         level3Pirate2.move(player.decks);
 
-        checkLevel3Collisions(player);
-        drawLevel3Collisions(context, player.decks);
+        check_level_3_collisions(player, [level3Pirate1, level3Pirate2]);
+        draw_level_3_collisions(context, player.decks);
 
         level3Pirate1.draw(context);
         level3Pirate2.draw(context);
@@ -301,21 +301,21 @@ function drawFrame() {
     // Check whether the current level is complete
     if (levelNumber === "1") {
 
-        if (isLevel1Complete()) {
+        if (level_1_completed()) {
             showVictoryPopup();
             return;
         }
 
     } else if (levelNumber === "2") {
 
-        if (isLevel2Complete()) {
+        if (level_2_completed()) {
             showVictoryPopup();
             return;
         }
 
     } else if (levelNumber === "3") {
 
-        if (isLevel3Complete()) {
+        if (level_3_completed()) {
             showVictoryPopup();
             return;
         }
