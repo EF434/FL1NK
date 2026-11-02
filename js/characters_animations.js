@@ -1,4 +1,4 @@
-    "use strict";
+"use strict";
 
     // =========== This file creates two classes      =====
     // =========== "Player_Fl1nk", and "Pirate" Class =====

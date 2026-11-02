@@ -1,3 +1,5 @@
+"use strict";
+
 /* ============== Import the spirate sheet and get each frame from there ==============*/ 
 
 // store and export spirate animation frames

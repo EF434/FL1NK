@@ -1,6 +1,9 @@
+"use strict";
+
+// Define the positions of coins in all 3 levels
 export const coins_for_every_level = {
     "1": [
-        { deck: 1, firstX: 400, count:  7 },
+        { deck: 1, firstX: 400, count:  6 },
         { deck: 2, firstX: 230, count: 10 },
         { deck: 3, firstX: 230, count: 10 },
         { deck: 4, firstX: 230, count: 10 },
@@ -8,7 +11,7 @@ export const coins_for_every_level = {
     ],
 
     "2": [
-        { deck: 1, firstX: 400, count: 8 },
+        { deck: 1, firstX: 400, count: 6 },
         { deck: 2, firstX: 240, count: 8 },
         { deck: 3, firstX: 240, count: 10 },
         { deck: 4, firstX: 240, count: 8 },
@@ -16,7 +19,7 @@ export const coins_for_every_level = {
     ],
 
     "3": [
-        { deck: 1, firstX: 400, count: 7 },
+        { deck: 1, firstX: 400, count: 6 },
         { deck: 2, firstX: 240, count: 10 },
         { deck: 3, firstX: 240, count: 10 },
         { deck: 4, firstX: 240, count: 10 },

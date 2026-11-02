@@ -1,6 +1,5 @@
 "use strict";
 
-
 /////// This file is a shared file for Key, Treasure and Shield logic     ///////
 /////// It consists of two classess for handle this logic across 3 levels ///////
 
@@ -267,12 +266,11 @@ export class Shield {
 const player_email = sessionStorage.getItem("loggedInUserEmail");
 const savedPlayer = localStorage.getItem(player_email);
 
-
 if (savedPlayer) {
     const player = JSON.parse(savedPlayer);
     const completed_levels = player.completedLevels || []; // get completed levels
 
-    // check if player completed level 1, if not display lock 
+    // check if player completed level 1, if not display lock
     const level_1_completed = completed_levels.includes(1);
 
     if (level_1_completed === false) {
@@ -281,24 +279,35 @@ if (savedPlayer) {
         const lock = document.getElementById("level2-lock");
         const button = document.getElementById("level2-button");
 
-        lock.style.display = "block";
-        button.textContent = "LOCKED";
-        button.removeAttribute("href");
+        if (lock) {
+            lock.style.display = "block";
+        }
+
+        if (button) {
+            button.textContent = "LOCKED";
+            button.removeAttribute("href");
+        }
     }
 
-     // check if player completed level 2, if not display lock 
+    // check if player completed level 2, if not display lock
     const level2Completed = completed_levels.includes(2);
 
     if (level2Completed === false) {
+
+        // get the lock and button
         const lock = document.getElementById("level3-lock");
         const button = document.getElementById("level3-button");
 
-        lock.style.display = "block";
-        button.textContent = "LOCKED";
-        button.removeAttribute("href");
+        if (lock) {
+            lock.style.display = "block";
+        }
+
+        if (button) {
+            button.textContent = "LOCKED";
+            button.removeAttribute("href");
+        }
     }
 }
-
 // Reusable function to draw image on canvas once it is loaded sucessfully
 export function drawLoadedImage(context, image, x, y, width, height) {
     if (image.complete && image.naturalWidth > 0) {

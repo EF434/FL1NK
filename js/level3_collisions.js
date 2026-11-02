@@ -270,14 +270,19 @@ export function check_level_3_collisions(player, pirates) {
 
                     if (!chest.opened) {
                         if (touchesItem(player, chest.x, chestWidth, chest.deck)) {
-                            chest.opened = true;
-                            playSound(chestSound);
 
-                            // level completed
+                            chest.opened = true;
                             if (i === realChest) {
                                 level3Complete = true;
+                                playSound(chestSound);
                             }
+                            else {
+                                 window.level3EmptyChest = true;
+                            }
+                            break;
                         }
+
+                        
                     }
                 }
             }

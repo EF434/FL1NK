@@ -1,8 +1,11 @@
 "use strict";
+//////////////////////////////////////////////////////////
+//    Main Game logic, importis all classes and functions
+//////////////////////////////////////////////////////////
 
 // Importing classes from other files in game.js to run everything
 import { Fl1nk_Coins } from "./coins.js"
-import { savePlayerScore } from "./score_board.js";
+import { save_users_score, save_guest_score  } from "./score_board.js";
 import {draw_level_1_collisions, check_level_1_collisions, level_1_completed} from "./level1_collisions.js";
 import {draw_level_2_collisions, check_level_2_collisions, level_2_completed} from "./level2_collisions.js";
 import { Player_Fl1nk, Pirate } from "./characters_animations.js";
@@ -133,10 +136,10 @@ function showVictoryPopup() {
 
     // sotring the score based on if player was registered or not
     if (sessionStorage.getItem("loggedInUserEmail")) {
-        savePlayerScore(levelNumber, fl1nk_coin.score); // saving score
+        save_users_score(levelNumber, fl1nk_coin.score); // saving score
 
     } else {
-        sessionStorage.setItem("fl1nkGuestScore", fl1nk_coin.score);
+        save_guest_score(levelNumber, fl1nk_coin.score);
     }
 
     if (victoryScore) {
@@ -166,6 +169,9 @@ function showGameOverPopup(reason) {
 
     } else if (reason === "hearts") {
         losingMessage.innerHTML = "YOU LOST! <br> Better Luck Next Time!";
+
+    } else if (reason === "empty_chest") {
+    losingMessage.innerHTML = "WRONG TREASURE! <br> You opened the empty chest!";
     }
 
     // Display the Game Over popup
@@ -198,7 +204,13 @@ if (replayLevelButton) {
     };
 }
 
-// Exit game when player lost
+// exit the game after winning
+if (exitLevelButton) {
+    exitLevelButton.onclick = function() {
+        window.location.href = "play_game.html";
+    };
+}
+// Exit game after the player lost
 if (losingExitButton) {
 
     losingExitButton.onclick = function() {
@@ -282,6 +294,12 @@ function drawFrame() {
         level3Pirate2.draw(context);
 
         drawMapHint(context);
+
+        // end game if wrong chest is opened
+        if (window.level3EmptyChest === true) {
+            showGameOverPopup("empty_chest");
+            return;
+}
     }
 
 

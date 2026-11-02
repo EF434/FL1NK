@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <!-- Navigate user to home page when they clieck the FL1NK Icon-->
+        <!-- Navigate to home page when they click the FL1NK Icon-->
         <a href="../index.html" class="navbar-logo-link">
             <img class="navbar-logo" src="../assets/images/nav-logo.png" alt="FL1NK Logo">
         </a>
@@ -25,19 +25,18 @@
         <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
-                <!-- Home page icon-->
                 <li><a href="../index.html"> 
                     <img src="../assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
-                <!-- Home page icon-->
-                <li><a href="login_register.html">
+
+                <li><a id="login-register-button" href="login_register.html">
                     <img src="../assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
-                <!-- Home page icon-->
+
                 <li><a href="score_board.html">
                     <img src="../assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
-                <!-- Home page icon-->
+
                 <li><a href="play_game.html">
                     <img src="../assets/images/play-icon.png" alt="Play Game Icon"></a>
                 </li>
@@ -46,7 +45,7 @@
                     <img src="../assets/images/about_page-icon.png" alt="About Us Icon"></a>
                 </li>
 
-                                <!-- show user profile pic after logged in -->
+                <!-- show user profile pic after logged in -->
                 <li id="nav-profile-pic" class="nav-profile-pic" hidden>
 
                     <!-- profile pic icon -->
@@ -58,8 +57,7 @@
                     <div class="nav-profile-dropdown" id="nav-profile-dropdown">
                         <p id="nav-profile-usrname"></p>
                         <p id="nav-profile-score"></p>
-                        <button type="button" class="navbar-logout-button" onclick="logout()">
-                            Logout
+                        <button type="button" class="navbar-logout-button" onclick="logout()">Logout
                         </button>
 
                     </div>
@@ -71,9 +69,10 @@
 
     <section class="about-us-banner">
 
+        <!-- About section content -->
         <div class="about-founder-section">
 
-            <img src="../assets/images/emaan-profile.png" alt="Founder of FL1NK" class="my-picture">
+            <img src="../assets/images/emaan-profile.png" alt="Founder Picture" class="my-picture">
 
             <div class="info-about-me">
                 <h1>Meet the Founder</h1>
@@ -95,42 +94,35 @@
         </div>
 
 
-
+        <!-- Sotry behind Fl1nk Section -->
         <div class="story-card">
 
-            <!-- Story Information -->
             <div class="story-information">
 
                 <h1>The Story Behind FL1NK</h1>
                 <h2>Where the Adventure Began!</h2>
 
-                <p>
-                    The inspiration for FL1NK actually goes back to my
+                <p> The inspiration for FL1NK actually goes back to my
                     first year at university, when I worked on a
-                    coursework project involving search algorithms.
-                </p>
+                    coursework project involving search algorithms. </p>
 
-                <p>
-                    The challenge was to develop an algorithm that
+                <p> The challenge was to develop an algorithm that
                     could find the shortest path through a pirate maze.
                     It was an exciting experience that introduced me
                     to the world of pathfinding and problem-solving.
                 </p>
 
-                <p>
-                    That project sparked an idea:
+                <p> That project sparked an idea:
                     What if I could turn a simple pirate maze into
                     a real, interactive adventure game?
                 </p>
 
-                <p>
-                    And that's how the journey of FL1NK began!
-                </p>
+                <p>And that's how the journey of FL1NK began!</p>
 
             </div>
 
-            <!-- First Year Project Picture -->
-            <img src="../assets/images/game_inspo.png" alt="First Year Pirate Maze Search Algorithm Project" class="story-picture">
+            <!-- Game inspiration picture -->
+            <img src="../assets/images/game_inspo.png" alt="First Year Project Picture" class="inspo-picture">
 
         </div>
 
@@ -162,9 +154,9 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
-
-    <script src="../js/home-page.js"></script>
-    <script src="../js/navbar_profile.js"></script>
+    
+    <!-- Link javascript files -->
+    <script src="../js/pages_styling.js"></script>
 
 
 </body>

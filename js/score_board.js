@@ -1,206 +1,218 @@
+
 "use strict";
+///////////////////////////////////////////
+//   Store user data in local storage and
+//         display the scoreboard
+///////////////////////////////////////////
+export function save_users_score(level_number, currentScore) {
 
-// ============== FL1NK PLAYER SCORES ==============
+    // get user's email, and validate that it exists
+    let email = sessionStorage.getItem("loggedInUserEmail");
 
-// Save the player's score after completing a level
-export function savePlayerScore(levelNumber, currentScore) {
-
-    // Get the logged-in player's email
-    const playerEmail = sessionStorage.getItem("loggedInUserEmail");
-
-    // Check if the player is logged in
-    if (!playerEmail) {
-        console.log("Player is not logged in. Score not saved.");
+    if (email == null) {
         return;
     }
 
-    // Get the player's registered account
-    const savedPlayer = localStorage.getItem(playerEmail);
+    // get player's data from local storage and validate if it exsists
+    let player = JSON.parse(localStorage.getItem(email));
 
-    if (!savedPlayer) {
-        console.log("Player account not found.");
+    if (player == null) {
         return;
     }
 
-    // Convert saved JSON into a JavaScript object
-    const player = JSON.parse(savedPlayer);
+    // get level number and score 
+    let level = Number(level_number);
+    let score = Number(currentScore);
 
-    // Create level scores if the player has no previous scores
-    if (!player.levelScores) {
-        player.levelScores = {
-            1: 0,
-            2: 0,
-            3: 0
-        };
-    }
 
-    // Create completed levels list if it does not exist
-    if (!player.completedLevels) {
-        player.completedLevels = [];
-    }
-
-    // Convert level and score into numbers
-    const level = Number(levelNumber);
-    const score = Number(currentScore);
-
-    // Check that the level and score are valid
-    if (
-        ![1, 2, 3].includes(level) ||
-        !Number.isFinite(score) ||
-        score < 0
-    ) {
-        console.log("Invalid level or score.");
-        return;
-    }
-
-    // Get the player's previous best score for this level
-    const previousScore = Number(player.levelScores[level] || 0);
-
-    // Save only the highest score achieved
-    if (score > previousScore) {
+    // update the highest score for levels
+    if (score > player.levelScores[level]) {
         player.levelScores[level] = score;
     }
 
-    // Record the completed level
-    if (!player.completedLevels.includes(level)) {
+    // Add the completed levels
+    if (player.completedLevels.length < level) {
         player.completedLevels.push(level);
-        player.completedLevels.sort(function(a, b) {
-            return a - b;
+    }
+
+    // Calculate the player's total score and update 
+    player.totalScore = player.levelScores[1] + player.levelScores[2] + player.levelScores[3];
+    localStorage.setItem(email, JSON.stringify(player));
+}
+
+
+///////////////////////////////////////////////////////
+// Temporarly store guest score's in session storage
+///////////////////////////////////////////////////////
+export function save_guest_score(level_number, currentScore) {
+
+    // get level number and score 
+    let level = Number(level_number);
+    let score = Number(currentScore);
+
+    // get guest's updated scores
+    let guest_scores = JSON.parse(sessionStorage.getItem("fl1nkGuestLevelScores"));
+
+    // create scores for new user
+    if (!guest_scores) {
+        guest_scores = {1: 0, 2: 0, 3: 0};
+    }
+
+    //  save high score
+    if (score > guest_scores[level]) {
+        guest_scores[level] = score;
+    }
+
+    // calculaye total score
+    let totalScore = guest_scores[1] + guest_scores[2] + guest_scores[3];
+
+    // save guests scores temporarily via session storage
+    sessionStorage.setItem("fl1nkGuestLevelScores", JSON.stringify(guest_scores));
+    sessionStorage.setItem("fl1nkGuestScore", totalScore);
+}
+
+// ==========================================
+// GET ALL REGISTERED PLAYERS
+// ==========================================
+
+function getRegisteredPlayers() {
+
+    let players = [];
+
+    // Check all accounts in localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+
+        let email = localStorage.key(i);
+        let player;
+
+        // Read the saved account
+        try {
+            player = JSON.parse(localStorage.getItem(email));
+        }
+        catch (error) {
+            continue;
+        }
+
+        // Only include registered player accounts
+        if (!player || player.email !== email || !player.username) {
+            continue;
+        }
+
+        // Add player details to the leaderboard
+        players.push({
+            username: player.username,
+            score: Number(player.totalScore || 0),
+            profileImage: player.profileImage
         });
     }
 
-    // Calculate the total best score across all three levels
-    player.totalScore =
-        Number(player.levelScores[1] || 0) +
-        Number(player.levelScores[2] || 0) +
-        Number(player.levelScores[3] || 0);
+    // Sort players by highest score
+    players.sort(function(a, b) {
 
-    // Save updated player information in localStorage
-    localStorage.setItem(playerEmail, JSON.stringify(player));
-
-    console.log("Player score saved successfully!");
-    console.log("Total Score:", player.totalScore);
-}
-
-
-// Get the logged-in player's saved scores
-export function getPlayerScores() {
-    const playerEmail = sessionStorage.getItem("loggedInUserEmail");
-
-    if (!playerEmail) {
-        return null;
-    }
-
-    const savedPlayer = localStorage.getItem(playerEmail);
-
-    if (!savedPlayer) {
-        return null;
-    }
-
-    // Convert saved player data into a JavaScript object
-    const player = JSON.parse(savedPlayer);
-
-    return {
-        username: player.username,
-        levelScores: player.levelScores || {
-            1: 0,
-            2: 0,
-            3: 0
-        },
-        totalScore: player.totalScore || 0,
-        completedLevels: player.completedLevels || []
-    };
-}
-
-
-// get info from id
-const leaderboardPlayers = document.getElementById("leaderboard-players");
-
-// get info of registerd players
-function getRegisteredPlayers() {
-
-    // Store all registered players
-    const players = [];
-
-    // Go through localStorage
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        const player = JSON.parse(localStorage.getItem(key));
-
-        // Check if it is a registered player
-        if (player == null) {
-            continue;
+        if (a.score === b.score) {
+            return a.username.localeCompare(b.username);
         }
 
-        if (player.email != key) {
-            continue;
-        }
-
-        // Get the player's score
-        const score = player.totalScore;
-        players.push({ username: player.username, score: score });
-    }
-
-    // sort player's score high to low
-    players.sort((player1, player2) => {
-        // handle when two scores are the same
-        if (player1.score == player2.score) {
-            return player1.username.localeCompare(player2.username);
-        }
-
-        return player2.score - player1.score;
+        return b.score - a.score;
     });
 
     return players;
 }
 
 
-// Display the leaderboard
+// ==========================================
+// DISPLAY THE SCOREBOARD
+// ==========================================
+
 function displayLeaderboard() {
-    if (!leaderboardPlayers) {
+
+    let leaderboard = document.getElementById("leaderboard-players");
+
+    if (!leaderboard) {
         return;
     }
 
-    // Handle the scores of a guest player
-    if (!sessionStorage.getItem("loggedInUserEmail")) {
+    leaderboard.innerHTML = "";
 
-        // get the score of guest player and display it
-        const score = sessionStorage.getItem("fl1nkGuestScore");
+    let email = sessionStorage.getItem("loggedInUserEmail");
 
-        leaderboardPlayers.innerHTML = `
-            <div class="user-card-content">
-                <h3>-</h3>
-                <h3>Guest</h3>
-                <h3>${score}</h3>
-            </div>`;
+    // Guest player sees only their own score
+    if (!email) {
 
+        let guestScore = sessionStorage.getItem("fl1nkGuestScore") || 0;
+
+        let guestRow = document.createElement("div");
+        guestRow.className = "user-card-content";
+
+        guestRow.innerHTML = `
+            <h3>-</h3>
+            <img class="player-avatar"
+                 src="../assets/images/default_pic.png"
+                 alt="Guest Profile Picture">
+            <h3>Guest</h3>
+            <h3>${guestScore}</h3>
+        `;
+
+        leaderboard.appendChild(guestRow);
         return;
     }
 
-    // get the score board content
-    const players = getRegisteredPlayers();
+    // Get all registered players
+    let players = getRegisteredPlayers();
 
-    leaderboardPlayers.innerHTML = "";
-
-    // if no players registered than display message
     if (players.length === 0) {
-        leaderboardPlayers.innerHTML =
+        leaderboard.innerHTML =
             "<p class='leaderboard-empty'>No players registered yet!</p>";
         return;
     }
 
-    // display each player's rank, score and username
+    // Display each player on the scoreboard
     for (let i = 0; i < players.length; i++) {
-        const player = players[i]; // get each player
 
-        // display content
-        leaderboardPlayers.innerHTML +=
-            `<div class="user-card-content">
-                <h3>${i + 1}</h3>
-                <h3>${player.username}</h3>
-                <h3>${player.score}</h3>
-            </div>`;
+        let player = players[i];
+
+        let row = document.createElement("div");
+        row.className = "user-card-content";
+
+        // Highlight the top three players
+        if (i === 0) {
+            row.classList.add("first-place");
+        }
+        else if (i === 1) {
+            row.classList.add("second-place");
+        }
+        else if (i === 2) {
+            row.classList.add("third-place");
+        }
+
+        // Create the player's rank
+        let rank = document.createElement("h3");
+        rank.textContent = i + 1;
+
+        // Create the player's profile picture
+        let picture = document.createElement("img");
+        picture.className = "player-avatar";
+        picture.src = player.profileImage || "../assets/images/default_pic.png";
+        picture.alt = "Player Profile Picture";
+
+        // Create the player's username
+        let username = document.createElement("h3");
+        username.textContent = player.username;
+
+        // Create the player's score
+        let score = document.createElement("h3");
+        score.textContent = player.score;
+
+        // Add everything to the player's row
+        row.appendChild(rank);
+        row.appendChild(picture);
+        row.appendChild(username);
+        row.appendChild(score);
+
+        // Add the row to the scoreboard
+        leaderboard.appendChild(row);
     }
 }
 
+// Display the leaderboard when the page loads
 displayLeaderboard();

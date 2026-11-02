@@ -24,27 +24,29 @@
         <!-- Home Page Navigation Bar links -->
         <nav class="navbar-links">
             <ul>
-                <!-- Home page icon-->
                 <li><a href="../index.html"> 
                     <img src="../assets/images/home-page-icon.png" alt="Home Page icon"></a>
                 </li>
-                <!-- Home page icon-->
-                <li><a href="login_register.html">
+
+                <li><a id="login-register-button" href="login_register.html">
                     <img src="../assets/images/signup-icon.png" alt="Login Page Icon"></a>
                 </li>
-                <!-- Home page icon-->
+
                 <li><a href="score_board.html">
                     <img src="../assets/images/scoreboard-icon.png" alt="Score Board Icon"></a>
                 </li>
-                <!-- Home page icon-->
-                <li><a href="play_game.html">
-                    <img src="../assets/images/play-icon.png" alt="Play Game Icon"></a>
+
+                <li id="nav-register">
+                    <a href="play_game.html">
+                    <img src="../assets/images/play-icon.png" alt="Play Game Icon">
+                    </a>
                 </li>
+
                 <li><a href="about_me.html">
                     <img src="../assets/images/about_page-icon.png" alt="About Us Icon"></a>
                 </li>
 
-                                <!-- show user profile pic after logged in -->
+                <!-- show user profile pic after logged in -->
                 <li id="nav-profile-pic" class="nav-profile-pic" hidden>
 
                     <!-- profile pic icon -->
@@ -69,6 +71,7 @@
 
 
     <main> 
+        <!-- Page background video and content -->
         <div class="play-game-video">
 
             <video autoplay muted loop>
@@ -82,6 +85,7 @@
             <p> — Choose your level and set sail! — </p>
             </div>
 
+            <!-- Game level cards -->
             <div class="game-level-cards">
 
                 <div class="level">
@@ -118,6 +122,7 @@
 
      </main>
 
+     <!-- Guest User popup-->
      <section>
         <div class="guest_user_popup" id="guest_user_popup">
             <div class="guest_popup">
@@ -134,7 +139,7 @@
 
       <footer>
         <!-- Adding the waves animation with css-->
-        <div class="lazy-bg" class="waves">
+        <div class="waves">
             <div class="wave" id="wave1"></div>
         </div>
         
@@ -157,9 +162,12 @@
      nomodule 
      src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
-    <script src="../js/navbar_profile.js"></script>
+    
+    <!-- Link javascript files -->
+    <script src="../js/pages_styling.js"></script>
     <script src="../js/guest_mode.js"></script>
-    <script src="../js/level_lock.js"></script>
+    <script type="module" src="../js/levels_game_elements.js"></script>
+    
 
 
 </body>

@@ -16,6 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
 </head>
 <body class="signup-page-style">
+
+     <div id="sparkle-confetti"></div>
+
     <header>
         <!-- Navigate user to home page when they click the FL1NK Icon-->
         <a href="../index.html" class="navbar-logo-link">
@@ -72,15 +75,18 @@
         <div class="main-section">
             <!-- Create a checkbox for dynamic feature-->
             <input type="checkbox" id="checkbox">
+            <div class="login-register-tabs">
+                <button type="button" id="show-signup" >Register</button>
+                <button type="button" id="show-login">Login</button>
+            </div>
             <div class="signup">
 
                 <!-- Add Signup heading-->
-                <label for="checkbox">Sign up</label>
                 <form>
                     <!-- Profile Picture -->
                     <div class="upload-picture">
                         <label for="profile-image" class="profile-pic-circle" id="profile-circle">
-                            <img id="profile-pic" src="" alt="User Profile Picture">
+                            <img id="profile-pic"  alt="User Profile Picture">
                             <span id="plus-icon">+</span>
                         </label>
 
@@ -112,14 +118,20 @@
                     <!-- Add Fist name heading-->
                     <div>
                         <label>Password</label>
-                        <input type="password" id="password" placeholder="Password" required="">
+                        <div class="login-password-eye">
+                            <input type="password" id="password" placeholder="Password" required="">
+                            <ion-icon name="eye-outline" class="eye-icon" onclick="showPassword(this, 'password')"></ion-icon>
+                        </div>
                         <p class="error-message" id="password-error"></p>
                     </div>
 
                     <!-- Confirm Password -->
                     <div>
                         <label>Re-enter Password</label>
-                        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                        <div class="login-password-eye">
+                            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                            <ion-icon class="eye-icon" name="eye-outline" onclick="showPassword(this, 'confirm-password')"></ion-icon>
+                        </div>
                         <p class="error-message" id="confirm-password-error"></p>
                     </div>
 
@@ -145,8 +157,7 @@
 
             <div class="login">
                 <form>
-                    <label for="checkbox">Login</label>
-
+                    
                     <!-- Add email-->
                     <label>Email</label>
                     <input type="email" id="loginEmail" placeholder="Email" required>
@@ -155,7 +166,7 @@
                     <label>Password</label>
                     <div class="login-password-eye">
                         <input type="password" id="login-password" placeholder="Password" required>
-                        <ion-icon name="eye-outline" id="eye-icon" onclick="showPassword()"></ion-icon>
+                        <ion-icon name="eye-outline" id="eye-icon" onclick="showPassword(this, 'login-password')"></ion-icon>
                     </div>
 
                     <!-- submit-->
@@ -192,7 +203,8 @@
         src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js">
     </script>
 
-    <script src="../js/login-register.js"></script>
-    <script src="../js/navbar_profile.js"></script>
+    <!-- Link javascript files -->
+    <script type="module" src="../js/login-register.js"></script>
+    <script src="../js/pages_styling.js"></script>
 </body>
 </html>

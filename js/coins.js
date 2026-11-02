@@ -1,3 +1,5 @@
+"use strict";
+
 // import the coin positions
 import { coins_for_every_level } from "./coin_positions.js";
 
@@ -5,9 +7,11 @@ import { coins_for_every_level } from "./coin_positions.js";
 const COIN_SIZE = 40;
 const COIN_SCORE = 5;
 
-
-// This class maanges all the coins logic
+//////////////////////////////////////////
+// Fl1nk_Coins class manages  the coins logic
+//////////////////////////////////////////
 export class Fl1nk_Coins {
+
     // setting up the required varibales for the game logic
     constructor(context, levelNumber, scoreElement, decks) {
         this.context = context;

@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Declarations for the Home page-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Game</title>
-    <!-- Link Favicon-->
+     <!-- Add a favicon and link external CSS file-->
     <link rel="icon" href="../assets/images/favicon.png" type="image/png">
-
-    <!-- Link Css-->
     <link rel="stylesheet" href="../css/style.css">
-
-    <!-- Add fonts-->
+     <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lilita+One&family=Playwrite+BE+WAL+Guides&display=swap" rel="stylesheet">
     
 </head>
+
 <body>
-
-
+    <!-- Display the background video, and the pirate ship -->
     <main>
         <div class="ocean-bg-video">
             <video autoplay muted loop>
                 <source src="../assets/videos/level2_bg_video.mp4" type="video/mp4">
             </video>
 
+            <!-- Create Canvas for pirate ship-->
             <div class="pirate-ship_two">
-                
                 <canvas id="fl1nk-game-canvas-level2" width="1400" height="950"></canvas>
             </div>
         </div>
     </main>
 
-
+    <!-- Game Controls -->
     <section class="game-controls">
         <div class="exit-button">
             <a href="play_game.html" class="exit-button-link">
@@ -40,7 +38,7 @@
             </a>
         </div>
 
- 
+        <!-- Create Scoreboard, Player Life, and Game Info Boards-->
         <div class="scoreboard">
             <img src="../assets/images/display-score.png" alt="Score Board Board" class="scoreboard-image">
 
@@ -71,7 +69,7 @@
         </div>
 
 
-        <!-- Shield progress bar -->
+        <!-- Game Shield, and progress bar -->
         <div class="game_shield" id="game_shield">
             <img src="../assets/images/game_shield.png" alt="Game Shield" class="shield_img">
             <p class="shield-title">SHIELD</p>
@@ -82,14 +80,17 @@
             </div>
         </div>
 
+        <!-- Game Info Boards-->
         <div class="level2_info_images">
             <img src="../assets/images/level2_info_sheet.png" alt="Level 2 Instructions" class="level2_info">
+            <img src="../assets/images/game_controls.png" alt="Level 2 Instructions" class="game_controls">
         </div>
 
 
 
     </section>
-
+    
+    <!-- Game Victory and Loss popups-->
      <section>
         <div id="game-resut-display" class="game-resut-display">
             <div class="player_victory_display">
@@ -122,9 +123,8 @@
         </div>
     </section>
 
+    <!-- Load FL1NK game -->
     <script type="module" src="../js/game.js"></script>
-
-
 
 
     <!-- Adding external icons for footer-->
