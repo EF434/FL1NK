@@ -66,11 +66,13 @@ function displayNavbarProfile() {
             return;
         }
 
+        const player = JSON.parse(saved_player);
+
         if (player.profileImage) {
             profilePicture.src = player.profileImage;}
 
         else{
-            picture.src = "../assets/images/default_pic.png";
+            profilePicture.src = "../assets/images/default_pic.png";
         }
 
         username.textContent = player.username;
@@ -78,8 +80,6 @@ function displayNavbarProfile() {
         logoutButton.textContent = "Logout";
 
         profile.hidden = false;
-        profilePicture.src = player.profileImage;
-        const player = JSON.parse(saved_player);
     }
     ////////////////
     // Guest player
@@ -87,7 +87,7 @@ function displayNavbarProfile() {
     else if (guest_user === "true") {
 
         profile.hidden = false;
-        picture.src = "../assets/images/default_pic.png";
+        profilePicture.src = "../assets/images/default_pic.png";
         username.textContent = "Guest";
 
         let guest_score = sessionStorage.getItem("fl1nkGuestScore");

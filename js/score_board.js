@@ -71,48 +71,26 @@ export function save_guest_score(level_number, currentScore) {
     sessionStorage.setItem("fl1nkGuestScore", totalScore);
 }
 
-// ==========================================
-// GET ALL REGISTERED PLAYERS
-// ==========================================
-
-function getRegisteredPlayers() {
-
+////////////////////////////////////////////
+/// Get registered user's info for scoreboard
+////////////////////////////////////////////
+function registered_users_info() {
     let players = [];
 
-    // Check all accounts in localStorage
     for (let i = 0; i < localStorage.length; i++) {
-
         let email = localStorage.key(i);
-        let player;
+        let player = JSON.parse(localStorage.getItem(email));
 
-        // Read the saved account
-        try {
-            player = JSON.parse(localStorage.getItem(email));
+        if (player.email === email) {
+            players.push({
+                username: player.username,
+                score: player.totalScore,
+                profileImage: player.profileImage
+            });
         }
-        catch (error) {
-            continue;
-        }
-
-        // Only include registered player accounts
-        if (!player || player.email !== email || !player.username) {
-            continue;
-        }
-
-        // Add player details to the leaderboard
-        players.push({
-            username: player.username,
-            score: Number(player.totalScore || 0),
-            profileImage: player.profileImage
-        });
     }
 
-    // Sort players by highest score
     players.sort(function(a, b) {
-
-        if (a.score === b.score) {
-            return a.username.localeCompare(b.username);
-        }
-
         return b.score - a.score;
     });
 
@@ -123,9 +101,7 @@ function getRegisteredPlayers() {
 // ==========================================
 // DISPLAY THE SCOREBOARD
 // ==========================================
-
 function displayLeaderboard() {
-
     let leaderboard = document.getElementById("leaderboard-players");
 
     if (!leaderboard) {
@@ -135,84 +111,78 @@ function displayLeaderboard() {
     leaderboard.innerHTML = "";
 
     let email = sessionStorage.getItem("loggedInUserEmail");
+    let players = [];
+    let isGuest = false;
 
-    // Guest player sees only their own score
-    if (!email) {
+    if (email) {
+        players = registered_users_info();
 
-        let guestScore = sessionStorage.getItem("fl1nkGuestScore") || 0;
+        if (players.length === 0) {
+            leaderboard.innerHTML =
+                "<p class='leaderboard-empty'>No players registered yet!</p>";
+            return;
+        }
+    } else {
+        let guestScore = sessionStorage.getItem("fl1nkGuestScore");
 
-        let guestRow = document.createElement("div");
-        guestRow.className = "user-card-content";
+        if (guestScore === null) {
+            guestScore = 0;
+        }
 
-        guestRow.innerHTML = `
-            <h3>-</h3>
-            <img class="player-avatar"
-                 src="../assets/images/default_pic.png"
-                 alt="Guest Profile Picture">
-            <h3>Guest</h3>
-            <h3>${guestScore}</h3>
-        `;
+        players.push({
+            username: "Guest",
+            score: guestScore,
+            profileImage: "../assets/images/default_pic.png"
+        });
 
-        leaderboard.appendChild(guestRow);
-        return;
+        isGuest = true;
     }
 
-    // Get all registered players
-    let players = getRegisteredPlayers();
-
-    if (players.length === 0) {
-        leaderboard.innerHTML =
-            "<p class='leaderboard-empty'>No players registered yet!</p>";
-        return;
-    }
-
-    // Display each player on the scoreboard
     for (let i = 0; i < players.length; i++) {
-
         let player = players[i];
 
         let row = document.createElement("div");
         row.className = "user-card-content";
 
-        // Highlight the top three players
-        if (i === 0) {
-            row.classList.add("first-place");
-        }
-        else if (i === 1) {
-            row.classList.add("second-place");
-        }
-        else if (i === 2) {
-            row.classList.add("third-place");
+        if (isGuest) {
+            let rank = document.createElement("h3");
+            rank.textContent = "-";
+            row.appendChild(rank);
+        } else {
+            let rank = document.createElement("h3");
+            rank.textContent = i + 1;
+            row.appendChild(rank);
+
+            if (i === 0) {
+                row.classList.add("first-place");
+            } else if (i === 1) {
+                row.classList.add("second-place");
+            } else if (i === 2) {
+                row.classList.add("third-place");
+            }
         }
 
-        // Create the player's rank
-        let rank = document.createElement("h3");
-        rank.textContent = i + 1;
-
-        // Create the player's profile picture
         let picture = document.createElement("img");
         picture.className = "player-avatar";
-        picture.src = player.profileImage || "../assets/images/default_pic.png";
         picture.alt = "Player Profile Picture";
+        picture.src = player.profileImage;
 
-        // Create the player's username
+        if (!player.profileImage) {
+            picture.src = "../assets/images/default_pic.png";
+        }
+
         let username = document.createElement("h3");
         username.textContent = player.username;
 
-        // Create the player's score
         let score = document.createElement("h3");
         score.textContent = player.score;
 
-        // Add everything to the player's row
-        row.appendChild(rank);
         row.appendChild(picture);
         row.appendChild(username);
         row.appendChild(score);
 
-        // Add the row to the scoreboard
         leaderboard.appendChild(row);
     }
 }
 
-// Display the leaderboard when the page loads
 displayLeaderboard();
