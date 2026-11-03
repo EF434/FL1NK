@@ -77,10 +77,17 @@ export function save_guest_score(level_number, currentScore) {
 function registered_users_info() {
     let players = [];
 
+    // loop over local sotrage to get all registered users info
     for (let i = 0; i < localStorage.length; i++) {
-        let email = localStorage.key(i);
+        let email = localStorage.key(i); 
+
+        // validate the email
+        if (email === "profile_image"){
+            continue;
+        }
         let player = JSON.parse(localStorage.getItem(email));
 
+        // verify player's email and push their info
         if (player.email === email) {
             players.push({
                 username: player.username,
@@ -90,6 +97,7 @@ function registered_users_info() {
         }
     }
 
+    // sort the players score
     players.sort(function(a, b) {
         return b.score - a.score;
     });

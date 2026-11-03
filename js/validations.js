@@ -41,17 +41,17 @@ export function processInput() {
     // Check profile picture
     if (!user_image.files[0]) {
         document.getElementById("profile-pic-error").textContent =
-            "Please upload a profile picture.";
+            "❌ Please upload a profile picture.";
         CorrectFields = false;
     }
     else if (!user_image.files[0].type.startsWith("image/")) {
         document.getElementById("profile-pic-error").textContent =
-            "Please only select an image";
+            "❌ Please only select an image";
         CorrectFields = false;
     }
     else if (!window.uploaded_image) {
         document.getElementById("profile-pic-error").textContent =
-            "Please wait for your profile picture to load.";
+            "❌ Please wait for your profile picture to load.";
         CorrectFields = false;
     }
 
@@ -142,7 +142,7 @@ export function processInput() {
 
     if (dob === "") {
         document.getElementById("dob-error").textContent =
-            "Please enter your date of birth.";
+            "❌ Please enter your date of birth.";
         CorrectFields = false;
     } else if (birth_year >= current_year) {
         document.getElementById("dob-error").textContent =
@@ -189,7 +189,6 @@ export function login() {
         loginFeedback.textContent = "Password is not correct! Try again!";
         return;
     }
-    loginFeedback.textContent = `Thank you ${UserObject.fullname}, logged in successfully!`;
 
     // create session sotrage and redurect to game page
     sessionStorage.setItem("loggedInUserEmail", UserObject.email);
