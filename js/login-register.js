@@ -76,6 +76,7 @@ function StoreUser() {
 
     // store user's info in local storage
     localStorage[UserObject.email] = JSON.stringify(UserObject);
+    form_checkbox.checked = true; // switch to login form
     return true;
 }
 

@@ -6,7 +6,7 @@
 
 
 /* ============================================================ */
-/* ******           SHARED CSS ACROSS ALL FILES          ****** */
+/* ******           SHARED CSS ACROSS ALL FILES Section  ****** */
 /* ============================================================ */
 
 
@@ -31,7 +31,7 @@ li, a, button {
 }
 
 header {
-    background-image: url("../assets/images/navbar-bg.png");
+    background-image: url("../assets/images/navbar-bg.webp");
     background-position: center;
     display: flex;
     align-items: center;
@@ -164,7 +164,7 @@ footer .wave{
     left: 0;
     width: 100%;
     height: 100px;
-    background: url('../assets/images/wave.png');
+    background: url('../assets/images/wave.webp');
     background-size: 1000px 100px;
 
 }
@@ -231,7 +231,7 @@ footer .wave#wave1{
     right: 10px;
     width: 150px;
     padding: 10px;
-    background: url("../assets/images/wood-texture.png");
+    background: url("../assets/images/wood-texture.webp");
     border: 2px solid #2a1e00;
     border-radius: 12px;
     text-align: center;
@@ -293,7 +293,7 @@ footer .wave#wave1{
     content: "";
     position: absolute;
     inset: -5px;
-    background-image: url("../assets/images/banner.png");
+    background-image: url("../assets/images/banner.webp");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -314,7 +314,7 @@ footer .wave#wave1{
 }
 
 .play-button {
-    background-image: url("../assets/images/wood-texture.png");
+    background-image: url("../assets/images/wood-texture.webp");
     background-size: cover;
     background-position: center;
 
@@ -337,7 +337,7 @@ footer .wave#wave1{
 
 
 .play-game-section{
-    background-image: url("../assets/images/game-step-section-bg.png");
+    background-image: url("../assets/images/game-step-section-bg.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -647,12 +647,6 @@ footer .wave#wave1{
     pointer-events: none;
 }
 
-.exit-button {
-    position: absolute;
-    top: 10px;
-    right: 25px;
-    pointer-events: auto;
-}
 
 
 .scoreboard {
@@ -698,8 +692,15 @@ footer .wave#wave1{
     margin: 0;
 }
 
+.exit-icon {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    pointer-events: auto;
+}
 
-.exit-button img {
+
+.exit-icon  img {
     width: 90px;
     height: 100px;
     object-fit: contain;
@@ -708,7 +709,7 @@ footer .wave#wave1{
     transition: all 0.25s ease;
 }
 
-.exit-button img:hover {
+.exit-icon  img:hover {
     transform: scale(1.12) translateY(-7px) rotate(-2deg);
     filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
 }
@@ -719,7 +720,7 @@ footer .wave#wave1{
 /* ==========================================================*/
 
 .login-register-page {
-    background-image: url("../assets/images/pirate-map-bg.png");
+    background-image: url("../assets/images/pirate-map-bg.webp");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -960,7 +961,7 @@ footer .wave#wave1{
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../assets/images/confetti.png");
+    background-image: url("../assets/images/confetti.webp");
     background-size: 1000px;
     background-repeat: repeat;
     pointer-events: none;
@@ -990,7 +991,7 @@ footer .wave#wave1{
 
 
 .score-board-page {
-    background-image: url("../assets/images/score-page-bg.png");
+    background-image: url("../assets/images/score-page-bg.webp");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -998,35 +999,38 @@ footer .wave#wave1{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0px 0px 70px;
+    padding: 0px 0px 30px;
     align-items: center;
     box-sizing: border-box;
     
 }
 
-
-
 .score-board-header {
-    position: relative;
+    position: static;
     top: -150px;
     text-align: center;
-    margin-bottom: -20px;
+    margin: 0 0 20px;
+}
+
+.score-board-header h2 {
+    margin: 0 0 8px;
 }
 
 .score-board-header p {
     font-family: 'Franklin Gothic Medium';
     font-size: 30px;
-    margin-top: -40px;
-    color: #03f803;
-    text-shadow: 2px 2px 0 #48524b;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    color: #ffe225;
+    text-shadow: 2px 2px 0 #303832;
 }
 
 .leaderboard {
-    position: relative;
+    position: static;
     top: -100px;
     width: 800px;
     max-width: 95%;
-    padding: 22px;
+    padding: 14px;
     margin: 0 auto;
     box-sizing: border-box;
     background: #fff4d8;
@@ -1039,6 +1043,8 @@ footer .wave#wave1{
     background-color: #be3900;
     padding: 15px;
     border-radius: 30px;
+    padding: 10px;
+
 }
 
 .player-card-content,
@@ -1060,8 +1066,8 @@ footer .wave#wave1{
 #leaderboard-players {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 13px;
     max-height: 430px;
     overflow-y: auto;
 }
@@ -1121,7 +1127,7 @@ footer .wave#wave1{
     left:  240px;
     aspect-ratio: 1400 / 950;
     top: 2px;
-    background-image: url("../assets/images/level1-ship.png");
+    background-image: url("../assets/images/level1-ship.webp");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -1325,6 +1331,19 @@ footer .wave#wave1{
     cursor: pointer;
 }
 
+.exit-button{
+    position: absolute;
+    top: 115px;
+    right: 30px;
+    z-index: 5;
+}
+
+.exit-button img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
 .losing-next-level,
 .losing-exit-level {
     top: 30px;
@@ -1524,7 +1543,7 @@ footer .wave#wave1{
     left:  210px;
     height: 650px;
     top: 5px;
-    background-image: url("../assets/images/level2-ship.png");
+    background-image: url("../assets/images/level2-ship.webp");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1618,7 +1637,7 @@ footer .wave#wave1{
     left:  250px;
     height: 700px;
     top: -10px;
-    background-image: url("../assets/images/level3-ship.png");
+    background-image: url("../assets/images/level3-ship.webp");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1666,7 +1685,7 @@ footer .wave#wave1{
 
 
 .about-us-banner {
-    background-image: url("../assets/images/about_me_banner.png");
+    background-image: url("../assets/images/about_me_banner.webp");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1749,4 +1768,6 @@ footer .wave#wave1{
 }
 
 
+/* ////////////////////////////////////////////////////////////////////////////////////////// */
+/*                                   Thank you!                                                */
 /* ////////////////////////////////////////////////////////////////////////////////////////// */

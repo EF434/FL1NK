@@ -72,7 +72,7 @@ function displayNavbarProfile() {
             profilePicture.src = player.profileImage;}
 
         else{
-            profilePicture.src = "../assets/images/default_pic.png";
+            profilePicture.src = "../assets/images/default_pic.webp";
         }
 
         username.textContent = player.username;
@@ -87,7 +87,7 @@ function displayNavbarProfile() {
     else if (guest_user === "true") {
 
         profile.hidden = false;
-        profilePicture.src = "../assets/images/default_pic.png";
+        profilePicture.src = "../assets/images/default_pic.webp";
         username.textContent = "Guest";
 
         let guest_score = sessionStorage.getItem("fl1nkGuestScore");

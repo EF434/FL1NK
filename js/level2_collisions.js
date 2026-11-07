@@ -31,7 +31,7 @@ const treasureHeight = 85;
 const level2KeyTreasure = new KeyTreasure(
     //  pass the key
     {
-        image: "../assets/images/level2_key.png",
+        image: "../assets/images/level2_key.webp",
         x: keyX,
         deck: keyDeck,
         width: keyWidth,
@@ -39,8 +39,8 @@ const level2KeyTreasure = new KeyTreasure(
     },
     // pass the treasure
     {
-        treasure_closed_img: "../assets/images/treasure_locked_2.png",
-        treasure_open_img: "../assets/images/treasure-open2.png",
+        treasure_closed_img: "../assets/images/treasure_locked_2.webp",
+        treasure_open_img: "../assets/images/treasure-open2.webp",
         x: treasureX,
         deck: treasureDeck,
         width: treasureWidth,
@@ -49,7 +49,7 @@ const level2KeyTreasure = new KeyTreasure(
 );
 
 // create the shield for level 2
-const level2Shield = new Shield("../assets/images/shield.png",220,3);
+const level2Shield = new Shield("../assets/images/shield.webp",220,3);
 
 
 

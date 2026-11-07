@@ -12,10 +12,10 @@ const poisonSound = new Audio("../assets/sounds/poison.mp3");
 
 // set the posision images for decks
 const poisonImage1 = new Image();
-poisonImage1.src = "../assets/images/poison_1.png";
+poisonImage1.src = "../assets/images/poison_1.webp";
 
 const poisonImage2 = new Image();
-poisonImage2.src = "../assets/images/poison_2.png";
+poisonImage2.src = "../assets/images/poison_2.webp";
 
 // set posision size and dimentions 
 const poisonWidth = 100;
@@ -52,13 +52,13 @@ const level1KeyTreasure = new KeyTreasure(
 
     //  pass the key
     {
-        image: "../assets/images/level1_key.png",
+        image: "../assets/images/level1_key.webp",
          x: keyX,deck: keyDeck,width: keyWidth,height: keyHeight
     },
     // pass the treasure
     {
-        treasure_closed_img: "../assets/images/treasure-locked1.png",
-        treasure_open_img: "../assets/images/treasure-open1.png",
+        treasure_closed_img: "../assets/images/treasure-locked1.webp",
+        treasure_open_img: "../assets/images/treasure-open1.webp",
         x: treasureX,deck: treasureDeck,
         width: treasureWidth,height: treasureHeight
     }

@@ -97,100 +97,93 @@ function registered_users_info() {
         }
     }
 
-    // sort the players score
+    // sort the higher score 
     players.sort(function(a, b) {
         return b.score - a.score;
     });
-
     return players;
 }
 
 
-// ==========================================
-// DISPLAY THE SCOREBOARD
-// ==========================================
-function displayLeaderboard() {
+////////////////////////////////////////
+// Display users info on scoreboard 
+////////////////////////////////////////
+function display_scoreboard_results() {
+    // get the player cards and do validation
     let leaderboard = document.getElementById("leaderboard-players");
-
-    if (!leaderboard) {
+    if (leaderboard == null) {
         return;
     }
 
+    // clear everthing initially
     leaderboard.innerHTML = "";
 
     let email = sessionStorage.getItem("loggedInUserEmail");
     let players = [];
-    let isGuest = false;
+    let is_it_guest = false;
+
 
     if (email) {
+        // get info and display message if empty initially 
         players = registered_users_info();
 
         if (players.length === 0) {
-            leaderboard.innerHTML =
-                "<p class='leaderboard-empty'>No players registered yet!</p>";
+            leaderboard.innerHTML ="<p class='leaderboard-empty'>Scoreboard is empty yet!</p>";
             return;
         }
+
     } else {
+
+        // handle guest player scores
         let guestScore = sessionStorage.getItem("fl1nkGuestScore");
 
+        // Validate and push the guest scores and info
         if (guestScore === null) {
             guestScore = 0;
         }
-
-        players.push({
-            username: "Guest",
-            score: guestScore,
-            profileImage: "../assets/images/default_pic.png"
-        });
-
-        isGuest = true;
+        players.push({ username: "Guest", score: guestScore, profileImage: "../assets/images/default_pic.webp"});
+        is_it_guest = true;
     }
 
+    // loop over each player  and display on scoreboard
     for (let i = 0; i < players.length; i++) {
         let player = players[i];
 
+        // create the player cards via Javascript using css
         let row = document.createElement("div");
         row.className = "user-card-content";
+        let rank = document.createElement("h3");
 
-        if (isGuest) {
-            let rank = document.createElement("h3");
+        // show the rank
+        if (is_it_guest) {
             rank.textContent = "-";
-            row.appendChild(rank);
         } else {
-            let rank = document.createElement("h3");
             rank.textContent = i + 1;
-            row.appendChild(rank);
-
-            if (i === 0) {
-                row.classList.add("first-place");
-            } else if (i === 1) {
-                row.classList.add("second-place");
-            } else if (i === 2) {
-                row.classList.add("third-place");
-            }
         }
 
+        // Add and display the profile picture
         let picture = document.createElement("img");
         picture.className = "player-avatar";
         picture.alt = "Player Profile Picture";
-        picture.src = player.profileImage;
 
-        if (!player.profileImage) {
-            picture.src = "../assets/images/default_pic.png";
+        // display default pics if not avaliable
+        if (player.profileImage == null) {
+            picture.src = "../assets/images/default_pic.webp";
+        } else {
+            picture.src = player.profileImage;
         }
-
+    
+        // headline elemts for score and username
         let username = document.createElement("h3");
         username.textContent = player.username;
 
         let score = document.createElement("h3");
         score.textContent = player.score;
 
-        row.appendChild(picture);
-        row.appendChild(username);
-        row.appendChild(score);
-
-        leaderboard.appendChild(row);
+        // add all the info
+        row.append(rank, picture, username, score);
+        leaderboard.append(row);
     }
 }
 
-displayLeaderboard();
+display_scoreboard_results();

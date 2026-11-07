@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Game</title>
      <!-- Add a favicon and link external CSS file-->
-    <link rel="icon" href="../assets/images/favicon.png" type="image/png">
+    <link rel="icon" href="../assets/images/favicon.webp" type="image/png">
     <link rel="stylesheet" href="../css/style.css">
      <!-- Add external fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,18 +33,18 @@
 
     <!-- Game Controls -->
     <section class="game-controls">
-        <div class="exit-button">
+        <div class="exit-icon ">
             <a href="play_game.html" class="exit-button-link">
-                <img src="../assets/images/exit-icon.png" alt="Exit Icon">
+                <img src="../assets/images/exit-icon.webp" alt="Exit Icon">
             </a>
         </div>
 
         <!-- Create Scoreboard, Player Life, and Game Info Boards-->
         <div class="scoreboard">
-            <img src="../assets/images/display-score.png" alt="Score Board Board" class="scoreboard-image">
+            <img src="../assets/images/display-score.webp" alt="Score Board Board" class="scoreboard-image">
 
             <div class="scoreboard-text">
-                <img src="../assets/images/game-coin.png" alt="Player Score" class="coin-img">
+                <img src="../assets/images/game-coin.webp" alt="Player Score" class="coin-img">
                 <h3>SCORE</h3>
                 <p id="score-value">0</p>
             </div>
@@ -52,26 +52,26 @@
 
         <div class="player-life">
             <div class="player-life-board">
-                <img src="../assets/images/lives-board.png" alt="Player Life Board Image">
+                <img src="../assets/images/lives-board.webp" alt="Player Life Board Image">
             </div>
 
             <div class="play-life-hearts" id="play-life-hearts">
-                <img src="../assets/images/heart.png" alt="Life" class="life-heart">
-                <img src="../assets/images/heart.png" alt="Life" class="life-heart">
-                <img src="../assets/images/heart.png" alt="Life" class="life-heart">
+                <img src="../assets/images/heart.webp" alt="Life" class="life-heart">
+                <img src="../assets/images/heart.webp" alt="Life" class="life-heart">
+                <img src="../assets/images/heart.webp" alt="Life" class="life-heart">
             </div>
         </div>
 
         <!-- Game Info Boards-->
         <div class="level1-info-board">
-            <img src="../assets/images/game-status-board3.png" alt="Game Information board" class="info-board-image">
-            <img src="../assets/images/green-tick.png" alt="Green tick icon" class="key-tick" id="key-tick">
+            <img src="../assets/images/game-status-board3.webp" alt="Game Information board" class="info-board-image">
+            <img src="../assets/images/green-tick.webp" alt="Green tick icon" class="key-tick" id="key-tick">
             <p id="game-timer-text">05:00</p>
         </div>
 
         <div class="level1_info_images">
-            <img src="../assets/images/level1_info_sheet.png" alt="Level 1 Instructions" class="level1_info">
-            <img src="../assets/images/game_controls.png" alt="Level 1 Instructions" class="game_controls">
+            <img src="../assets/images/level1_info_sheet.webp" alt="Level 1 Instructions" class="level1_info">
+            <img src="../assets/images/game_controls.webp" alt="Level 1 Instructions" class="game_controls">
         </div>
 
 
@@ -81,14 +81,14 @@
     <section>
         <div id="game-resut-display" class="game-resut-display">
             <div class="player_victory_display">
-                <img src="../assets/images/player_won_img.png" alt="Game victory display" id="victory-img" class="victory-img">
+                <img src="../assets/images/player_won_img.webp" alt="Game victory display" id="victory-img" class="victory-img">
                 <div class="victory_display_content">
                     <h1 class="victory_display_title"> LEVEL COMPLETE!</h1>
                     <p id="victory_display_message">Congratulations! <br> You found the treasure!</p>
                     <p class="display_score">FINAL SCORE</p>
                     <h2 id="game_score">0</h2>
                     <button class="victory-next-level">NEXT LEVEL </button>
-                    <button class="victory-exit-level" src="play_game.html">EXIT </button>
+                    <a class="victory-exit-level" href="play_game.html">EXIT </a>
 
                 </div>
             </div>
@@ -99,12 +99,12 @@
     <section>
         <div id="game-lost-display" class="game-resut-display">
             <div class="player_lost_display">
-            <img src="../assets/images/player_lost_img.png" alt="Game lost display" id="losing-img" class="losing-img">
+            <img src="../assets/images/player_lost_img.webp" alt="Game lost display" id="losing-img" class="losing-img">
             <div class="losing_display_content">
                 <h1 class="losing_display_title">GAME OVER</h1>
                 <p id="losing_display_message"> YOU LOST <br> Better Luck Next Time! </p>
                 <button class="losing-next-level">REPLAY LEVEL</button>
-                <button class="losing-exit-level" src="play_game.html">EXIT</button>
+                <a class="losing-exit-level" href="play_game.html">EXIT</a>
             </div>
             </div>
         </div>

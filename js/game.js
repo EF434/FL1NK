@@ -72,9 +72,9 @@ window.onkeyup = function(event) {
 
 
 // Creatw instances to add  pirates in level 2 & 3
-const level2Pirate = new Pirate("../assets/images/pirate-sprite-sheet.png", 300, 3, 2, 1);
-const level3Pirate1 = new Pirate("../assets/images/level3_pirate1.png",300,3,2,1);
-const level3Pirate2 = new Pirate("../assets/images/level3_pirate2.png",800,5,3,-1);
+const level2Pirate = new Pirate("../assets/images/pirate-sprite-sheet.webp", 300, 3, 2, 1);
+const level3Pirate1 = new Pirate("../assets/images/level3_pirate1.webp",300,3,2,1);
+const level3Pirate2 = new Pirate("../assets/images/level3_pirate2.webp",800,5,3,-1);
 
 
 // <<<<<<<<<<<< Display the timer on the levels UI >>>>>>>>
@@ -151,8 +151,6 @@ function showVictoryPopup() {
     victoryPopup.style.display = "flex";
     console.log("Level is compleetd");
 }
-
-
 
 // Display different popup when the player loses the game
 function showGameOverPopup(reason) {

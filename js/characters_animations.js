@@ -44,7 +44,7 @@
 
             // load the fl1nk spirte sheet
             this.image = new Image();
-            this.image.src = "../assets/images/fl1nk-spirate-sheet.png";
+            this.image.src = "../assets/images/fl1nk-spirate-sheet.webp";
             this.animationData = fl1nkAnimationData;
 
             // Keep FL1NK inside the starting deck

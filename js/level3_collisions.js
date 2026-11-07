@@ -8,28 +8,28 @@ import {drawLoadedImage,touchesItem, playSound, remove_heart} from "./levels_gam
 
 //Load all the images for the game
 const poisonImage = new Image();
-poisonImage.src = "../assets/images/poison_2.png";
+poisonImage.src = "../assets/images/poison_2.webp";
 
 const mapImage = new Image();
-mapImage.src = "../assets/images/map.png";
+mapImage.src = "../assets/images/map.webp";
 
 const keyImage = new Image();
-keyImage.src = "../assets/images/key3.png";
+keyImage.src = "../assets/images/key3.webp";
 
 const chestImage = new Image();
-chestImage.src = "../assets/images/chest.png";
+chestImage.src = "../assets/images/chest.webp";
 
 const openTreasureImage = new Image();
-openTreasureImage.src = "../assets/images/open_chest.png";
+openTreasureImage.src = "../assets/images/open_chest.webp";
 
 const openEmptyImage = new Image();
-openEmptyImage.src = "../assets/images/empty_open_chest.png";
+openEmptyImage.src = "../assets/images/empty_open_chest.webp";
 
 const leftHintImage = new Image();
-leftHintImage.src = "../assets/images/left_treasure_hint.png";
+leftHintImage.src = "../assets/images/left_treasure_hint.webp";
 
 const rightHintImage = new Image();
-rightHintImage.src = "../assets/images/right_treasure_hint.png";
+rightHintImage.src = "../assets/images/right_treasure_hint.webp";
 
 // Game sound affects
 const mapSound = new Audio("../assets/sounds/map.mp3");

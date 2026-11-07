@@ -20,7 +20,7 @@ export class Fl1nk_Coins {
         this.score = 0;
         this.coin_sound = new Audio("../assets/sounds/coin.mp3");
         this.image = new Image();
-        this.image.src = "../assets/images/coin.png";
+        this.image.src = "../assets/images/coin.webp";
 
     // get coin positions in the defined file
     let coinPositions = coins_for_every_level[levelNumber];
